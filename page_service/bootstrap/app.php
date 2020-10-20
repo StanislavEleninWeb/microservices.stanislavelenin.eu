@@ -23,9 +23,20 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
+$app->withFacades();
 
 $app->withEloquent();
+
+/*
+|--------------------------------------------------------------------------
+| Fix path.* bug
+|--------------------------------------------------------------------------
+|
+| 'ReflectionException' with message 'Class path.storage does not exist'
+|
+*/
+$app->instance('path.config', app()->basePath() . DIRECTORY_SEPARATOR . 'config');
+$app->instance('path.storage', app()->basePath() . DIRECTORY_SEPARATOR . 'storage');
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +105,7 @@ $app->configure('app');
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

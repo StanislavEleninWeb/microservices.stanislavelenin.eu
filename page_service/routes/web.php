@@ -29,7 +29,7 @@ $router->get('/source', 'SourceController@index');
 $router->get('/source/{id}', 'SourceController@show');
 $router->post('/source', 'SourceController@store');
 $router->patch('/source/{id}', 'SourceController@update');
-$router->delete('/source/{id}', 'SourceController@delete');
+$router->delete('/source/{id}', 'SourceController@destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +43,14 @@ $router->get('/page', 'PageController@index');
 $router->get('/page/{id}', 'PageController@show');
 $router->post('/page', 'PageController@store');
 $router->patch('/page/{id}', 'PageController@update');
-$router->delete('/page/{id}', 'PageController@delete');
+$router->delete('/page/{id}', 'PageController@destroy');
+
+/*
+|--------------------------------------------------------------------------
+| Source Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can CRUD source
+|
+*/
+$router->get('/test', 'TestController@index');

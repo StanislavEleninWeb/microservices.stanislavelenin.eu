@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use App\Jobs\ProcessCrawlerJob;
+
 use App\Models\Source;
 
 class SourceController extends Controller
@@ -24,7 +27,11 @@ class SourceController extends Controller
      */
     public function index()
     {
-        return Source::all();
+        $sources = Cache::remember('sources', 120, function(){
+            return Source::all();
+        });
+
+        return $sources;
     }
 
     /**
@@ -47,7 +54,11 @@ class SourceController extends Controller
         $source->slug = $validated['slug'];
         $source->base_url = $validated['base_url'];
 
-        $source->save();
+        try {
+            $source->save();
+        } catch (\PDOException $e) {
+            return response('Duplicate entry.', 403);
+        }
 
         return response('Successfully created.', 201);
     }
@@ -60,8 +71,12 @@ class SourceController extends Controller
      */
     public function show($id)
     {
+        $sources = Cache::get('sources');
 
-        $source = Source::findOrFail($id);
+        if($sources)
+            $source = $sources->filter(function($item){return $item->id == 1;})->first();
+        else
+            $source = Source::findOrFail($id);
 
         return $source;
     }
@@ -76,6 +91,12 @@ class SourceController extends Controller
     public function update(Request $request, $id)
     {
         $source = Source::findOrFail($id);
+
+        $validated = $this->validate($request, [
+            'title' => 'required|string',
+            'slug' => 'required|string',
+            'base_url' => 'required',
+        ]);
 
         $source->title = $validated['title'];
         $source->slug = $validated['slug'];
@@ -95,7 +116,9 @@ class SourceController extends Controller
      */
     public function destroy($id)
     {
-        return $id;
+        Source::destroy($id);
+
+        return response('Successfully deleted.', 204);
     }
 
 }

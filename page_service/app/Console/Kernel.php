@@ -5,6 +5,8 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
+use App\Jobs\ProcessCrawlerJob;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -24,6 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //
+        
+        $schedule->job(new ProcessCrawlerJob)->hourly()->between('6:00', '23:59');
+
     }
 }
