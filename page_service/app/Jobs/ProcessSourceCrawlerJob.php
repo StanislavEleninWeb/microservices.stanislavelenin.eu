@@ -2,8 +2,6 @@
 
 namespace App\Jobs;
 
-use Spatie\Browsershot\Browsershot;
-
 use App\Models\Source;
 
 class ProcessSourceCrawlerJob extends Job
@@ -47,23 +45,13 @@ class ProcessSourceCrawlerJob extends Job
      */
     public function handle()
     {
-        // Generate base url
-        $generated_url = 'https://www.alo.bg/obiavi/imoti-prodajbi/apartamenti-stai/?region_id=16';
-
-        // Craw main page
-        $content = Browsershot::url($generated_url)
-        ->device('iPhone X')
-        ->bodyHtml();
-
-        
-        // Fetch dom
-
         // Analyze content and fetch urls
+        $urls = new $this->source->analyze_links($this->source);
 
-        // Check if already crawled
-
-        // Dispatch process page url
-
+        $urls->each($url){
+            // Dispatch process page url
+            ProcessPageCrawlerJob::dispatch($url);
+        }
     }
 
     /**

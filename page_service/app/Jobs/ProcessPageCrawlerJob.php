@@ -2,6 +2,10 @@
 
 namespace App\Jobs;
 
+use Spatie\Browsershot\Browsershot;
+
+use Goutte\Client;
+
 use App\Models\Page;
 
 class ProcessPageCrawlerJob extends Job
@@ -25,8 +29,13 @@ class ProcessPageCrawlerJob extends Job
     {
         
         // Craw page url
+        // Craw main page
+        $html = Browsershot::url($generated_url)
+        ->device('iPhone X')
+        ->bodyHtml();
 
         // Fetch info
+        $client = new Client($html);
 
         // Analyze content
 
