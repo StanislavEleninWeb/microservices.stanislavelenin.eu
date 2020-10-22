@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use Illuminate\Support\Facades\Validator;
-use Spatie\Browsershot\Browsershot;
 
 use App\Models\Page;
 
@@ -48,15 +47,6 @@ class ProcessPageCrawlerJob extends Job
     public function handle()
     {
         /**
-        * Generate get/post request
-        *
-        * @return html dom
-        */
-        $html = Browsershot::url($this->url)
-        ->device('iPhone X')
-        ->bodyHtml();
-
-        /**
         * Analyze content
         *
         * @return array
@@ -76,7 +66,7 @@ class ProcessPageCrawlerJob extends Job
 
         $page->title = $validator['title'];
         $page->content = $validator['content'];
-        
+
 
         $page->save();
 
