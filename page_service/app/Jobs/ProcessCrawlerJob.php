@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use Illuminate\Support\Facades\Cache;
-use App\Jobs\ProcessSourceCrawlerJob;
 use App\Models\Source;
 
 class ProcessCrawlerJob extends Job

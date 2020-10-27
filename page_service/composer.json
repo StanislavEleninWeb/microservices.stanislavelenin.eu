@@ -9,7 +9,6 @@
         "fabpot/goutte": "^4.0",
         "illuminate/redis": "^8.10",
         "laravel/lumen-framework": "^8.0",
-        "php-webdriver/webdriver": "^1.8",
         "predis/predis": "^1.1",
         "spatie/browsershot": "^3.40"
     },

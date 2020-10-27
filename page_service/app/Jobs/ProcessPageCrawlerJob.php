@@ -5,15 +5,23 @@ namespace App\Jobs;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\Page;
+use App\Models\Source;
 
 class ProcessPageCrawlerJob extends Job
 {
     /**
-    * The source 
+    * The url address 
     *
     * @var url;
     */
     protected $url;
+
+    /**
+    * The source 
+    *
+    * @var source;
+    */
+    protected $source;
 
     /**
      * The number of times the job may be attempted.
@@ -34,9 +42,10 @@ class ProcessPageCrawlerJob extends Job
      *
      * @return void
      */
-    public function __construct($url)
+    public function __construct($url, Source $source)
     {
-        $this->url = $url;;
+        $this->url = $url;
+        $this->source = $source;
     }
 
     /**
@@ -46,14 +55,12 @@ class ProcessPageCrawlerJob extends Job
      */
     public function handle()
     {
-        /**
-        * Analyze content
-        *
-        * @return array
-        */
-        $analyzed = AnalyzeContent($html);
+        //Generate source url get/post http request
+        $analyzer = new $this->source->analyze_content_class($this->url);
+        $analyzer->crawl();
+        $analyzer->analyze();
 
-        $validator = Validator::make($analyzed, [
+        $validator = Validator::make($analyzer->getAnalyzed(), [
             'title' => 'required|string',
         ]);
 

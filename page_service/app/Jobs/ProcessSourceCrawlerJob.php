@@ -45,13 +45,15 @@ class ProcessSourceCrawlerJob extends Job
      */
     public function handle()
     {
-        // Analyze content and fetch urls
-        $urls = new $this->source->analyze_links($this->source);
+        //Generate source url get/post http request
+        $generator = new $this->source->generate_url_request_class($this->source);
+        $generator->crawl();
+        $generator->analyze();
 
-        $urls->each($url){
+        $generator->getLinks()->each(function($url){
             // Dispatch process page url
-            ProcessPageCrawlerJob::dispatch($url);
-        }
+            ProcessPageCrawlerJob::dispatch($url, $this->source);
+        });
     }
 
     /**

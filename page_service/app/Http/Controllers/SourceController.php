@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use App\Jobs\ProcessCrawlerJob;
 
 use App\Models\Source;
@@ -42,10 +44,14 @@ class SourceController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge(['slug' => Str::slug($request->title)]);
+
         $validated = $this->validate($request, [
             'title' => 'required|string',
             'slug' => 'required|string',
-            'base_url' => 'required',
+            'base_url' => 'required|url',
+            'generate_url_request_class' => 'required|string',
+            'analyze_content_class' => 'required|string',
         ]);
 
         $source = new Source;
@@ -53,14 +59,16 @@ class SourceController extends Controller
         $source->title = $validated['title'];
         $source->slug = $validated['slug'];
         $source->base_url = $validated['base_url'];
+        $source->generate_url_request_class = $validated['generate_url_request_class'];
+        $source->analyze_content_class = $validated['analyze_content_class'];
 
         try {
             $source->save();
         } catch (\PDOException $e) {
-            return response('Duplicate entry.', 403);
+            return new Response('Duplicate entry.', 403);
         }
 
-        return response('Successfully created.', 201);
+        return new Response('Successfully created.', 201);
     }
 
     /**
@@ -105,7 +113,7 @@ class SourceController extends Controller
         if($source->isDirty())
             $source->save();
 
-        return response('Successfully updated.', 204);
+        return new Response('Successfully updated.', 204);
     }
 
     /**
@@ -118,7 +126,7 @@ class SourceController extends Controller
     {
         Source::destroy($id);
 
-        return response('Successfully deleted.', 204);
+        return new Response('Successfully deleted.', 204);
     }
 
 }

@@ -4,6 +4,10 @@ namespace App\GenerateUrlRequest;
 
 interface GenerateUrlRequest {
 
-	public function getHtml();
+	public function crawl();
+
+	public function analyze();
+
+	public function getLinks();
 
 }

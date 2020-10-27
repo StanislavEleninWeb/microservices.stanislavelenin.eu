@@ -18,6 +18,8 @@ class CreateSourcesTable extends Migration
             $table->string('title', 50);
             $table->string('slug', 50)->unique();
             $table->string('base_url');
+            $table->string('generate_url_request_class');
+            $table->string('analyze_content_class');
             $table->softDeletes();
             $table->timestamps();
         });
