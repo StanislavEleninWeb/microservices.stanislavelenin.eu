@@ -2,7 +2,6 @@
 
 namespace App\GenerateUrlRequest;
 
-use Spatie\Browsershot\Browsershot;
 use Goutte\Client;
 use App\Models\Source;
 use App\Traits\ValidateUrl;
@@ -11,10 +10,18 @@ class GenerateUrlRequestAloBg implements GenerateUrlRequest {
 
 	use ValidateUrl;
 
+	/**
+    * The source 
+    *
+    * @var source;
+    */
 	private $source;
 
-	private $html;
-
+	/**
+    * The links 
+    *
+    * @var links;
+    */
 	private $links;
 
 	public function __construct(Source $source){
@@ -22,15 +29,12 @@ class GenerateUrlRequestAloBg implements GenerateUrlRequest {
 		$this->links = collect([]);
 	}
 
-	public function crawl(){
-		return;
-        $html = Browsershot::url($this->source->base_url . '/obiavi/imoti-prodajbi/apartamenti-stai/?region_id=16')
-        ->device('iPhone X')
-        ->bodyHtml();
-
-		return $html;
-	}
-
+	/**
+    * Analyze html
+    * Use Goutte to fetch url and analyze
+    *
+    * @return void;
+    */
 	public function analyze(){
 
 		$client = new Client();
@@ -47,7 +51,12 @@ class GenerateUrlRequestAloBg implements GenerateUrlRequest {
 		})->unique();
 	}
 
-	public function getLinks(){
+	/**
+    * The url 
+    *
+    * @return Illuminate\Support\Collection;;
+    */
+	public function getResult(){
 		return $this->links;
 	}
 

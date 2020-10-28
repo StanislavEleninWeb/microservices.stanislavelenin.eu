@@ -17,7 +17,6 @@ class CreatePagesTable extends Migration
             $table->id();
             $table->foreignId('source_id');
             $table->string('url')->unique();
-            $table->string('full_url')->unique();
             $table->softDeletes();
             $table->timestamps();
 

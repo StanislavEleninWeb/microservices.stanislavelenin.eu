@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+class Page extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
 
@@ -23,11 +23,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     ];
 
     /**
+     * Page source
+     * 
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function source() {
+        return $this->belongsTo('App\Models\Source');
+    }
+
+    /**
      * Page info object
      * 
      * @return Illuminate\Database\Eloquent\Model
      */
-    public function objects() {
+    public function info() {
         return $this->hasOne('App\Models\PageInfo');
     }
 

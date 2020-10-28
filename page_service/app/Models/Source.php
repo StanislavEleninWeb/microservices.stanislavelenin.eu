@@ -22,4 +22,13 @@ class Source extends Model implements AuthenticatableContract, AuthorizableContr
         'title', 'slug', 'base_url'
     ];
 
+    /**
+     * Page
+     * 
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function pages() {
+        return $this->hasMany('App\Models\Page');
+    }
+
 }

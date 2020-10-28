@@ -18,7 +18,7 @@ trait ValidateUrl {
 			$parse_url['path'] = str_replace($parse_source_url['host'], '', $parse_url['path']);
 		}
 
-		$new_url = $parse_url['scheme'] . '://' . $parse_url['host'] . $parse_url['path'];
+		$new_url = $parse_url['scheme'] . '://' . $parse_url['host'] . '/' . trim($parse_url['path'], '/');
 
 
 		return $new_url;

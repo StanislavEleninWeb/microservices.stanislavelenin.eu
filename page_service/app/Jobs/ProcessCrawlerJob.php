@@ -28,9 +28,19 @@ class ProcessCrawlerJob extends Job
     	$sources = Cache::get('sources', Source::all());
 
     	// Iterate over sources
-    	foreach($sources as $source){
-    		// Dispatch Source jobs on queue 'crawler'
-    		ProcessSourceCrawlerJob::dispatch($source);
-    	}
+    	$sources->each(function($source){
+            dispatch(new ProcessSourceCrawlerJob($source));
+        });
+    }
+
+    /**
+     * Handle a job failure.
+     *
+     * @param  \Throwable  $exception
+     * @return void
+     */
+    public function failed(Throwable $exception)
+    {
+        dd($exception);
     }
 }

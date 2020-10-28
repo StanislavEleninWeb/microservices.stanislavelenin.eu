@@ -57,27 +57,35 @@ class ProcessPageCrawlerJob extends Job
     {
         //Generate source url get/post http request
         $analyzer = new $this->source->analyze_content_class($this->url);
-        $analyzer->crawl();
+
         $analyzer->analyze();
 
-        $validator = Validator::make($analyzer->getAnalyzed(), [
+        $results = $analyzer->getResult();
+
+        $page_validator = Validator::make($results, [
+            'url' => 'required|url',
+        ])->validate();
+
+        $page_info_validator = Validator::make($results, [
             'title' => 'required|string',
-        ]);
+            'price'
+        ])->validate();
 
-        if($validator->fails()){
-            return;
-        }
-
-        // Record info
+        // Page Model
         $page = new Page;
-
-        $page->title = $validator['title'];
-        $page->content = $validator['content'];
-
-
+        $page->url = $page_validator['url'];
+        $page->source_id = $this->source->id;
         $page->save();
 
-        // notify users
+        // Page Info Model
+        $page_info = new PageInfo;
+
+        $page_info->title = $page_info_validator['title'];
+        $page_info->price = $page_info_validator['price'];
+        $page_info->price_per_square = $page_info_validator['price_per_square'];
+        $page_info->content = $page_info_validator['content'];
+
+        // // notify users
 
     }
 

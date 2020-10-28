@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+
+	<div class="max_browser_size" >
+	<div class="bootstrap-iso">
+	<div id="topofthetop" class="container-fluid">
+		<!--START Header-->
+		<div class="row no-padding pb10">
+			<div class="col-sm-12 " style="padding-right: 0px; padding-left: 0px; padding-top:0px">
+				<nav  class="navbar navbar-default force-print-block" id="header_navbar" role="navigation">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button id="mobile_main_menu" type="button" class="btn btn-default navbar-toggle no-print" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+												<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						</button>
+						<button id="mobilesearchbtn" class="btn btn-default hidden-sm hidden-md hidden-lg no-print"
+							type="submit"
+							onclick="hideSearch(this)"
+							style="padding: 9px 10px; margin: 8px 5px 8px -3px; float: right;font-size: 14px;">
+						<i class="show-search-icon glyphicon glyphicon-search"></i>
+						</button>
+						<a class="logo" style="float:left;" title="Начална страница" href="/"><img  id="logo" src="template/images/alobg-logo.svg"></a>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse  no-print" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right no-print">
+							<li class="publish-btn"><a  href="choose_subcat.php"><i class="fa fa-plus" aria-hidden="true"></i> Публикувай обява</a></li>
+							<li class="mopen dropdown">
+								<a href="javascript:dn();" class="dropdown-toggle hide-mobile" data-toggle="dropdown" id="user_dropdown"><img width="20px" height="20px" border="0" src="template/images/icons/profile.svg"  align="baseline" alt="alobg" /> Моят профил <b class="caret"></b></a>
+								<ul class="dropdown-menu" aria-labelledby="user_dropdown" >
+									<li class="our-menu-separator"></li>
+<li><a href="login.php" ><img width="20px" height="20px" border="0" src="template/images/icons/profile.svg"  align="baseline" alt="alobg" style="margin-right:10px;" />Вход в alo.bg</a></li>
+<li><a href="register.php" ><img  width="20px" height="20px" border="0" align="baseline"   style="margin-right:10px;"  src="template/images/icons/profile-create.svg" alt="Google" />Нова регистрация</a></li>
+<li class="our-menu-separator"></li>
+<li><a title="Вход с Facebook акаунт"  href="/login.php?redirect=login_facebook"><img width="16px" height="20px" border="0" src="template/images/icons/login-icon-facebook.svg"  style="margin:0 10px 0 0"  align="baseline" alt="facebook" />Вход с Facebook</a></li>
+<li><a title="Вход с Google акаунт" class="mm" href="/login.php?redirect=login_google"><img  width="16px" height="16px" border="0" align="baseline"   style="margin:0 10px 0 0"  src="template/images/icons/login-icon-google.svg" alt="Google" />Вход с Google</a></li>
+<li class="our-menu-separator"></li>
+<li><a href="lastvisited.php" ><i class="fa fa-history fa_li_top" ></i> Последно разгледани</a></li>
+
+			<li>
+				<a onclick="$('#qr-code').css('display', 'block'); $('.qraddress').html(window.location.href);  $('#qr-code img').attr('src', 'https://chart.googleapis.com/chart?cht=qr&chl=' + encodeURIComponent(window.location.href) + '&chs=320x320&chld=L|0');" ><i id="qr-code-icon " class="fa fa-qrcode fa_li_top" aria-hidden="true"></i> QR код на страницата</a>
+			</li>								</ul>
+							</li>
+						</ul>
+
+<!--qr code display-->
+					<script>
+						$( document ).on( 'keydown', function ( e ) {
+								if ( e.keyCode === 27 && $("#qr-code").is(":visible") ) { // ESC
+										$("#qr-code").hide();
+								}
+						});
+					</script>
+					
+					<div id="qr-code" onclick="$('#qr-code').hide();">
+						<i class="fa fa-times qrclose" aria-hidden="true"></i>
+						<div id="qrtable-container">
+							<div id="qrtable-cell">
+								<div class="qrinfo">QR код с адреса на текущата страница</div>
+								<img src="/template/images/loading_rotate.gif">
+								<div class="qraddress"></div>
+							</div>
+						</div>
+					</div>
+						
+					</div>
+					<!-- /.navbar-collapse -->
+					<form onsubmit="return focusonempty()" id="searchform" class="navbar-form navbar-form-hide no-print" role="search" method="get" action="searchq/">
+						<div class="input-group">
+							<input onfocus="showSearch(this)" id="searchtext" type="text" class="form-control" name="q" value="" placeholder="ключова дума, номер на обява, телефонен номер, населено място" />
+							<div class="input-group-btn">
+								<button id="searchbtn" class="btn btn-primary" type="submit" style="padding: 9px 10px;"><i class="glyphicon glyphicon-search"></i></button>
+							</div>
+						</div>
+					</form>
+				</nav>
+				</div>
+				<ol class="nbc_ol" itemscope itemtype="http://schema.org/BreadcrumbList"><li class="nbc_right"><a class="hidden-xs" href="/agency/?region_id=16" target="_blank" title="Препоръчани агенции" >Препоръчани агенции <img border="0" src="/template/images/icons/star.svg" style="height:22px;border-radius:3px;margin-left:5px;" /></a>
+							<img id="realestates-icon" src="img/realestates-logo-1.svg" style="">
+							<a href="http://en.realestates.bg/6956103" target="_blank" title="English - www.realestates.bg" ><img border="0" src="/template/images/icons/flag_en.svg" style="height:22px;border-radius:3px;border:1px solid #dadada;margin-left:5px;box-shadow:0px 0px 5px #dadada;" /></a>
+							<a href="http://ru.realestates.bg/6956103" target="_blank" title="Руский - www.realestates.bg"  ><img border="0" src="/template/images/icons/flag_ru.svg" style="height:22px;border-radius:3px;border:1px solid #dadada;margin-left:2px;box-shadow:0px 0px 5px #dadada;" /></a></li><li><a href="/" title="Начална страница"><img class="nbc_icon" src="template/images/icons/home-icon.svg" alt="home" /></a></li><li class="nbc_separator"> » </li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" ><a title="Имоти - Продажби" class="nbc_a" href="/obiavi/imoti-prodajbi/" itemprop="item" ><span itemprop="name" ><img class="nbc_icon nbc_icon_in" src="/template/images/icons/caticons/34.svg" alt="bc" />Имоти - Продажби</span></a>
+							<meta itemprop="position" content="1" /></li><li class="nbc_separator"> » </li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" ><a title="Апартаменти" class="nbc_a" href="/obiavi/imoti-prodajbi/apartamenti-stai/" itemprop="item" ><span itemprop="name" >Апартаменти</span></a>
+							<meta itemprop="position" content="2" /></li><li class="nbc_separator"> » </li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" ><a title="обл. Пловдив" class="nbc_a" href="/obiavi/imoti-prodajbi/apartamenti-stai/?region_id=16" itemprop="item" ><span itemprop="name" >обл. Пловдив</span></a>
+							<meta itemprop="position" content="3" /></li><li class="nbc_separator"> » </li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" ><a title="гр. Пловдив" class="nbc_a" href="/obiavi/imoti-prodajbi/apartamenti-stai/?region_id=16&location_ids=3333" itemprop="item" ><span itemprop="name" >гр. Пловдив</span></a>
+							<meta itemprop="position" content="4" /></li><li class="nbc_separator"> » </li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" ><a title="Въстанически / Кючук Париж" class="nbc_a" href="/obiavi/imoti-prodajbi/apartamenti-stai/?region_id=16&location_ids=3333&section_ids=288" itemprop="item" ><span itemprop="name" >Въстанически / Кючук Париж</span></a>
+							<meta itemprop="position" content="5" /></li><li class="nbc_separator"> » </li><li><span title="Обява № 6956103" class="nbc_span" ><span itemprop="name" >Обява № 6956103</span></span></li></ol>			</div>
+		</div><!--END Header-->
+	</div><!--END Conatainer-->
+
+<div class="bootstrap-iso">
+	<div id="backToTop" >
+		<a onclick="scrolltoId( '#topofthetop' );"><img src="template/images/back-to-top.svg"></a>
+	</div>
+</div>
+
+
+
+<div id="main_wrapper" >
+<div id="head_wrapper">
+</div>
+<div id="main_content">
+
+<div style="display:none;margin:20px 10px 10px 10px;" id="ad_abuse"></div><div style="display:none;" id="ad_promote"></div><div style="clear:both;">
+
+<!-- v2 start -->
+		<div class="bootstrap-iso">
+		<div class="container" >
+		<div class="row no-padding">
+
+<!--START title-->
+		<div style="float: right; padding-right: 0; margin-bottom:3px;" class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+			<div class="big-info theme-color1" >
+								<div class="social-icons no-print" >
+					<table><tr>
+						<td style="padding:0px;" onclick="var $el = $('.social-icons table td>div.icon-circle-clone'); $el.removeClass('social-animation'); $el.show(); $el.addClass('social-animation')">
+							<div class="text-center icon-circle">
+								<span class="ishare" ><i class="fa-share-alt">&nbsp;</i></span>&nbsp;
+							</div>
+						</td>
+						<td>
+							<div class="text-center icon-circle icon-circle-clone" style>
+								<a target="_blank" rel="nofollow" href="/sharer.php?provider=facebook&&url=https%3A%2F%2Fwww.alo.bg%2F6956103" class="ifacebook" title="Сподели обявата в твоя Facebook"><i class="fa fa-facebook"></i></a>							</div>
+						</td>
+						<td>
+							<div class="text-center icon-circle icon-circle-clone">
+								<a target="_blank" rel="nofollow" href="/sharer.php?provider=tweeter&&url=https%3A%2F%2Fwww.alo.bg%2F6956103" class="itwittter" title="Сподели обявата в твоя Twitter"><i class="fa fa-twitter"></i></a>
+							</div>
+						</td>
+											</tr></table>
+				</div>
+				<h1 class="large-headline highlightable">
+					Апартамент от собственик 74 кв.м. Кючук Париж 
+				</h1>
+				<div style="clear:both"></div>
+			</div>
+		</div>
+<!--END Title-->		
+<!--BEGIN ad images-->
+			<div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 big-img" style="padding: 6px 0; padding-top: 0;" >
+			<div><a title="Наблюдавай тази обява" class="watchlist_in_image" href="javascript:watchlist('add','');" ></a><a  id="main_image_a" style="position:relative;max-height: 500px"  class="fancyimages" href="user_files/p/programa.alo.bg/6956103_112274733_big.jpg" data-fancybox="group" data-type="image" title="Апартамент от собственик 74 кв.м. Кючук Париж Двустаен апартамент 74 кв.м Тухла 2010 г. 2 етаж Непоследен | Апартаменти | Въстанически / Кючук Париж гр. Пловдив">
+						<img id="main_image_img" style=";" src="user_files/p/programa.alo.bg/6956103_112274733_big.jpg" />
+						</a></div><div class="images" ><div id="thumbscroll"><a class="fancyimages" href="user_files/p/programa.alo.bg/6956103_112274728_big.jpg" data-fancybox="group" data-type="image" title="Апартамент от собственик 74 кв.м. Кючук Париж Двустаен апартамент 74 кв.м Тухла 2010 г. 2 етаж Непоследен | Апартаменти | Въстанически / Кючук Париж гр. Пловдив" ><div class="image"><img src="user_files/p/programa.alo.bg/6956103_112274728_medium.jpg" /></div></a><a class="fancyimages" href="user_files/p/programa.alo.bg/6956103_112274730_big.jpg" data-fancybox="group" data-type="image" title="Апартамент от собственик 74 кв.м. Кючук Париж Двустаен апартамент 74 кв.м Тухла 2010 г. 2 етаж Непоследен | Апартаменти | Въстанически / Кючук Париж гр. Пловдив" ><div class="image"><img src="user_files/p/programa.alo.bg/6956103_112274730_medium.jpg" /></div></a><a class="fancyimages" href="user_files/p/programa.alo.bg/6956103_112274732_big.jpg" data-fancybox="group" data-type="image" title="Апартамент от собственик 74 кв.м. Кючук Париж Двустаен апартамент 74 кв.м Тухла 2010 г. 2 етаж Непоследен | Апартаменти | Въстанически / Кючук Париж гр. Пловдив" ><div class="image"><img src="user_files/p/programa.alo.bg/6956103_112274732_medium.jpg" /></div></a><a class="fancyimages" href="user_files/p/programa.alo.bg/6956103_112274734_big.jpg" data-fancybox="group" data-type="image" title="Апартамент от собственик 74 кв.м. Кючук Париж Двустаен апартамент 74 кв.м Тухла 2010 г. 2 етаж Непоследен | Апартаменти | Въстанически / Кючук Париж гр. Пловдив" ><div class="image"><img src="user_files/p/programa.alo.bg/6956103_112274734_medium.jpg" /></div></a><a class="fancyimages" href="user_files/p/programa.alo.bg/6956103_112274736_big.jpg" data-fancybox="group" data-type="image" title="Апартамент от собственик 74 кв.м. Кючук Париж Двустаен апартамент 74 кв.м Тухла 2010 г. 2 етаж Непоследен | Апартаменти | Въстанически / Кючук Париж гр. Пловдив" ><div class="image"><img src="user_files/p/programa.alo.bg/6956103_112274736_medium.jpg" /></div></a><a class="fancyimages" href="user_files/p/programa.alo.bg/6956103_112274737_big.jpg" data-fancybox="group" data-type="image" title="Апартамент от собственик 74 кв.м. Кючук Париж Двустаен апартамент 74 кв.м Тухла 2010 г. 2 етаж Непоследен | Апартаменти | Въстанически / Кючук Париж гр. Пловдив" ><div class="image"><img src="user_files/p/programa.alo.bg/6956103_112274737_medium.jpg" /></div></a><a class="fancyimages" href="user_files/p/programa.alo.bg/6956103_112274735_big.jpg" data-fancybox="group" data-type="image" title="Апартамент от собственик 74 кв.м. Кючук Париж Двустаен апартамент 74 кв.м Тухла 2010 г. 2 етаж Непоследен | Апартаменти | Въстанически / Кючук Париж гр. Пловдив" ><div class="image"><img src="user_files/p/programa.alo.bg/6956103_112274735_medium.jpg" /></div></a><a class="fancyimages" href="user_files/p/programa.alo.bg/6956103_112274729_big.jpg" data-fancybox="group" data-type="image" title="Апартамент от собственик 74 кв.м. Кючук Париж Двустаен апартамент 74 кв.м Тухла 2010 г. 2 етаж Непоследен | Апартаменти | Въстанически / Кючук Париж гр. Пловдив" ><div class="image"><img src="user_files/p/programa.alo.bg/6956103_112274729_medium.jpg" /></div></a><a class="fancyimages" href="user_files/p/programa.alo.bg/6956103_112274727_big.jpg" data-fancybox="group" data-type="image" title="Апартамент от собственик 74 кв.м. Кючук Париж Двустаен апартамент 74 кв.м Тухла 2010 г. 2 етаж Непоследен | Апартаменти | Въстанически / Кючук Париж гр. Пловдив" ><div class="image"><img src="user_files/p/programa.alo.bg/6956103_112274727_medium.jpg" /></div></a><a class="fancyimages" href="user_files/p/programa.alo.bg/6956103_112274726_big.jpg" data-fancybox="group" data-type="image" title="Апартамент от собственик 74 кв.м. Кючук Париж Двустаен апартамент 74 кв.м Тухла 2010 г. 2 етаж Непоследен | Апартаменти | Въстанически / Кючук Париж гр. Пловдив" ><div class="image"><img src="user_files/p/programa.alo.bg/6956103_112274726_medium.jpg" /></div></a><a id="gallerygoogle" style="dislay:none" class="fancyimages" data-fancybox="group" data-type="ajax" data-src="/?ajax=gallerygoogle" href="javascript:;" ></a><div class="clear-fix"></div>
+						</div>
+						</div>
+									
+				<div class="wrap300 pt10 pb10 no-print lo-min-hide-mobile" style="text-align: center; overflow: hidden; ">
+				<div
+	style="
+		position: relative;
+		max-height: 350px;
+		max-width: 600px;
+		width: 100%;
+		padding:0;
+		box-sizing: border-box;
+		overflow: hidden;
+		margin:0 0 10px 0;
+		text-align: center;"
+	class="loadable_div_ajax"
+	id="adv_zone_pod_snimka"
+	data-src="https://b1.alo.bg/www/delivery/afr.php?refresh=0&amp;zoneid=27&amp;target=_blank&amp;cb=5415&amp;cat_id=34&amp;subcat_id=456&amp;region_id=16&amp;in_cat_id=34&amp;in_subcat_id=456&amp;in_region_id=16"></div>
+				</div>
+							</div>
+<!--END ad images-->
+			<div class="col-xs-12 col-sm-6 col-md-7 col-lg-8 mb10">
+				<div class="ads-params ads-params-table highlightable" >
+				
+
+				
+					<div class='ads-params-row' >
+						<div class='ads-param-title ads-params-cell theme-color1'>Обява №:</div>
+						<div class='ads-params-cell ads-params-single  animation-element bounce-up' >
+							6956103<img title="Обявата ще е ТОП оферта до  22.11.2020 23:59" style="height: 22px; padding-bottom: 3px; margin-left:10px;" src="template/images/icons/top.svg"><img title="Обявата ще е VIP обява до  22.11.2020 23:59" style="height: 22px; padding-bottom: 3px; margin-left:10px;" src="template/images/icons/vip.svg">						</div>
+					</div>
+					
+<div class="ads-params-row" ><div id="price_name" class="ads-param-title ads-params-cell theme-color1" style="white-space:normal">Цена:</div><div class="ads-params-cell ads-params-price  animation-element bounce-up">66 000 EUR<span class="ads-params-price-sub pl15  animation-element bounce-up">891.89 EUR/кв.м</span></div></div><div class="ads-params-row" >
+			<div class="ads-param-title ads-params-cell theme-color1">Местоположение:</div>
+			<div class="ads-params-cell ads-params-price animation-element bounce-up" style="font-size:16px;" ><br class="visible-xs" /><a style="text-decoration-line: underline;" href="/obiavi/imoti-prodajbi/apartamenti-stai/?region_id=16&location_ids=3333&section_ids=288" title="Квартал/Район">Въстанически / Кючук Париж</a>, <a style="text-decoration-line: underline;" href="/obiavi/imoti-prodajbi/apartamenti-stai/?region_id=16&location_ids=3333" title="Населено място">гр. Пловдив</a>, <a style="text-decoration-line: underline;" href="/obiavi/imoti-prodajbi/apartamenti-stai/?region_id=16" title="Област">обл. Пловдив</a>, <span style="font-size:13px;font-weight:normal;" >(<a style="text-decoration:underline;color:blue" target="_blank" href="https://maps.google.com/?q=42.1267957,24.7422393&ll=42.1267957,24.7422393&z=15">Виж Въстанически / Кючук Париж на картата</a>)</span>
+			</div>
+		</div><div class="ads-params-row">
+					<div class="ads-param-title ads-params-cell theme-color1" >Вид на имота:</div>
+					<div  class="ads-params-cell animation-element bounce-up"><span class="ads-params-single" style="font-size:larger;">Двустаен апартамент</span>	</div>
+				</div><div class="ads-params-row">
+					<div class="ads-param-title ads-params-cell theme-color1" >Квадратура:</div>
+					<div  class="ads-params-cell animation-element bounce-up"><span class="ads-params-single" >74&nbsp;кв.м</span>	</div>
+				</div><div class="ads-params-row">
+					<div class="ads-param-title ads-params-cell theme-color1" >Вид строителство:</div>
+					<div  class="ads-params-cell animation-element bounce-up"><span class="ads-params-single" >Тухла</span>	</div>
+				</div><div class="ads-params-row">
+					<div class="ads-param-title ads-params-cell theme-color1" >Година на строителство:</div>
+					<div  class="ads-params-cell animation-element bounce-up"><span class="ads-params-single" >2010&nbsp;г.<span style="font-size: smaller;font-weight: normal;"> (годината може да е ориентировъчна)</span></span>	</div>
+				</div><div class="ads-params-row">
+					<div class="ads-param-title ads-params-cell theme-color1" >Степен на завършеност:</div>
+					<div  class="ads-params-cell animation-element bounce-up"><span class="ads-params-single" >Готов (завършен)</span>	</div>
+				</div><div class="ads-params-row">
+					<div class="ads-param-title ads-params-cell theme-color1" >Номер на етажа:</div>
+					<div  class="ads-params-cell animation-element bounce-up"><span class="ads-params-single" >2&nbsp;етаж</span>	</div>
+				</div><div class="ads-params-row">
+					<div class="ads-param-title ads-params-cell theme-color1" >Етаж:</div>
+					<div  class="ads-params-cell animation-element bounce-up"><span class="ads-params-single" >Непоследен</span>	</div>
+				</div><div class="ads-params-row multi-value-row">
+					<div class="ads-param-title ads-params-cell theme-color1" >Особености:</div>
+					<div  class="ads-params-cell animation-element bounce-up multi-value-row"><span class="ads-params-multi" >Асансьор</span> <span class="ads-params-multi" >Гараж/Паркомясто</span> <span class="ads-params-multi" >Обзаведен</span> <span class="ads-params-multi" >Саниран</span> <span class="ads-params-multi" >След ремонт</span> 	</div>
+				</div>				</div>
+
+				<div class="col-xs-12 pt10 pb10" style="background-color: white;">
+				<span style="white-space: nowrap;" >Актуализирана днес</span>. <span style="white-space: nowrap;"  style="color:#aaaaaa"  title="22.11.2020 23:59">Валидна още 25 дни</span>.				
+				</div>
+				
+			<!--START icons-->
+			<!--<div>&nbsp;</div>-->
+			<div class="no-print" id="ad_actions_wrapper">
+				
+				<div id="actions_row" class="ubuntu coment-header p10 mb10 ads-icons" style="clear: both;" onclick="open_mainicons()">
+					<span class="pr10"><i id="ad_actions_carret" style="font-size:20px;" class="fa fa-caret-up" aria-hidden="true"></i> Действия </span>
+					<span style="float: right; margin-top: -4px;">
+						<img class="icon-action-small" src="template/images/icons/eye-icon-star-gold.svg">
+						<img class="icon-action-small" src="template/images/icons/promote-icon.svg">
+						<img class="icon-action-small" src="template/images/icons/statistic-icon.svg">
+						<img class="icon-action-small" src="template/images/icons/info1-icon.svg">
+						<img class="icon-action-small" src="template/images/icons/email-icon.svg">
+						<img class="icon-action-small" src="template/images/icons/comments-icon.svg">
+					</span>
+				</div> 
+
+				<div id="mainicons" class="pb5 pt10 collapse" style="clear: both;">
+				<div class="icon-ph"><a title="Добавете обявата в наблюдавани и получавайте уведомления при извършени промени" href="javascript:watchlist('add','')" ><table><tr class="action-buttons">
+						<td><img class="icon-action" src="template/images/icons/eye-icon-star-gold.svg" /></td>
+						<td>Добави в наблюдавани</td>
+					</tr></table></a>
+				</div><div class="icon-ph">
+					<a href="javascript:show_vip_top();" >
+					<table><tr class="action-buttons">
+						<td><img class="icon-action" src="template/images/icons/promote-icon.svg"></td>
+						<td>Промотирай с VIP, ТОП</td>
+					</tr></table></a>
+				</div><div class="icon-ph">
+					<a href="javascript:show_stat();" >
+					<table><tr class="action-buttons">
+						<td><img class="icon-action" src="template/images/icons/statistic-icon.svg"></td>
+						<td>Преглеждания днес (51)</td>
+					</tr></table>
+					</a>
+				</div><div class="icon-ph">
+					<a href="javascript:show_abuse();"><table><tr class="action-buttons">
+						<td><img class="icon-action" src="template/images/icons/info1-icon.svg"></td>
+						<td>
+							Съобщи за нередност
+						</td>
+					</tr></table></a>
+				</div><div class="icon-ph">
+					<a onclick="scrolltoId('#contact_anchor');" ><table><tr class="action-buttons">
+						<td><img class="icon-action" src="template/images/icons/email-icon2.svg"></td>
+						<td>
+							Контакт с подателя
+						</td>
+					</tr></table></a>
+				</div><div class="icon-ph" style="opacity:.4">
+						<a style="cursor:not-allowed">
+						<table><tr class="action-buttons">
+							<td><img class="icon-action" src="template/images/icons/comments-icon.svg"></td>
+							<td>
+								Не поддържа коментари
+							</td>
+						</tr></table>
+						</a>
+						</div></div>			</div>
+			
+			
+			<!--END icons -->
+			</div>
+
+       
+	    <!-- START Information display table remove over 4000 chars-->	   
+            <div class="more-info">
+				<div style="width: 100%; display: table-cell;">
+				<div class="ubuntu pt10 pb5">Допълнителна информация</div>
+				
+				<p class="word-break-all highlightable">
+				ОТ СОБСТВЕНИК имам удоволствието да Ви предложа двустаен апартамент 74 кв.м (61кв.м чиста площ) в НОВА КООПЕРАЦИЯ със западно изложение в Kючук Париж близо до магазин Слънчеви Лъчи. <br />
+Жилището се състои от ПРОСТОРЕН и СВЕТЪЛ хол с кухненски бокс и трапезария, уютна спалня 19 кв.м, баня с WC, коридор, тераса и избено помещение от 4 кв.м. <br />
+Продава се НАПЪЛНО обзаведен с цялото налично обзавеждане, което Ви позволява да се нанесете веднага или да го отдадете под наем.<br />
+Локацията предлага всичко необходимо в близост!!! <br />
+Без проблемно паркиране около сградата!!!<br />
+<br />
+МОЛЯ АГЕНЦИИ ДА НЕ МИ ЗВЪНЯТ!!! АПАРТАМЕНТА НЯМА ТЕЖЕСТИ!!!				</p>
+								</div>
+				<div style="display: table-cell; width: 1%;font-size: 1px;min-height: 1px;padding:1px;">&nbsp;</div>
+			<!--end comments-->
+
+            </div>			
+				
+			<!-- END Information-->	
+            <div id="contact_anchor" class="contacts-all theme-color2 mt30 pl0 pr0 pb10">
+				<div style="width: 100%; display: table-cell;">
+				<div style="height:10px">&nbsp;</div>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 personal-message bootstrap-iso skip-position" id="send_message_wrapper" style=""  >
+				<div>
+								</div>
+				<div class="no-print">
+				<div id="message_error" ></div>
+						<div><textarea disabled id="textareapersonalmsg" style="resize: none;" class="form-control" rows="3" placeholder="Потребителят е деактивирал лични съобщения към обявата, моля използвайте посочените контакти." required></textarea></div>	
+				</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mt15 contacts">
+					<div class="" style="font-size: 16px; font-weight: bold;"><div style="" class="ubuntu pb10">Контакт с подателя</div><span style="font-size:13px;color:gray">Обявата е подадена през вестник АЛО</span><div style="font-size:12px;color:gray;"></div></div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mt5 contacts">
+					<div class="contacts_wrapper">
+						<div class="contact_row">
+						  <a href="tel:0876838303">
+							<div style="display: table-cell;"><img src="template/images/icons/phone-black-icon.svg" class="icon-contacts"></div>
+							<div style="display: table-cell;">087 683 8303</div>
+						  </a>
+						</div>					</div>
+										
+				</div>
+<!--BEGIN more user ads-->
+				<!--END more user ads-->	
+				</div>
+				<div style="display: table-cell; width: 1%;font-size: 1px;min-height: 1px;padding:1px;">&nbsp;</div>
+            </div>
+			<div class="no-print" style="text-align:center;margin:10px 0px 10px 0px;padding:10px;font-size:13px;word-break: break-word;">Тази обява е намирана по: <a class="ad_searches_link" href="https://www.alo.bg/searchq/?q=%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%B8+%D0%BE%D0%B1%D0%B7%D0%B0%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8+%D0%B0%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82%D0%B8+%D0%BF%D0%BB%D0%BE%D0%B2%D0%B4%D0%B8%D0%B2" target="_blank" >готови обзаведени апартаменти пловдив</a> <a class="ad_searches_link" href="https://www.alo.bg/searchq/?q=%D0%B4%D0%B2%D1%83%D1%81%D1%82%D0%B0%D0%B5%D0%BD+%D0%B0%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82+%D0%BF%D0%BB%D0%BE%D0%B2%D0%B4%D0%B8%D0%B2+%D0%BA%D1%8E%D1%87%D1%83%D0%BA+%D0%BF%D0%B0%D1%80%D0%B8%D0%B6" target="_blank" >двустаен апартамент пловдив кючук париж</a> <a class="ad_searches_link" href="https://www.alo.bg/searchq/?q=%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B6%D0%B1%D0%B8+%D0%B0%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82%D0%B8+%D0%BF%D0%BB%D0%BE%D0%B2%D0%B4%D0%B8%D0%B2+%D1%81%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%B8%D0%BA" target="_blank" >продажби апартаменти пловдив собственик</a> <a class="ad_searches_link" href="https://www.alo.bg/searchq/?q=%D0%B4%D0%B2%D1%83%D1%81%D1%82%D0%B0%D0%B5%D0%BD+%D0%B0%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82+%D0%BF%D0%BB%D0%BE%D0%B2%D0%B4%D0%B8%D0%B2+%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B6%D0%B1%D0%B8" target="_blank" >двустаен апартамент пловдив продажби</a> <a class="ad_searches_link" href="https://www.alo.bg/searchq/?q=%D0%B8%D0%BC%D0%BE%D1%82%D0%B8+%D0%BE%D1%82+%D1%81%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%B8%D0%BA" target="_blank" >имоти от собственик</a></div>			<div class="banner-bottom no-print"  >
+				<div id="adv_zone_bottom_dynamic" style="position:relative;margin: 0 auto 0 auto; max-width: 728px;height: 90px;" class="adv_zoomable_div">		
+		</div>
+				</div>
+        </div>
+		</div>		
+	</div>
+	
+
+<!-- v2 stop -->
+<div style="display:none" id="parent_marent"><div id="fancybox-thumbs-banner-div"><div></div>
+</div></div><div  id="message" title="Съобщение" style="display:none;"></div></div></div>
+
+<!--START footer-->
+<div class="container-fluid no-print">
+	<div class="row">
+		<div  class="col-sm-12 p10 newfooter" style="position: relative;">
+			<div class="footer_boxes">
+				<h4><b>Сайт за обяви alo.bg</b></h4>
+				<div><a href="/user_mainpage_info.php">Моят "Сайт в alo.bg"</a></div>
+				<div><a href="/cenizareklama.php">Цени за банери</a></div>
+<!--				<div><a target="_blank" href="/downloads/izbori.pdf">Местни избори 2019</a></div>
+				<div><a target="_blank" href="https://drive.google.com/file/d/1alD-hXirhzND01PBflTFiNdWsmL2_dgu/view?usp=sharing">Договори местни избори 2019</a></div> -->
+				<div><a href="/price_calc/">Цени за обяви</a></div>
+				<div><a href="/info_promote.php">Видове промотиране</a></div>
+				<div><a href="/news.php">Новини за alo.bg</a></div>
+				<div><a href="agreement.html">Условия за ползване</a></div>
+				<div><a href="agreement.html#gdrp">Лични данни</a></div>
+				<div><a href="contact/">Контакти</a></div>
+			</div>	
+			<div class="footer_boxes">
+				<h4><b>Вестници за обяви АЛО</b></h4>
+				<div><a href="/vestnik_alo.php#АЛО - София">АЛО - София</a></div><div><a href="/vestnik_alo.php#АЛО - Пловдив">АЛО - Пловдив</a></div><div><a href="/vestnik_alo.php#АЛО - Бургас">АЛО - Бургас</a></div><div><a href="/vestnik_alo.php#АЛО - Стара Загора">АЛО - Стара Загора</a></div><div><a href="/vestnik_alo.php#АЛО - Сливен">АЛО - Сливен</a></div><div><a href="/vestnik_alo.php#АЛО - Ямбол">АЛО - Ямбол</a></div>			</div>
+			<div class="footer_boxes footer_facebook" style="">
+				<a class="nohover" target="_blank" href="https://www.facebook.com/www.alo.bg" title="Facebook страница на www.alo.bg"><img style="width: 160px;margin-top: 1.33em;" src="template/images/facebook-likeus-white.svg"></a>
+			</div>
+			<div style="clear:both"></div>
+	
+		<!--<hr>-->
+		<div class="col-sm-12 form-horizontal mt10">
+			© 1998 - 2020 Alo.bg
+		</div>
+	</div>
+</div>
+<!--END footer-->
+</div>
+</body>
+</html>
