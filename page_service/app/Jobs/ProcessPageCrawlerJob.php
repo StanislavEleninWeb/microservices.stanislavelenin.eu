@@ -67,11 +67,6 @@ class ProcessPageCrawlerJob extends Job
         $analyzer->analyze();
 
         $results = $analyzer->getResult();
-        dd($results['images']);
-        $page_images_validator = Validator::make($results, [
-            'images.*' => 'nullable|url',
-        ])->validate();
-        dd($page_images_validator);
 
         $page_validator = Validator::make($results, [
             'url' => 'required|url',
@@ -122,11 +117,7 @@ class ProcessPageCrawlerJob extends Job
 
         $contact_name = '';
 
-        $page_images_validator = Validator::make($results, [
-            'images.*' => 'nullable|url',
-        ])->validate();
-
-        $images = '';
+        
     }
 
     /**
