@@ -15,7 +15,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             SourceSeeder::class,
+            CitiesSeeder::class,
         	CurrencySeeder::class,
+            BuildTypeSeeder::class,
             BuildingTypeSeeder::class,
     	]);
     }

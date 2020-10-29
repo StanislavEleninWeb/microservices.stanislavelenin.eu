@@ -80,7 +80,7 @@ class AnalyzeContentAloBg extends AnalyzeContent {
         $this->setContactPhone($this->xpath->query('//div[@class="contacts_wrapper"]//div[@class="contact_row"]//a//@href'));
 
         //----------------------------------------------------------------
-        // Contacts
+        // Images
         //----------------------------------------------------------------
         $this->setImages($this->xpath->query('//div[@id="thumbscroll"]//a//@href'));
 

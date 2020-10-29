@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class PageInfo extends Model implements AuthenticatableContract, AuthorizableContract
+class BuildType extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
 
@@ -19,16 +19,7 @@ class PageInfo extends Model implements AuthenticatableContract, AuthorizableCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'title', 'keywords'
     ];
-
-
-    /**
-     * Get the user that owns the phone.
-     */
-    public function page()
-    {
-        return $this->belongsTo('App\Models\Page');
-    }
 
 }
