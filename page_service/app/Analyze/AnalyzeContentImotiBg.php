@@ -4,7 +4,7 @@ namespace App\Analyze;
 
 use Goutte\Client;
 
-class AnalyzeContentAloBg implements AnalyzeContent {
+class AnalyzeContentImotiBg extends AnalyzeContent {
 
     /**
     * The url 
@@ -47,12 +47,13 @@ class AnalyzeContentAloBg implements AnalyzeContent {
      */
     public function crawl(){
 
-        if(filter_var($this->url, FILTER_VALIDATE_URL))
+        if(filter_var($this->url, FILTER_VALIDATE_URL)){
             $this->html = Browsershot::url($this->url)
             ->device('iPhone X')
             ->bodyHtml();
-        else
-            throw new \Exception('Url not valid : ' $this->url);
+        } else {
+            throw new \Exception('Url not valid : ' . $this->url);
+        }
     }
 	
     /**
