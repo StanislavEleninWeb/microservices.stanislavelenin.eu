@@ -16,3 +16,8 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('/page/{id}/images', 'ImageController@index');
+$router->post('/images', 'ImageController@store');
+$router->get('/image/{id}', 'ImageController@show');
+$router->delete('/image/{id}', 'ImageController@destroy');

@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 use App\Models\Source;
 use App\Models\Page;
@@ -117,6 +118,10 @@ class ProcessPageCrawlerJob extends Job
 
         $contact_name = '';
 
+        Http::post(env('IMAGE_SERVICE_URL') . 'images', [
+            'page' => $page->id,
+            'images' => $results['images'],
+        ]);
         
     }
 
