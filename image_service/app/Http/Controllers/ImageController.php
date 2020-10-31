@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
-class ExampleController extends Controller
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+use App\Jobs\ProcessImageFileJob;
+
+class ImageController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -19,13 +24,12 @@ class ExampleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $sources = Cache::remember('sources', 120, function(){
-            return Source::all();
-        });
+        $images = app('db')
+        ->select('SELECT * FROM images WHERE page_id = :page_id', ['page_id' => $id]);
 
-        return $sources;
+        return $images;
     }
 
     /**
@@ -36,14 +40,9 @@ class ExampleController extends Controller
      */
     public function show($id)
     {
-        $sources = Cache::get('sources');
+        
 
-        if($sources)
-            $source = $sources->filter(function($item){return $item->id == 1;})->first();
-        else
-            $source = Source::findOrFail($id);
-
-        return $source;
+        return new Response('Show', 200);
     }
 
 
@@ -55,15 +54,11 @@ class ExampleController extends Controller
      */
     public function store(Request $request)
     {
+    	foreach($request->input('images') as $image){
+    			dispatch(new ProcessImageFileJob($request->input('page'), $image));
+    	}
 
-
-        try {
-            $source->save();
-        } catch (\PDOException $e) {
-            return new Response('Duplicate entry.', 403);
-        }
-
-        return new Response('Successfully created.', 201);
+        return new Response('Successfully queued for upload.', 200);
     }
 
 }

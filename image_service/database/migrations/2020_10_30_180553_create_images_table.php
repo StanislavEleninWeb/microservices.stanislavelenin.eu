@@ -17,7 +17,7 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->foreignId('page_id');
             $table->string('filename');
-            $table->enum(['jpeg', 'png']);
+            $table->enum('ext', ['jpeg', 'png']);
             $table->timestamps();
         });
     }
