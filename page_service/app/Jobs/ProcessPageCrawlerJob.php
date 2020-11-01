@@ -62,16 +62,17 @@ class ProcessPageCrawlerJob extends Job
      */
     public function handle()
     {
+        // Validate url and check if unique
+        $page_validator = Validator::make(get_object_vars($this), [
+            'url' => 'required|url|unique:pages',
+        ])->validate();
+
         //Generate source url get/post http request
         $analyzer = new $this->source->analyze_content_class($this->url);
 
         $analyzer->analyze();
 
         $results = $analyzer->getResult();
-
-        $page_validator = Validator::make($results, [
-            'url' => 'required|url',
-        ])->validate();
 
         $page_info_validator = Validator::make($results, [
             'title' => 'required|string',
@@ -88,7 +89,7 @@ class ProcessPageCrawlerJob extends Job
             'content' => 'required|string',
         ])->validate();
 
-        DB::transaction(function() use ($page_validator, $page_info_validator){
+        $page_id = DB::transaction(function() use ($page_validator, $page_info_validator){
             // Page Model
             $page = new Page;
             $page->url = $page_validator['url'];
@@ -110,16 +111,13 @@ class ProcessPageCrawlerJob extends Job
             $page_info->keywords = implode(', ', $page_info_validator['keywords']);
             $page_info->content = $page_info_validator['content'];
             $page_info->save();
+
+            return $page->id;
         });
 
-        $contact_phone = '';
-
-        $contact_email = '';
-
-        $contact_name = '';
-
-        Http::post(env('IMAGE_SERVICE_URL') . 'images', [
-            'page' => $page->id,
+        // Send post http request and process image urls
+        Http::post(env('IMAGE_SERVICE_URL') . '/images', [
+            'page' => $page_id,
             'images' => $results['images'],
         ]);
         

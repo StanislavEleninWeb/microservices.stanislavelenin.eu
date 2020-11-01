@@ -32,7 +32,6 @@ class TestController extends Controller
     	try {
             $page = new ProcessPageCrawlerJob('http://127.0.1.2/test.html', Source::find(1));
             $page->handle();
-
     	} catch(\Exception $e) {
             dd($e);
     		return new Response( $e->getMessage(), 403);
