@@ -50,7 +50,6 @@ class LoginController extends Controller
         return [
             'email' => $request->{$this->username()},
             'password' => $request->password,
-            'active' => '1',
             'deleted_at' => null,
         ];
     }
