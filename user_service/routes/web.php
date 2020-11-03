@@ -13,9 +13,10 @@
 |
 */
 
-$router->group(['namespace' => 'Admin'], function() use ($router) {
+$router->group(['namespace' => 'Auth'], function() use ($router) {
 
 	$router->post('/login', 'LoginController@login');
+	$router->post('/logout', 'LoginController@logout');
 	$router->post('/register', 'RegisterController@register');
 
 	$router->post('/email/resend', [
@@ -28,9 +29,19 @@ $router->group(['namespace' => 'Admin'], function() use ($router) {
 		'uses' => 'VerificationController@verify'
 	]);
 
-	$router->get('/email/verify', [
-		'as' => 'verification.notice',
-		'uses' => 'VerificationController@show'
+	$router->post('/password/confirm', [
+		'as' => 'password.confirm',
+		'uses' => 'ConfirmPasswordController@confirm'
+	]);
+
+	$router->post('/password/email', [
+		'as' => 'password.email',
+		'uses' => 'ForgotPasswordController@ressendResetLinkEmailet'
+	]);
+
+	$router->post('/password/reset', [
+		'as' => 'password.update',
+		'uses' => 'ResetPasswordController@reset'
 	]);
 });
 
