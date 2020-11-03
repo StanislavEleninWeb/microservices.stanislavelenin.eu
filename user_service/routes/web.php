@@ -13,6 +13,27 @@
 |
 */
 
+$router->group(['namespace' => 'Admin'], function() use ($router) {
+
+	$router->post('/login', 'LoginController@login');
+	$router->post('/register', 'RegisterController@register');
+
+	$router->post('/email/resend', [
+		'as' => 'verification.resend',
+		'uses' => 'VerificationController@resend'
+	]);
+
+	$router->get('/email/verify/{id}/{hash}', [
+		'as' => 'verification.verify',
+		'uses' => 'VerificationController@verify'
+	]);
+
+	$router->get('/email/verify', [
+		'as' => 'verification.notice',
+		'uses' => 'VerificationController@show'
+	]);
+});
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
