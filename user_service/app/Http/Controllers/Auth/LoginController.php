@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -25,7 +30,9 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('guest')->except('logout');
+        $this->middleware('guest', [
+            'except' => 'logout'
+        ]);
     }
 
     /**
@@ -36,8 +43,16 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = $this->credentials($request);
-        dd($credentials);
+        $validated = $this->validator($request)->validate();
+
+        $user = User::withTrashed()->where('email', $validated['email'])->firstOrFail();
+        
+        if(!Hash::check($validated['password'], $user->password))
+            return new Response('User credentials doesn`t match!', 401);
+
+        $user->api_token = Hash::make(microtime());
+
+        return $user;
     }
 
     /**
@@ -46,12 +61,22 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    protected function credentials(Request $request)
+    public function logout(Request $request)
     {
-        return [
-            'email' => $request->{$this->username()},
-            'password' => $request->password,
-            'deleted_at' => null,
-        ];
+        $credentials = $this->credentials($request);
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function validator(Request $request)
+    {
+        return Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
     }
 }
