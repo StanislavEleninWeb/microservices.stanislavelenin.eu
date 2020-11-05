@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Events\UserCreatedEvent;
 use App\Models\User;
 
 class RegisterController extends Controller
@@ -70,11 +71,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'api_token' => Hash::make(microtime()),
         ]);
+
+        event(UserCreatedEvent($user));
+
+        return $user;
     }
 }

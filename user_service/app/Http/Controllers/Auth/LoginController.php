@@ -45,12 +45,13 @@ class LoginController extends Controller
     {
         $validated = $this->validator($request)->validate();
 
-        $user = User::withTrashed()->where('email', $validated['email'])->firstOrFail();
+        $user = User::where('email', $validated['email'])->firstOrFail();
         
         if(!Hash::check($validated['password'], $user->password))
             return new Response('User credentials doesn`t match!', 401);
 
         $user->api_token = Hash::make(microtime());
+        $user->save();
 
         return $user;
     }
@@ -63,7 +64,10 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        $credentials = $this->credentials($request);
+        $user = User::where('api_token', $request->input('api_token'))->firstOrFail();
+
+        $user->api_token = Hash::make(microtime());
+        $user->save();
     }
 
     /**
