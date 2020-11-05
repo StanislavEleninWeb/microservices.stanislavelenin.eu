@@ -30,7 +30,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('guest');
+        $this->middleware('guest');
     }
 
 
@@ -42,7 +42,7 @@ class RegisterController extends Controller
      */
     public function register(Request $request){
         $validated = $this->validator($request->all())->validate();
-        dd($this->create($validated));
+        
         if($this->create($validated))
             return new Response('Sucessfully created!', 201);
     }
