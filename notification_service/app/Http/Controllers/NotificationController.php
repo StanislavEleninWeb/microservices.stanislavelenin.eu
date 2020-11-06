@@ -26,7 +26,7 @@ class NotificationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function notify(Request $request)
+    public function notifyPageCreated(Request $request)
     {
         // Send post http request and process image urls
         $users = Http::get(env('USER_SERVICE_URL') . '/users', [

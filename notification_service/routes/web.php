@@ -17,9 +17,4 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/mail', function () use ($router) {
-    return (new App\Notifications\PageRecorded())
-                ->toMail('slavibio@abv.bg');
-});
-$router->get('/notify', 'NotificationController@notify');
-$router->get('/notify/via/email', 'NotificationController@notifyViaEmail');
+$router->get('/notify/page/created', 'NotificationController@notifyPageCreated');
