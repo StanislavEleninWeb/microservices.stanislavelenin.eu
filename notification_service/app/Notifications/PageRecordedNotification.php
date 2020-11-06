@@ -6,9 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-use App\Mail\PageRecorded as Mailable;
+use App\Mail\PageRecordedMail as Mailable;
 
-class PageRecorded extends Notification implements ShouldQueue
+class PageRecordedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 

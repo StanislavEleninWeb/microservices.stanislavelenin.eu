@@ -120,7 +120,8 @@ class ProcessPageCrawlerJob extends Job
             'page' => $page_id,
             'images' => $results['images'],
         ]);
-        
+
+        event(new PageCreatedEvent($page));        
     }
 
     /**
