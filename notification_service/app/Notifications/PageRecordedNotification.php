@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 
 use App\Mail\PageRecordedMail as Mailable;
 
-class PageRecordedNotification extends Notification implements ShouldQueue
+class PageRecordedNotification extends Notification
 {
     use Queueable;
 
@@ -45,7 +45,7 @@ class PageRecordedNotification extends Notification implements ShouldQueue
 	 */
 	public function toMail($notifiable)
 	{
-	    return (new Mailable($this->page))->to($notifiable->email);
+	    return (new Mailable($this->page))->to($notifiable);
 	}
 
 	/**
