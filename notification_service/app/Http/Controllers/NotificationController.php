@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Notification;
 
-use App\Notifications\PageRecorded;
+use App\Notifications\PageRecordedNotification;
 
 class NotificationController extends Controller
 {
@@ -29,14 +30,18 @@ class NotificationController extends Controller
     public function notifyPageCreated(Request $request)
     {
         // Send post http request and process image urls
-        $users = Http::get(env('USER_SERVICE_URL') . '/users', [
-            'page' => $page_id,
-            'images' => $results['images'],
+        $usersResponse = Http::post(env('USER_SERVICE_URL') . '/users', [
+            'key' => $request->all(),
         ]);
 
-        Notification::send($users, new PageRecorded($page));
+        if($usersResponse->failed())
+            return new Response('Could not load users', 400);
 
-        return new Response('Successfully queued for upload.', 200);
+        $users = collect($usersResponse->json());
+
+        Notification::send($users->pluck(['email']), new PageRecordedNotification($request->all()));
+
+        return new Response('Successfully queued notifications.', 200);
     }
 
     /**

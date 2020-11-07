@@ -27,7 +27,9 @@ class ImageController extends Controller
     public function index($id)
     {
         $images = app('db')
-        ->select('SELECT * FROM images WHERE page_id = :page_id', ['page_id' => $id]);
+        ->select('SELECT * FROM images WHERE page_id = :page_id', [
+            ':page_id' => intval($id),
+        ]);
 
         return $images;
     }
@@ -40,9 +42,12 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        
+        $image = app('db')
+        ->select('SELECT * FROM images WHERE id = :id LIMIT 1', [
+            ':id' => intval($id),
+        ]);
 
-        return new Response('Show', 200);
+        return $image;
     }
 
 
@@ -59,6 +64,34 @@ class ImageController extends Controller
     	}
 
         return new Response('Successfully queued for upload.', 200);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        $image = $app('db')
+        ->select('SELECT * FROM images WHERE id = :id', [
+            ':id' => intval($id),
+        ]);
+        
+        if($image){
+
+            $path = app('storage_path') . DIRECTORY_SEPARATOR . intval($image->id/1000) . DIRECTORY_SEPARATOR;
+            $file = $image->filename . '.' . $image->ext;
+            
+            unlink($path . 'orig_' . $file);
+            unlink($path . '400' . $file);
+
+            $app('db')->delete();
+
+        }
+
+        return new Response('Successfully deleted.', 200);
     }
 
 }

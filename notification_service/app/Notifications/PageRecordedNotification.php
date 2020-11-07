@@ -33,7 +33,8 @@ class PageRecordedNotification extends Notification implements ShouldQueue
 	 */
 	public function via($notifiable)
 	{
-	    return $notifiable->prefers_sms ? ['nexmo'] : ['mail', 'database'];
+	    // return $notifiable->prefers_sms ? ['nexmo'] : ['mail', 'database'];
+	    return ['mail', 'database'];
 	}
 
     /**
