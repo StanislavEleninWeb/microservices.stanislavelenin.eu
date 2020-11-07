@@ -132,6 +132,10 @@ class ProcessPageCrawlerJob extends Job
      */
     public function failed(Throwable $exception)
     {
-        dd($exception);
+        Http::post(env('NOTIFICATION_SERVICE_URL') . '/notify/admin', [
+            'url' => $this->url,
+            'source' => $this->source,
+            'exception' => $exception,
+        ]);
     }
 }

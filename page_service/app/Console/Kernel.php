@@ -26,8 +26,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        
         // $schedule->job(new ProcessCrawlerJob)->everyMinute()->between('6:00', '23:59');
-
     }
 }

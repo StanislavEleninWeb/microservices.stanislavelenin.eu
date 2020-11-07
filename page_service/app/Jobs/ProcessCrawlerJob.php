@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use App\Models\Source;
 
 class ProcessCrawlerJob extends Job
@@ -41,6 +42,8 @@ class ProcessCrawlerJob extends Job
      */
     public function failed(Throwable $exception)
     {
-        dd($exception);
+        Http::post(env('NOTIFICATION_SERVICE_URL' . '/notify/admin'), [
+            'exception' => $exception,
+        ]);
     }
 }

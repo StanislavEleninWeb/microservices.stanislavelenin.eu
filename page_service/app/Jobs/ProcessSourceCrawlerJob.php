@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Illuminate\Support\Facades\Http;
 use App\Models\Source;
 
 class ProcessSourceCrawlerJob extends Job
@@ -50,7 +51,6 @@ class ProcessSourceCrawlerJob extends Job
         $generator->analyze();
         $generator->getResult()->each(function($url){
             dispatch(new ProcessPageCrawlerJob($url, $this->source));
-            dd();
         });
     }
 
@@ -62,6 +62,9 @@ class ProcessSourceCrawlerJob extends Job
      */
     public function failed(Throwable $exception)
     {
-        dd($exception);
+        Http::post(env('NOTIFICATION_SERVICE_URL') . '/notify/admin', [
+            'object' => $this->source,
+            'exception' => $exception,
+        ]);
     }
 }

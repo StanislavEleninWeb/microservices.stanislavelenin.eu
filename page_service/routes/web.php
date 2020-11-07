@@ -54,3 +54,4 @@ $router->delete('/page/{id}', 'PageController@destroy');
 |
 */
 $router->get('/test', 'TestController@index');
+$router->get('/failed/jobs', 'TestController@failedJobs');

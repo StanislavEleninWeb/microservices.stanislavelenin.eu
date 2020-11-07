@@ -42,4 +42,10 @@ class TestController extends Controller
         return new Response('Success!!!', Response::HTTP_OK);
     }
 
+    public function failedJobs(){
+        $failedJobs = app('db')->select('SELECT * FROM failed_jobs');
+        dd($failedJobs);
+        return $failedJobs;
+    }
+
 }

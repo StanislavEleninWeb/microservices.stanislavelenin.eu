@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Illuminate\Support\Facades\Http;
 use Intervention\Image\Image;
 
 class ProcessImageFileJob extends Job
@@ -14,7 +15,6 @@ class ProcessImageFileJob extends Job
         'image/gif',
         'image/png',
         'image/bmp',
-        'image/svg+xml'
     ];
 
     /**
@@ -35,7 +35,7 @@ class ProcessImageFileJob extends Job
      */
     public function handle()
     {
-        $contentType = mime_content_type($image);
+        $contentType = mime_content_type($this->url);
 
         if(!in_array($contentType, $this->allowedMimeTypes))
             return;
@@ -70,5 +70,20 @@ class ProcessImageFileJob extends Job
             $img->save($storage_path . '400' . $filename . '.' . $ext);
 
         });
+    }
+
+    /**
+     * Handle a job failure.
+     *
+     * @param  \Throwable  $exception
+     * @return void
+     */
+    public function failed(Throwable $exception)
+    {
+        Http::post(env('NOTIFICATION_SERVICE_URL') . '/notify/admin', [
+            'url' = $this->url, 
+            'page' => $this->page,
+            'exception' => $exception,
+        ]);
     }
 }
