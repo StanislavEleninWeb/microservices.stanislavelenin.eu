@@ -17,5 +17,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/test', 'NotificationController@test');
+
 $router->post('/notify/admin', 'NotificationController@notifyAdmin');
 $router->post('/notify/page/created', 'NotificationController@notifyPageCreated');

@@ -12,6 +12,8 @@ use App\Notifications\PageRecordedNotification;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PageRecordedMail;
 
+use App\Models\User;
+
 class NotificationController extends Controller
 {
     /**
@@ -45,15 +47,20 @@ class NotificationController extends Controller
         if($usersResponse->failed())
             return new Response('Could not load users', 400);
 
-        $users = collect($usersResponse->json());
+        $user = new User;
 
-        Notification::route('mail', $users->pluck('email'))->notify(
-            new PageRecordedNotification($request->all())
-        );
+        $users = collect($usersResponse->json())
+        ->map(function($item) use ($user) {
+            $user = clone($user);
 
-        dd();
+            $user->id = $item['id'];
+            $user->name = $item['name'];
+            $user->email = $item['email'];
 
-        // Notification::send($users->pluck(['email']), new PageRecordedNotification($request->all()));
+            return $user;
+        });
+
+        Notification::send($users, new PageRecordedNotification($request->all()));
 
         return new Response('Successfully queued notifications.', 200);
     }
@@ -75,6 +82,10 @@ class NotificationController extends Controller
         dispatch(new ProcessImageFileJob($request->input('page'), $image));
 
         return new Response('Successfully queued for upload.', 200);
+    }
+
+    public function test(){
+        return app('db')->select('SELECT exception FROM failed_jobs');
     }
 
 

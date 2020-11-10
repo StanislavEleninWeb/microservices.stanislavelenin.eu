@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-use App\Mail\PageRecordedMail as Mailable;
+use App\Mail\PageRecordedMail;
 
 class PageRecordedNotification extends Notification
 {
@@ -33,8 +33,7 @@ class PageRecordedNotification extends Notification
 	 */
 	public function via($notifiable)
 	{
-	    // return $notifiable->prefers_sms ? ['nexmo'] : ['mail', 'database'];
-	    return ['mail', 'database'];
+	    return ['mail'];
 	}
 
     /**
@@ -45,7 +44,7 @@ class PageRecordedNotification extends Notification
 	 */
 	public function toMail($notifiable)
 	{
-	    return (new Mailable($this->page))->to($notifiable->routes['mail']);
+	    return (new PageRecordedMail($this->page))->to($notifiable->email);
 	}
 
 	/**
