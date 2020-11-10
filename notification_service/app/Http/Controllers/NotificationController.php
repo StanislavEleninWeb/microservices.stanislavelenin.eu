@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Notification;
 
 use App\Notifications\PageRecordedNotification;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PageRecordedMail;
+
 class NotificationController extends Controller
 {
     /**
@@ -29,6 +32,11 @@ class NotificationController extends Controller
      */
     public function notifyPageCreated(Request $request)
     {
+
+        // Mail::to('stanislaveleninweb@gmail.com')->send(new PageRecordedMail($request->all()));
+
+        // dd($request->all());
+
         // Send post http request and process image urls
         $usersResponse = Http::post(env('USER_SERVICE_URL') . '/users', [
             'key' => $request->all(),
@@ -39,7 +47,13 @@ class NotificationController extends Controller
 
         $users = collect($usersResponse->json());
 
-        Notification::send($users->pluck(['email']), new PageRecordedNotification($request->all()));
+        Notification::route('mail', $users->pluck('email'))->notify(
+            new PageRecordedNotification($request->all())
+        );
+
+        dd();
+
+        // Notification::send($users->pluck(['email']), new PageRecordedNotification($request->all()));
 
         return new Response('Successfully queued notifications.', 200);
     }

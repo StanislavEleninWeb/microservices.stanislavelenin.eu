@@ -45,7 +45,7 @@ class PageRecordedNotification extends Notification
 	 */
 	public function toMail($notifiable)
 	{
-	    return (new Mailable($this->page))->to($notifiable);
+	    return (new Mailable($this->page))->to($notifiable->routes['mail']);
 	}
 
 	/**
