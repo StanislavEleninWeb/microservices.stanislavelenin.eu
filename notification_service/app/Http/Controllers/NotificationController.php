@@ -34,11 +34,6 @@ class NotificationController extends Controller
      */
     public function notifyPageCreated(Request $request)
     {
-
-        // Mail::to('stanislaveleninweb@gmail.com')->send(new PageRecordedMail($request->all()));
-
-        // dd($request->all());
-
         // Send post http request and process image urls
         $usersResponse = Http::post(env('USER_SERVICE_URL') . '/users', [
             'key' => $request->all(),
