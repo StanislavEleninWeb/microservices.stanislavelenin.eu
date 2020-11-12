@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 
 use App\Mail\PageRecordedMail;
 
-class PageRecordedNotification extends Notification
+class PageRecordedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
