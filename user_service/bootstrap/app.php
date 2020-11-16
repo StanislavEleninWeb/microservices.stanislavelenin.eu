@@ -79,6 +79,7 @@ $app->configure('app');
 $app->routeMiddleware([
     'auth' => \App\Http\Middleware\Authenticate::class,
     'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+    'auth0' => \App\Http\Middleware\Auth0Middleware::class,
 ]);
 
 /*

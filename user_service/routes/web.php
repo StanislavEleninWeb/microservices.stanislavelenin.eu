@@ -13,6 +13,17 @@
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Login and Register Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It is a breeze. Simply tell Lumen the URIs it should respond to
+| and give it the Closure to call when that URI is requested.
+|
+*/
+
 $router->group(['namespace' => 'Auth'], function() use ($router) {
 
 	$router->post('/login', 'LoginController@login');
@@ -45,16 +56,28 @@ $router->group(['namespace' => 'Auth'], function() use ($router) {
 	]);
 });
 
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+/*
+|--------------------------------------------------------------------------
+| User Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It is a breeze. Simply tell Lumen the URIs it should respond to
+| and give it the Closure to call when that URI is requested.
+|
+*/
+
 $router->post('/users', 'UserController@index');
 
-$router->group(['middleware' => 'auth'], function () use ($router) {
+$router->group(['middleware' => 'auth0'], function () use ($router) {
 
-    $router->get('/user/{id}', function($id){
-    	dd($id);
-    });
+    $router->get('/users/{id}', 'UserController@show');
+
+    $router->delete('/users/{id}', 'UserController@delete');
 
 });
