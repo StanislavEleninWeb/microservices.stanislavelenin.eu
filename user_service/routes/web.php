@@ -72,7 +72,7 @@ $router->get('/', function () use ($router) {
 |
 */
 
-$router->post('/users', 'UserController@index');
+$router->get('/users', 'UserController@index');
 
 $router->group(['middleware' => 'auth0'], function () use ($router) {
 
