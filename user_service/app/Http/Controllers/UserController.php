@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function index(Request $request){
 
-        return User::all();
+        return response()->json(User::all());
     }
 
     public function show($id){
