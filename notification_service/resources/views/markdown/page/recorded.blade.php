@@ -3,7 +3,7 @@
 
 Your invoice has been paid!
 
-@component('mail::button', ['url' => 'http://127.0.1.1'])
+@component('mail::button', ['url' => {{ env('APP_URL') }}])
 View Invoice
 @endcomponent
 

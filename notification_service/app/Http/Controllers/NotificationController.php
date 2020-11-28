@@ -12,6 +12,7 @@ use App\Notifications\PageRecordedNotification;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PageRecordedMail;
 
+use App\Jobs\UserCreatedJob;
 use App\Models\User;
 
 class NotificationController extends Controller
@@ -79,9 +80,17 @@ class NotificationController extends Controller
         return new Response('Successfully queued for upload.', 200);
     }
 
-    public function test(){
-        return app('db')->select('SELECT exception FROM failed_jobs');
-    }
+    /**
+     * Dispatch UserCreatedJob and notify user
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function notifyUserCreated(Request $request)
+    {
+        dispatch(new UserCreatedJob($request->input('data')));
 
+        return new Response('Successfully queued!', 202);
+    }    
 
 }

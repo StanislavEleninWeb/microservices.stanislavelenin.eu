@@ -11,18 +11,6 @@ class PageRecordedMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $page;
-
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($page)
-    {
-        $this->page = $page;
-    }
-
     /**
      * Build the message.
      *
@@ -30,6 +18,6 @@ class PageRecordedMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->markdown('markdown.page.recorded');
+        return $this->markdown('markdown.user.created');
     }
 }

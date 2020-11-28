@@ -20,4 +20,5 @@ $router->get('/', function () use ($router) {
 $router->get('/test', 'NotificationController@test');
 
 $router->post('/notify/admin', 'NotificationController@notifyAdmin');
+$router->post('/notify/user/created', 'NotificationController@notifyUserCreated');
 $router->post('/notify/page/created', 'NotificationController@notifyPageCreated');
