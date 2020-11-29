@@ -17,6 +17,11 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/notifications/unread/user/{id}', 'NotificationController@getUnreadNotifications');
+$router->get('/notifications/user/{id}', 'NotificationController@getNotifications');
+$router->get('/notifications/{id}/read', 'NotificationController@markNotificationAsRead');
+$router->get('/notifications/{id}', 'NotificationController@getNotificationById');
+
 $router->post('/notify/admin', 'NotificationController@notifyAdmin');
 $router->post('/notify/user/created', 'NotificationController@notifyUserCreated');
 $router->post('/notify/page/created', 'NotificationController@notifyPageCreated');

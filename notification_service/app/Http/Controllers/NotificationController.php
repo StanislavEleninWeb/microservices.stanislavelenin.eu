@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response as ResponseCodes;
 
 use App\Events\PageCreatedEvent;
 use App\Events\UserCreatedEvent;
+
+use App\Models\User;
 
 class NotificationController extends Controller
 {
@@ -29,7 +34,7 @@ class NotificationController extends Controller
     public function notifyPageCreated(Request $request)
     {
         // Send post http request and process image urls
-        $usersResponse = Http::post(env('USER_SERVICE_URL') . '/users', [
+        $usersResponse = Http::get(env('USER_SERVICE_URL') . '/users', [
             'key' => $request->all(),
         ]);
 
@@ -53,5 +58,56 @@ class NotificationController extends Controller
 
         return response('Event successfully executed!', ResponseCodes::HTTP_CREATED);
     }
+
+    /**
+     * Get user unread notifications from database
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getUnreadNotifications($id)
+    {
+        $user = User::findOrFail($id);
+        return response($user->unreadNotifications, ResponseCodes::HTTP_OK);
+    }
+
+    /**
+     * Get user notifications from database
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getNotifications($id)
+    {
+        $user = User::findOrFail($id);
+        return response($user->notifications, ResponseCodes::HTTP_OK);
+    }
+
+    /**
+     * Mark user notification as read
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function markNotificationAsRead($id)
+    {
+        DB::table('notifications')->where('id', $id)->update([
+            'read_at' => Carbon::now(),
+        ]);
+        return response('Successfully marked as read!', ResponseCodes::HTTP_ACCEPTED);
+    }
+
+    /**
+     * Mark user notification as read
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getNotificationById($id)
+    {
+        $notification = DB::table('notifications')->where('id', $id)->get();
+        return response($notification, ResponseCodes::HTTP_OK);
+    }
+
 
 }

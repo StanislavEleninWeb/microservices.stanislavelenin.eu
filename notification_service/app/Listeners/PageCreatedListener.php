@@ -6,7 +6,10 @@ use App\Events\PageCreatedEvent as Event;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\PageCreatedNotification;
+
+use App\Models\User;
 
 class PageCreatedListener implements ShouldQueue
 {
@@ -18,7 +21,7 @@ class PageCreatedListener implements ShouldQueue
      */
     public function handle(Event $event)
     {
-        $users = User::find($event->users->pluck('id'));
+        $users = User::find(collect($event->users)->pluck('id'));
 
         Notification::send($users, new PageCreatedNotification($event->data));
     }

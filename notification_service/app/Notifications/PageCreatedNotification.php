@@ -44,7 +44,7 @@ class PageCreatedNotification extends Notification implements ShouldQueue
 	 */
 	public function toMail($notifiable)
 	{
-	    return (new PageRecordedMail($this->page))->to($notifiable->email);
+	    return (new PageCreatedMail($this->page))->to($notifiable->email);
 	}
 
 	/**
