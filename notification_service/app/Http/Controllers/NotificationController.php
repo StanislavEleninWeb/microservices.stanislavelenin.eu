@@ -34,14 +34,14 @@ class NotificationController extends Controller
     public function notifyPageCreated(Request $request)
     {
         // Send post http request and process image urls
-        $usersResponse = Http::get(env('USER_SERVICE_URL') . '/users', [
+        $response = Http::get(env('USER_SERVICE_URL') . '/users', [
             'key' => $request->all(),
         ]);
 
-        if($usersResponse->failed())
+        if($response->failed())
             return response('User service no valid response data', ResponseCodes::HTTP_BAD_REQUEST);
 
-        event(new PageCreatedEvent($usersResponse->json(), $request->all()));
+        event(new PageCreatedEvent($response->json(), $request->all()));
 
         return response(null, ResponseCodes::HTTP_NO_CONTENT);
     }
