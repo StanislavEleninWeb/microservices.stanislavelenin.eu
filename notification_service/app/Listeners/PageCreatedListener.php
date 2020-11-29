@@ -2,22 +2,14 @@
 
 namespace App\Listeners;
 
-use App\Events\ExampleEvent as Event;
+use App\Events\PageCreatedEvent as Event;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class ExampleListener
-{
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+use App\Notifications\PageCreatedNotification;
 
+class PageCreatedListener implements ShouldQueue
+{
     /**
      * Handle the event.
      *
@@ -26,6 +18,8 @@ class ExampleListener
      */
     public function handle(Event $event)
     {
-        //
+        $users = User::find($event->users->pluck('id'));
+
+        Notification::send($users, new PageCreatedNotification($event->data));
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Events;
 
-class ExampleEvent extends Event
+class UserCreatedEvent extends Event
 {
 
-	private $data;
+	public $data;
 
     /**
      * Create a new event instance.

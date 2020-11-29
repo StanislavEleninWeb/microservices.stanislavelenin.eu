@@ -1,10 +1,10 @@
 @component('mail::message')
-# Invoice Paid
+# Order Shipped
 
-Your invoice has been paid!
+Your order has been shipped!
 
-@component('mail::button', ['url' => {{ env('APP_URL') }}])
-View Invoice
+@component('mail::button', ['url' => 'http://localhost'])
+View Order
 @endcomponent
 
 Thanks,<br>

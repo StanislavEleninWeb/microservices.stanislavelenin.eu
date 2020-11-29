@@ -15,6 +15,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable, HasFactory, Notifiable;
 
+
+    /**
+     * Remove timestamps fields
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *

@@ -27,9 +27,9 @@ class UserCreatedListener implements ShouldQueue
      */
     public function handle(UserCreatedEvent $event)
     {
-        Http::post(env('NOTIFICATION_SERVICE_URL') . '/notify', [
+        Http::post(env('NOTIFICATION_SERVICE_URL') . '/notify/user/created', [
             'markdown' => 'markdown.user_created',
-            'user' => $event->user,
+            'data' => $event->user->toArray(),
         ]);
     }
 }

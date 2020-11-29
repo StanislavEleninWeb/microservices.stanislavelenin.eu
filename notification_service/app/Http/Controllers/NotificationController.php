@@ -3,17 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Notification;
+use Symfony\Component\HttpFoundation\Response as ResponseCodes;
 
-use App\Notifications\PageRecordedNotification;
-
-use Illuminate\Support\Facades\Mail;
-use App\Mail\PageRecordedMail;
-
-use App\Jobs\UserCreatedJob;
-use App\Models\User;
+use App\Events\PageCreatedEvent;
+use App\Events\UserCreatedEvent;
 
 class NotificationController extends Controller
 {
@@ -41,56 +34,24 @@ class NotificationController extends Controller
         ]);
 
         if($usersResponse->failed())
-            return new Response('Could not load users', 400);
+            return response('User service no valid response data', ResponseCodes::HTTP_BAD_REQUEST);
 
-        $user = new User;
+        event(new PageCreatedEvent($usersResponse->json(), $request->all()));
 
-        $users = collect($usersResponse->json())
-        ->map(function($item) use ($user) {
-            $user = clone($user);
-
-            $user->id = $item['id'];
-            $user->name = $item['name'];
-            $user->email = $item['email'];
-
-            return $user;
-        });
-
-        Notification::send($users, new PageRecordedNotification($request->all()));
-
-        return new Response('Successfully queued notifications.', 200);
+        return response(null, ResponseCodes::HTTP_NO_CONTENT);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function notifyViaEmail(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'to.*' => 'required|email',
-            'cc.*' => 'nullable|email',
-            'message' => 'required|string',
-        ]);
-
-        dispatch(new ProcessImageFileJob($request->input('page'), $image));
-
-        return new Response('Successfully queued for upload.', 200);
-    }
-
-    /**
-     * Dispatch UserCreatedJob and notify user
+     * Dispatch UserCreatedEvent and notify user
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function notifyUserCreated(Request $request)
     {
-        dispatch(new UserCreatedJob($request->input('data')));
+        event(new UserCreatedEvent($request->all()));
 
-        return new Response('Successfully queued!', 202);
-    }    
+        return response('Event successfully executed!', ResponseCodes::HTTP_CREATED);
+    }
 
 }

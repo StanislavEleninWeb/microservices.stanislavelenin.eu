@@ -6,13 +6,13 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-use App\Mail\PageRecordedMail;
+use App\Mail\PageCreatedMail;
 
-class PageRecordedNotification extends Notification implements ShouldQueue
+class PageCreatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    private $page;
+    public $page;
 
     /**
      * Create a new message instance.
@@ -33,7 +33,7 @@ class PageRecordedNotification extends Notification implements ShouldQueue
 	 */
 	public function via($notifiable)
 	{
-	    return ['mail'];
+	    return ['mail', 'database'];
 	}
 
     /**

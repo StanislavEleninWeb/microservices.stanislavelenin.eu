@@ -6,9 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-use App\Mail\PageRecordedMail;
+use App\Mail\UserCreatedMail;
 
-class PageRecordedNotification extends Notification implements ShouldQueue
+class UserCreatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -21,7 +21,7 @@ class PageRecordedNotification extends Notification implements ShouldQueue
 	 */
 	public function via($notifiable)
 	{
-	    return ['mail'];
+	    return ['mail', 'database'];
 	}
 
     /**
@@ -35,4 +35,16 @@ class PageRecordedNotification extends Notification implements ShouldQueue
 	    return (new UserCreatedMail())->to($notifiable->email);
 	}
 
+
+	/**
+	 * Get the array representation of the notification.
+	 * toDatabase Vs. toArray
+	 *
+	 * @param  mixed  $notifiable
+	 * @return array
+	 */
+	public function toArray($notifiable)
+	{
+	    return $notifiable->toArray();
+	}
 }

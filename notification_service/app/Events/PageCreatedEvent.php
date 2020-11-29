@@ -2,18 +2,19 @@
 
 namespace App\Events;
 
-class ExampleEvent extends Event
+class PageCreatedEvent extends Event
 {
-
-	private $data;
+    public $users;
+	public $data;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($users, $data)
     {
+        $this->users = $users;
         $this->data = $data;
     }
 }

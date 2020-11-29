@@ -1,10 +1,10 @@
 @component('mail::message')
-# User Successfully Created
+# User Created
 
-Your account has been created!
+Your user account has been created!
 
-@component('mail::button', ['url' => {{ env('APP_URL') . '/user/profile' }}])
-View Profile
+@component('mail::button', ['url' => 'http://localhost'])
+View Order
 @endcomponent
 
 Thanks,<br>
