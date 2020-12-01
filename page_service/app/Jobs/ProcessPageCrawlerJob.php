@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
+use App\Events\PageCreatedEvent;
+
 use App\Models\Source;
 use App\Models\Page;
 use App\Models\PageInfo;
@@ -42,7 +44,7 @@ class ProcessPageCrawlerJob extends Job
      *
      * @var int
      */
-    public $timeout = 30;
+    public $timeout = 60;
 
     /**
      * Create a new job instance.
@@ -121,7 +123,7 @@ class ProcessPageCrawlerJob extends Job
             'images' => $results['images'],
         ]);
 
-        event(new PageCreatedEvent($page));        
+        event(new PageCreatedEvent($page_id));        
     }
 
     /**
@@ -134,7 +136,7 @@ class ProcessPageCrawlerJob extends Job
     {
         Http::post(env('NOTIFICATION_SERVICE_URL') . '/notify/admin', [
             'url' => $this->url,
-            'source' => $this->source,
+            'object' => $this->source,
             'exception' => $exception,
         ]);
     }

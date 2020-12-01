@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response as ResponseCodes;
 
+use App\Events\NotifyAdminsEvent;
 use App\Events\PageCreatedEvent;
 use App\Events\UserCreatedEvent;
 
@@ -22,7 +23,20 @@ class NotificationController extends Controller
      */
     public function __construct()
     {
-        //
+        
+    }
+
+    /**
+     * Notify admins
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function notifyAdmins(Request $request)
+    {
+        event(new NotifyAdminsEvent($request->all()));
+
+        return response(null, ResponseCodes::HTTP_NO_CONTENT);
     }
 
     /**

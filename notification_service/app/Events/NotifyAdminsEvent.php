@@ -5,7 +5,7 @@ namespace App\Events;
 class NotifyAdminsEvent extends Event
 {
 
-	private $data;
+	public $data;
 
     /**
      * Create a new event instance.

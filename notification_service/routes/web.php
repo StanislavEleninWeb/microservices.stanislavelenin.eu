@@ -22,6 +22,6 @@ $router->get('/notifications/user/{id}', 'NotificationController@getNotification
 $router->get('/notifications/{id}/read', 'NotificationController@markNotificationAsRead');
 $router->get('/notifications/{id}', 'NotificationController@getNotificationById');
 
-$router->post('/notify/admin', 'NotificationController@notifyAdmin');
+$router->post('/notify/admins', 'NotificationController@notifyAdmins');
 $router->post('/notify/user/created', 'NotificationController@notifyUserCreated');
 $router->post('/notify/page/created', 'NotificationController@notifyPageCreated');

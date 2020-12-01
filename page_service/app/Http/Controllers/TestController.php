@@ -30,7 +30,10 @@ class TestController extends Controller
     public function index()
     {
     	try {
-            $page = new ProcessPageCrawlerJob('http://127.0.1.2/test.html', Source::find(1));
+            // $page = new ProcessPageCrawlerJob('http://127.0.1.2/test.html', Source::find(1));
+            
+            $page = new ProcessPageCrawlerJob('https://www.alo.bg/7070426', Source::find(1));
+            
             $page->handle();
     	} catch(\Exception $e) {
             dd($e);

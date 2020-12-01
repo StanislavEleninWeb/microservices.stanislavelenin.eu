@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseCodes;
 
 use App\Jobs\ProcessImageFileJob;
 
@@ -63,7 +63,7 @@ class ImageController extends Controller
     			dispatch(new ProcessImageFileJob($request->input('page'), $image));
     	}
 
-        return new Response('Successfully queued for upload.', 200);
+        return response('Successfully queued for upload.', ResponseCodes::HTTP_ACCEPTED);
     }
 
     /**
@@ -91,7 +91,7 @@ class ImageController extends Controller
 
         }
 
-        return new Response('Successfully deleted.', 200);
+        return response('Successfully deleted.', ResponseCodes::HTTP_ACCEPTED);
     }
 
 }

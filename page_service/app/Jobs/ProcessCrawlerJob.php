@@ -27,7 +27,7 @@ class ProcessCrawlerJob extends Job
     {
         // Fetch all sources
     	$sources = Cache::get('sources', Source::all());
-
+        
     	// Iterate over sources
     	$sources->each(function($source){
             dispatch(new ProcessSourceCrawlerJob($source));
@@ -42,7 +42,7 @@ class ProcessCrawlerJob extends Job
      */
     public function failed(Throwable $exception)
     {
-        Http::post(env('NOTIFICATION_SERVICE_URL' . '/notify/admin'), [
+        Http::post(env('NOTIFICATION_SERVICE_URL' . '/notify/admins'), [
             'exception' => $exception,
         ]);
     }

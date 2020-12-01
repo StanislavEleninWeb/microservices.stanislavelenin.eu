@@ -62,7 +62,7 @@ class ProcessSourceCrawlerJob extends Job
      */
     public function failed(Throwable $exception)
     {
-        Http::post(env('NOTIFICATION_SERVICE_URL') . '/notify/admin', [
+        Http::post(env('NOTIFICATION_SERVICE_URL') . '/notify/admins', [
             'object' => $this->source,
             'exception' => $exception,
         ]);
