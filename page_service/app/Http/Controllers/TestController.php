@@ -29,6 +29,8 @@ class TestController extends Controller
      */
     public function index()
     {
+        event(new \App\Events\TestEvent());
+        dd('test');
     	try {
             // $page = new ProcessPageCrawlerJob('http://127.0.1.2/test.html', Source::find(1));
             

@@ -18,5 +18,8 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\PageCreatedEvent::class => [
             \App\Listeners\PageCreatedListener::class,
         ],
+        \App\Events\TestEvent::class => [
+            \App\Listeners\TestListener::class,
+        ],
     ];
 }
