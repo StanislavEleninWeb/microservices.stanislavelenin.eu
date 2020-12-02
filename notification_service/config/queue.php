@@ -82,7 +82,22 @@ return [
            ],
        
            'options' => [
-               'ssl_options' => [
+                'queue' => [
+                    'exchange' => env('RABBITMQ_EXCHANGE_NAME', 'amq.fanout'),
+                    'exchange_type' => env('RABBITMQ_EXCHANGE_TYPE', 'fanout'),
+                    'prioritize_delayed_messages' =>  env('RABBITMQ_PRIORITIZE_DELAYED_MESSAGES', false),
+                    'queue_max_priority' => env('RABBITMQ_QUEUE_MAX_PRIORITY', 10),
+                ],
+                'exchange' => [
+                    'name' => env('RABBITMQ_EXCHANGE_NAME', 'amq.fanout'),
+                    'declare' => env('RABBITMQ_EXCHANGE_DECLARE', true),
+                    'type' => env('RABBITMQ_EXCHANGE_TYPE', 'fanout'),
+                    'passive' => env('RABBITMQ_EXCHANGE_PASSIVE', false),
+                    'durable' => env('RABBITMQ_EXCHANGE_DURABLE', true),
+                    'auto_delete' => env('RABBITMQ_EXCHANGE_AUTODELETE', false),
+                    'arguments' => env('RABBITMQ_EXCHANGE_ARGUMENTS'),
+                ],
+                'ssl_options' => [
                    'cafile' => env('RABBITMQ_SSL_CAFILE', null),
                    'local_cert' => env('RABBITMQ_SSL_LOCALCERT', null),
                    'local_key' => env('RABBITMQ_SSL_LOCALKEY', null),
