@@ -15,11 +15,5 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\UserCreatedEvent::class => [
             \App\Listeners\UserCreatedListener::class,
         ],
-        \App\Events\PageCreatedEvent::class => [
-            \App\Listeners\PageCreatedListener::class,
-        ],
-        \App\Events\TestEvent::class => [
-            \App\Listeners\TestListener::class,
-        ],
     ];
 }
