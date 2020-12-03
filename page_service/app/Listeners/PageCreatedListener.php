@@ -28,6 +28,7 @@ class PageCreatedListener implements ShouldQueue
      */
     public function handle(PageCreatedEvent $event)
     {
+        echo 'Page Service - Page Created Listener';
         // Http::post('NOTIFICATION_SERVICE_URL' . '/notify/page/created', [
         //     'post' => $event->post,
         // ]);
