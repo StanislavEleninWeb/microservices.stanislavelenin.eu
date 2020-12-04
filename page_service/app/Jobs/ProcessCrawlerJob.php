@@ -2,11 +2,12 @@
 
 namespace App\Jobs;
 
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use App\Models\Source;
 
-class ProcessCrawlerJob extends Job
+class ProcessCrawlerJob extends Job implements ShouldBeUnique
 {
     /**
      * Create a new job instance.
