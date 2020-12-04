@@ -115,13 +115,28 @@ return [
            ],
        
            'options' => [
-               'ssl_options' => [
-                   'cafile' => env('RABBITMQ_DIRECT_SSL_CAFILE', null),
-                   'local_cert' => env('RABBITMQ_DIRECT_SSL_LOCALCERT', null),
-                   'local_key' => env('RABBITMQ_DIRECT_SSL_LOCALKEY', null),
-                   'verify_peer' => env('RABBITMQ_DIRECT_SSL_VERIFY_PEER', true),
-                   'passphrase' => env('RABBITMQ_DIRECT_SSL_PASSPHRASE', null),
-               ],
+                'queue' => [
+                    'exchange' => env('RABBITMQ_DIRECT_EXCHANGE_NAME', 'amq.fanout'),
+                    'exchange_type' => env('RABBITMQ_DIRECT_EXCHANGE_TYPE', 'fanout'),
+                    'prioritize_delayed_messages' =>  env('RABBITMQ_DIRECT_PRIORITIZE_DELAYED_MESSAGES', false),
+                    'queue_max_priority' => env('RABBITMQ_DIRECT_QUEUE_MAX_PRIORITY', 10),
+                ],
+                'exchange' => [
+                    'name' => env('RABBITMQ_DIRECT_EXCHANGE_NAME', 'amq.fanout'),
+                    'declare' => env('RABBITMQ_DIRECT_EXCHANGE_DECLARE', true),
+                    'type' => env('RABBITMQ_DIRECT_EXCHANGE_TYPE', 'fanout'),
+                    'passive' => env('RABBITMQ_DIRECT_EXCHANGE_PASSIVE', false),
+                    'durable' => env('RABBITMQ_DIRECT_EXCHANGE_DURABLE', true),
+                    'auto_delete' => env('RABBITMQ_DIRECT_EXCHANGE_AUTODELETE', false),
+                    'arguments' => env('RABBITMQ_DIRECT_EXCHANGE_ARGUMENTS', 'default'),
+                ], 
+                'ssl_options' => [
+                    'cafile' => env('RABBITMQ_DIRECT_SSL_CAFILE', null),
+                    'local_cert' => env('RABBITMQ_DIRECT_SSL_LOCALCERT', null),
+                    'local_key' => env('RABBITMQ_DIRECT_SSL_LOCALKEY', null),
+                    'verify_peer' => env('RABBITMQ_DIRECT_SSL_VERIFY_PEER', true),
+                    'passphrase' => env('RABBITMQ_DIRECT_SSL_PASSPHRASE', null),
+                ],
            ],
        
            /*
