@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Http;
 
-use App\Events\PageCreatedEvent;
+use App\Events\PageCreatedEvent as Event;
 
 class PageCreatedListener implements ShouldQueue
 {
@@ -26,11 +25,8 @@ class PageCreatedListener implements ShouldQueue
      * @param  \App\Events\ExampleEvent  $event
      * @return void
      */
-    public function handle(PageCreatedEvent $event)
+    public function handle(Event $event)
     {
-        echo 'Page Service - Page Created Listener';
-        // Http::post('NOTIFICATION_SERVICE_URL' . '/notify/page/created', [
-        //     'post' => $event->post,
-        // ]);
+        
     }
 }
