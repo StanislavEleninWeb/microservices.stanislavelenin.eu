@@ -10,14 +10,11 @@ use App\Events\PageCreatedEvent as Event;
 class PageCreatedListener implements ShouldQueue
 {
     /**
-     * Create the event listener.
+     * The name of the connection the job should be sent to.
      *
-     * @return void
+     * @var string|null
      */
-    public function __construct()
-    {
-        //
-    }
+    public $connection = 'rabbitmq.fanout';
 
     /**
      * Handle the event.
@@ -29,4 +26,5 @@ class PageCreatedListener implements ShouldQueue
     {
         
     }
+
 }

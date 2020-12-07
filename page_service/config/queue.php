@@ -116,19 +116,20 @@ return [
        
            'options' => [
                 'queue' => [
-                    'exchange' => env('RABBITMQ_DIRECT_EXCHANGE_NAME', 'amq.fanout'),
-                    'exchange_type' => env('RABBITMQ_DIRECT_EXCHANGE_TYPE', 'fanout'),
+                    'exchange' => env('RABBITMQ_DIRECT_EXCHANGE_NAME', 'amq.direct'),
+                    'exchange_type' => env('RABBITMQ_DIRECT_EXCHANGE_TYPE', 'direct'),
+                    'exchange_routing_key' => env('RABBITMQ_DIRECT_EXCHANGE_ROUTING_KEY', 'default'),
                     'prioritize_delayed_messages' =>  env('RABBITMQ_DIRECT_PRIORITIZE_DELAYED_MESSAGES', false),
                     'queue_max_priority' => env('RABBITMQ_DIRECT_QUEUE_MAX_PRIORITY', 10),
                 ],
                 'exchange' => [
-                    'name' => env('RABBITMQ_DIRECT_EXCHANGE_NAME', 'amq.fanout'),
+                    'name' => env('RABBITMQ_DIRECT_EXCHANGE_NAME', 'amq.direct'),
                     'declare' => env('RABBITMQ_DIRECT_EXCHANGE_DECLARE', true),
-                    'type' => env('RABBITMQ_DIRECT_EXCHANGE_TYPE', 'fanout'),
+                    'type' => env('RABBITMQ_DIRECT_EXCHANGE_TYPE', 'direct'),
                     'passive' => env('RABBITMQ_DIRECT_EXCHANGE_PASSIVE', false),
                     'durable' => env('RABBITMQ_DIRECT_EXCHANGE_DURABLE', true),
                     'auto_delete' => env('RABBITMQ_DIRECT_EXCHANGE_AUTODELETE', false),
-                    'arguments' => env('RABBITMQ_DIRECT_EXCHANGE_ARGUMENTS', 'default'),
+                    'arguments' => env('RABBITMQ_DIRECT_EXCHANGE_ARGUMENTS'),
                 ], 
                 'ssl_options' => [
                     'cafile' => env('RABBITMQ_DIRECT_SSL_CAFILE', null),
