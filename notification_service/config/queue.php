@@ -98,7 +98,7 @@ return [
             
         ],
 
-        'rabbitmq.direct' => [
+        'rabbitmq_direct' => [
         
            'driver' => 'rabbitmq',
            'queue' => env('RABBITMQ_DIRECT_QUEUE', 'default'),
@@ -116,27 +116,28 @@ return [
        
            'options' => [
                 'queue' => [
-                    'exchange' => env('RABBITMQ_DIRECT_EXCHANGE_NAME', 'amq.fanout'),
-                    'exchange_type' => env('RABBITMQ_DIRECT_EXCHANGE_TYPE', 'fanout'),
+                    'exchange' => env('RABBITMQ_DIRECT_EXCHANGE_NAME', 'amq.direct'),
+                    'exchange_type' => env('RABBITMQ_DIRECT_EXCHANGE_TYPE', 'direct'),
+                    'exchange_routing_key' => env('RABBITMQ_DIRECT_EXCHANGE_ROUTING_KEY', 'default'),
                     'prioritize_delayed_messages' =>  env('RABBITMQ_DIRECT_PRIORITIZE_DELAYED_MESSAGES', false),
                     'queue_max_priority' => env('RABBITMQ_DIRECT_QUEUE_MAX_PRIORITY', 10),
                 ],
                 'exchange' => [
                     'name' => env('RABBITMQ_DIRECT_EXCHANGE_NAME', 'amq.direct'),
                     'declare' => env('RABBITMQ_DIRECT_EXCHANGE_DECLARE', true),
-                    'type' => env('RABBITMQ_DIRECT_EXCHANGE_TYPE', 'fanout'),
+                    'type' => env('RABBITMQ_DIRECT_EXCHANGE_TYPE', 'direct'),
                     'passive' => env('RABBITMQ_DIRECT_EXCHANGE_PASSIVE', false),
                     'durable' => env('RABBITMQ_DIRECT_EXCHANGE_DURABLE', true),
                     'auto_delete' => env('RABBITMQ_DIRECT_EXCHANGE_AUTODELETE', false),
-                    'arguments' => env('RABBITMQ_DIRECT_EXCHANGE_ARGUMENTS', 'default'),
+                    'arguments' => env('RABBITMQ_DIRECT_EXCHANGE_ARGUMENTS'),
+                ], 
+                'ssl_options' => [
+                    'cafile' => env('RABBITMQ_DIRECT_SSL_CAFILE', null),
+                    'local_cert' => env('RABBITMQ_DIRECT_SSL_LOCALCERT', null),
+                    'local_key' => env('RABBITMQ_DIRECT_SSL_LOCALKEY', null),
+                    'verify_peer' => env('RABBITMQ_DIRECT_SSL_VERIFY_PEER', true),
+                    'passphrase' => env('RABBITMQ_DIRECT_SSL_PASSPHRASE', null),
                 ],
-               'ssl_options' => [
-                   'cafile' => env('RABBITMQ_DIRECT_SSL_CAFILE', null),
-                   'local_cert' => env('RABBITMQ_DIRECT_SSL_LOCALCERT', null),
-                   'local_key' => env('RABBITMQ_DIRECT_SSL_LOCALKEY', null),
-                   'verify_peer' => env('RABBITMQ_DIRECT_SSL_VERIFY_PEER', true),
-                   'passphrase' => env('RABBITMQ_DIRECT_SSL_PASSPHRASE', null),
-               ],
            ],
        
            /*
@@ -146,7 +147,7 @@ return [
             
         ],
 
-        'rabbitmq.fanout' => [
+        'rabbitmq_fanout' => [
         
            'driver' => 'rabbitmq',
            'queue' => env('RABBITMQ_FANOUT_QUEUE', 'default'),
@@ -176,7 +177,7 @@ return [
                     'passive' => env('RABBITMQ_FANOUT_EXCHANGE_PASSIVE', false),
                     'durable' => env('RABBITMQ_FANOUT_EXCHANGE_DURABLE', true),
                     'auto_delete' => env('RABBITMQ_FANOUT_EXCHANGE_AUTODELETE', false),
-                    'arguments' => env('RABBITMQ_FANOUT_EXCHANGE_ARGUMENTS', 'default'),
+                    'arguments' => env('RABBITMQ_FANOUT_EXCHANGE_ARGUMENTS'),
                 ],
                 'ssl_options' => [
                    'cafile' => env('RABBITMQ_FANOUT_SSL_CAFILE', null),
@@ -193,7 +194,7 @@ return [
            'worker' => env('RABBITMQ_FANOUT_WORKER', 'default'),
             
         ],
-
+        
     ],
 
     /*
