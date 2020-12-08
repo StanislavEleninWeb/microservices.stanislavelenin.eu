@@ -177,7 +177,7 @@ return [
                     'passive' => env('RABBITMQ_FANOUT_EXCHANGE_PASSIVE', false),
                     'durable' => env('RABBITMQ_FANOUT_EXCHANGE_DURABLE', true),
                     'auto_delete' => env('RABBITMQ_FANOUT_EXCHANGE_AUTODELETE', false),
-                    'arguments' => env('RABBITMQ_FANOUT_EXCHANGE_ARGUMENTS', 'default'),
+                    'arguments' => env('RABBITMQ_FANOUT_EXCHANGE_ARGUMENTS'),
                 ],
                 'ssl_options' => [
                    'cafile' => env('RABBITMQ_FANOUT_SSL_CAFILE', null),
