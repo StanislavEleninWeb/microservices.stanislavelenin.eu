@@ -98,7 +98,7 @@ return [
             
         ],
 
-        'rabbitmq.direct' => [
+        'rabbitmq_direct' => [
         
            'driver' => 'rabbitmq',
            'queue' => env('RABBITMQ_DIRECT_QUEUE', 'default'),
@@ -147,7 +147,7 @@ return [
             
         ],
 
-        'rabbitmq.fanout' => [
+        'rabbitmq_fanout' => [
         
            'driver' => 'rabbitmq',
            'queue' => env('RABBITMQ_FANOUT_QUEUE', 'default'),

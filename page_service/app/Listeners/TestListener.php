@@ -14,24 +14,7 @@ class TestListener implements ShouldQueue
      *
      * @var string|null
      */
-    public $connection = 'rabbitmq';
-
-    /**
-     * The name of the queue the job should be sent to.
-     *
-     * @var string|null
-     */
-    public $queue = 'page.service';
-
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+    public $connection = 'rabbitmq_direct';
 
     /**
      * Handle the event.
