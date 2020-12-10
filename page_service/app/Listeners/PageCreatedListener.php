@@ -21,7 +21,7 @@ class PageCreatedListener implements ShouldQueue
      *
      * @var string|null
      */
-    public $exchange_routing_key = 'notifycation';
+    public $exchange_routing_key = 'notification';
 
     /**
      * Create the event listener.
