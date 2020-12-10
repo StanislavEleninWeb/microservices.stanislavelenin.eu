@@ -8,7 +8,8 @@
         "php": "^7.4",
         "illuminate/redis": "^8.12",
         "intervention/image": "^2.5",
-        "laravel/lumen-framework": "^8.0"
+        "laravel/lumen-framework": "^8.0",
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^11.1"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",

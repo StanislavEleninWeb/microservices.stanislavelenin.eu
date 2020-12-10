@@ -63,7 +63,7 @@ class ImageController extends Controller
     			dispatch(new ProcessImageFileJob($request->input('page'), $image));
     	}
 
-        return response('Successfully queued for upload.', ResponseCodes::HTTP_ACCEPTED);
+        return response('Successfully queued for upload.', ResponseCodes::HTTP_CREATED);
     }
 
     /**
@@ -91,7 +91,7 @@ class ImageController extends Controller
 
         }
 
-        return response('Successfully deleted.', ResponseCodes::HTTP_ACCEPTED);
+        return response('Successfully deleted.', ResponseCodes::HTTP_NO_CONTENT);
     }
 
 }
