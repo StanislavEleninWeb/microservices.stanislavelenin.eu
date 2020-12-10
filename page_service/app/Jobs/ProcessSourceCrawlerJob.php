@@ -51,6 +51,7 @@ class ProcessSourceCrawlerJob extends Job
         $generator->analyze();
         $generator->getResult()->each(function($url){
             dispatch(new ProcessPageCrawlerJob($url, $this->source));
+            return false;
         });
     }
 

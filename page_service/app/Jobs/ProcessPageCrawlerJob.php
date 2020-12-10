@@ -74,7 +74,7 @@ class ProcessPageCrawlerJob extends Job
             if(isset($page_validator->failed()['url']['Unique']))
                 return;
 
-            throw new Exception($page_validator->errors()->first(), 1);
+            throw new \Exception($page_validator->errors()->first(), 1);
         }
 
         //Generate source url get/post http request
@@ -99,7 +99,11 @@ class ProcessPageCrawlerJob extends Job
             'content' => 'required|string',
         ])->validate();
 
-        $page_id = DB::transaction(function() use ($page_validator, $page_info_validator){
+        $page_info = DB::transaction(function() use ($page_validator, $page_info_validator){
+            
+            // Fetch validator data as array
+            $page_validator = $page_validator->getData();
+
             // Page Model
             $page = new Page;
             $page->url = $page_validator['url'];
@@ -122,7 +126,7 @@ class ProcessPageCrawlerJob extends Job
             $page_info->content = $page_info_validator['content'];
             $page_info->save();
 
-            return $page->id;
+            return $page_info;
         });
 
         // Send post http request and process image urls
@@ -131,7 +135,7 @@ class ProcessPageCrawlerJob extends Job
             'images' => $results['images'],
         ]);
 
-        event(new PageCreatedEvent($page_id));        
+        event(new PageCreatedEvent($page_info));        
     }
 
     /**

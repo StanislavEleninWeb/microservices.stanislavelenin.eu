@@ -29,8 +29,8 @@ class TestController extends Controller
      */
     public function index()
     {
-        event(new \App\Events\PageCreatedEvent(1));
-        dd('Event send');
+        // event(new \App\Events\PageCreatedEvent(1));
+        // dd('Event send');
     	try {
             // $page = new ProcessPageCrawlerJob('http://127.0.1.2/test.html', Source::find(1));
             
