@@ -24,7 +24,7 @@ class PageCreatedListener implements ShouldQueue
     {
         // $users = User::find(collect($event->users)->pluck('id'));
         $users = User::all();
-        
+        // dd($users);
         Notification::send($users, new PageCreatedNotification($event));
     }
 }

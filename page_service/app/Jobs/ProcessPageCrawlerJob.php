@@ -67,16 +67,15 @@ class ProcessPageCrawlerJob extends Job
         // Validate url and check if unique
         $page_validator = Validator::make(get_object_vars($this), [
             'url' => 'required|url|unique:pages',
-        ])->validate();
+        ]);
 
+        if ($page_validator->fails()) {
 
-        // if ($page_validator->fails()) {
+            if(isset($page_validator->failed()['url']['Unique']))
+                return;
 
-        //     if(isset($page_validator->failed()['url']['Unique']))
-        //         return;
-
-        //     throw new Exception($page_validator->errors()->first(), 1);
-        // }
+            throw new Exception($page_validator->errors()->first(), 1);
+        }
 
         //Generate source url get/post http request
         $analyzer = new $this->source->analyze_content_class($this->url);

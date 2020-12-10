@@ -12,6 +12,25 @@ class PageCreatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * The name of the connection the job should be sent to.
+     *
+     * @var string|null
+     */
+    public $connection = 'rabbitmq_direct';
+
+    /**
+     * The name of the connection the job should be sent to.
+     *
+     * @var string|null
+     */
+    public $exchange_routing_key = 'notifycation';
+
+    /**
+     * The name of the connection the job should be sent to.
+     *
+     * @var string|null
+     */
     public $page;
 
     /**

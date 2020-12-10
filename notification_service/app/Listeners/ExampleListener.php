@@ -8,6 +8,14 @@ use Illuminate\Queue\InteractsWithQueue;
 
 class ExampleListener
 {
+    
+    /**
+     * The name of the connection the job should be sent to.
+     *
+     * @var string|null
+     */
+    // public $exchange_routing_key = 'notifycation';
+
     /**
      * Create the event listener.
      *
@@ -15,7 +23,10 @@ class ExampleListener
      */
     public function __construct()
     {
-        //
+        // // Config RabbitMQ Exchange Direct routing key
+        // config([
+        //     'queue.connections.rabbitmq_direct.options.queue.exchange_routing_key' => $this->exchange_routing_key
+        // ]);
     }
 
     /**
