@@ -131,11 +131,11 @@ class ProcessPageCrawlerJob extends Job
 
         // Send post http request and process image urls
         Http::post(env('IMAGE_SERVICE_URL') . '/images', [
-            'page' => $page_id,
+            'page' => $page_info->page_id,
             'images' => $results['images'],
         ]);
 
-        event(new PageCreatedEvent($page_info));        
+        event(new PageCreatedEvent($page_info->toArray()));        
     }
 
     /**
