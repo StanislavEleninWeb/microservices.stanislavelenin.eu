@@ -5,12 +5,12 @@ namespace App\Events;
 class NotifyAdminsEvent extends Event
 {
 
-    /**
-    * Pass exception variable
-    *
+	/**
+	* Pass exception variable
+	*
     * @var string|\Throwable
-    */
-    public $exception;
+	*/
+	public $exception;
 
     /**
      * Create a new event instance.

@@ -59,11 +59,14 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-    	foreach($request->input('images') as $image){
-    			dispatch(new ProcessImageFileJob($request->input('page'), $image));
-    	}
+        $image = 'https://www.alo.bg/user_files/e/eraplambg/7061283_112953436_big.jpg';
+        dispatch(new ProcessImageFileJob(13, $image));
 
-        return response('Successfully queued for upload.', ResponseCodes::HTTP_CREATED);
+    	// foreach($request->input('images') as $image){
+    	// 		dispatch(new ProcessImageFileJob($request->input('page'), $image));
+    	// }
+
+        return response('Successfully queued for upload.', ResponseCodes::HTTP_ACCEPTED);
     }
 
     /**

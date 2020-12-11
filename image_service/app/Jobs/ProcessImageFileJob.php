@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use Illuminate\Support\Facades\Http;
-use Intervention\Image\Image;
+use Intervention\Image\ImageManagerStatic as Image;
+use App\Events\NotifyAdminsEvent;
 
 class ProcessImageFileJob extends Job
 {
@@ -35,12 +35,19 @@ class ProcessImageFileJob extends Job
      */
     public function handle()
     {
-        $contentType = mime_content_type($this->url);
+        // From local
+        // $contentType = mime_content_type($this->url);
 
+        // From remote, arg 1 set keys
+        $contentType = get_headers($this->url, 1)['Content-Type'];
+        
         if(!in_array($contentType, $this->allowedMimeTypes))
             return;
 
         app('db')->transaction(function() use ($contentType){
+            
+            $filename = md5(microtime());
+            $ext = explode('/', $contentType)[1];
 
             app('db')->insert("INSERT INTO images(page_id, filename, ext) VALUES(:page, :filename, :ext)", [
                 ':page' => $this->page,
@@ -50,8 +57,13 @@ class ProcessImageFileJob extends Job
             $id = app('db')->getPdo()->lastInsertId();
 
             $storage_path = app('path.storage') . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . intval($id/1000) . DIRECTORY_SEPARATOR;
-            $filename = md5(microtime());
-            $ext = explode('/', $contentType)[1];
+
+            if(!file_exists($storage_path) || !is_dir($storage_path))
+                if(!mkdir($storage_path, 0775, true))
+                    throw new \Exception("Could not create directory in storage path: " . $storage_path . PHP_EOL, 1);
+                    
+            if(!is_writable($storage_path))
+                throw new \Exception("Storage Path is not writable: " . $storage_path . PHP_EOL, 1);
 
             // open an image file
             $img = Image::make($this->url);
@@ -61,13 +73,15 @@ class ProcessImageFileJob extends Job
 
             // resize the image so that the largest side fits within the limit; the smaller
             // side will be scaled to maintain the original aspect ratio
-            $img->resize(400, null, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
+            foreach(json_decode(env('IMAGE_SIZE')) as $width){
+                $img->resize($width, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
 
-            // save the resized image as a new file
-            $img->save($storage_path . '400' . $filename . '.' . $ext);
+                // save the resized image as a new file
+                $img->save($storage_path . $width . '_' . $filename . '.' . $ext);
+            }
 
         });
     }
@@ -78,12 +92,8 @@ class ProcessImageFileJob extends Job
      * @param  \Throwable  $exception
      * @return void
      */
-    public function failed(Throwable $exception)
+    public function failed(\Throwable $exception)
     {
-        Http::post(env('NOTIFICATION_SERVICE_URL') . '/notify/admin', [
-            'url' = $this->url, 
-            'page' => $this->page,
-            'exception' => $exception,
-        ]);
+        event(new NotifyAdminsEvent($exception));
     }
 }
