@@ -27,7 +27,7 @@ class NotifyAdminsListener implements ShouldQueue
         ]);
 
         if($response->failed())
-            return response('User service no valid response data', ResponseCodes::HTTP_BAD_REQUEST);
+            throw new \Exception('User service no valid response data', ResponseCodes::HTTP_BAD_REQUEST);
 
         $admins = User::find(collect($response->json())->pluck('id'));
 

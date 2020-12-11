@@ -6,7 +6,7 @@ use App\Events\NotifyAdmins as Event;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class ExampleListener
+class NotifyAdminsListener
 {
     /**
      * The name of the connection the job should be sent to.
@@ -30,6 +30,6 @@ class ExampleListener
      */
     public function handle(Event $event)
     {
-        
+        //
     }
 }
