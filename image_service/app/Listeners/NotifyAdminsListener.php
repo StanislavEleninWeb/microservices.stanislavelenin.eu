@@ -6,7 +6,7 @@ use App\Events\NotifyAdmins as Event;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class NotifyAdminsListener
+class NotifyAdminsListener implements ShouldQueue
 {
     /**
      * The name of the connection the job should be sent to.
