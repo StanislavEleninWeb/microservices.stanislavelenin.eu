@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Support\Facades\Http;
+use App\Events\NotifyAdminsEvent;
 use App\Models\Source;
 
 class ProcessSourceCrawlerJob extends Job
@@ -61,11 +62,8 @@ class ProcessSourceCrawlerJob extends Job
      * @param  \Throwable  $exception
      * @return void
      */
-    public function failed(Throwable $exception)
+    public function failed(\Throwable $exception)
     {
-        Http::post(env('NOTIFICATION_SERVICE_URL') . '/notify/admins', [
-            'object' => $this->source,
-            'exception' => $exception,
-        ]);
+        event(new NotifyAdminsEvent($exception));
     }
 }

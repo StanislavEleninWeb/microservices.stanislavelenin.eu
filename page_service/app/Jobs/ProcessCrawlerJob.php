@@ -5,6 +5,7 @@ namespace App\Jobs;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use App\Events\NotifyAdminsEvent;
 use App\Models\Source;
 
 class ProcessCrawlerJob extends Job implements ShouldBeUnique
@@ -31,10 +32,8 @@ class ProcessCrawlerJob extends Job implements ShouldBeUnique
      * @param  \Throwable  $exception
      * @return void
      */
-    public function failed(Throwable $exception)
+    public function failed(\Throwable $exception)
     {
-        Http::post(env('NOTIFICATION_SERVICE_URL' . '/notify/admins'), [
-            'exception' => $exception,
-        ]);
+        event(new NotifyAdminsEvent($exception));
     }
 }

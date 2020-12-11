@@ -13,7 +13,6 @@ use App\Notifications\NotifyAdminsNotification;
 
 class NotifyAdminsListener implements ShouldQueue
 {
-
     /**
      * Handle the event.
      *
@@ -31,6 +30,6 @@ class NotifyAdminsListener implements ShouldQueue
 
         $admins = User::find(collect($response->json())->pluck('id'));
 
-        Notification::send($admins, new NotifyAdminsNotification($event->data));
+        Notification::send($admins, new NotifyAdminsNotification($event->exception));
     }
 }

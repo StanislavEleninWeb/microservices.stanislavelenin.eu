@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
+use App\Events\NotifyAdminsEvent;
 use App\Events\PageCreatedEvent;
 
 use App\Models\Source;
@@ -144,12 +145,11 @@ class ProcessPageCrawlerJob extends Job
      * @param  \Throwable  $exception
      * @return void
      */
-    public function failed(Throwable $exception)
+    public function failed(\Throwable $exception)
     {
-        Http::post(env('NOTIFICATION_SERVICE_URL') . '/notify/admin', [
+        event(new NotifyAdminsEvent($exception, [
             'url' => $this->url,
             'object' => $this->source,
-            'exception' => $exception,
-        ]);
+        ]));
     }
 }
