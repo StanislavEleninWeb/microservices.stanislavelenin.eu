@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Events\NotifyAdminsEvent;
+use Carbon\Carbon;
 
 class ProcessImageFileJob extends Job
 {
@@ -48,11 +49,14 @@ class ProcessImageFileJob extends Job
             
             $filename = md5(microtime());
             $ext = explode('/', $contentType)[1];
+            $datetime = Carbon::now();
 
-            app('db')->insert("INSERT INTO images(page_id, filename, ext) VALUES(:page, :filename, :ext)", [
+            app('db')->insert("INSERT INTO images(page_id, filename, ext) VALUES(:page, :filename, :ext, :created_at, :updated_at)", [
                 ':page' => $this->page,
                 ':filename' => $filename,
                 ':ext' => $ext,
+                ':created_at' => $datetime,
+                ':updated_at' => $datetime,
             ]);
             $id = app('db')->getPdo()->lastInsertId();
 
