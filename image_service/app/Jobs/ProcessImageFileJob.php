@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Events\NotifyAdminsEvent;
 use Carbon\Carbon;
@@ -36,15 +37,23 @@ class ProcessImageFileJob extends Job
      */
     public function handle()
     {
-        // From local
-        // $contentType = mime_content_type($this->url);
+        $validator = Validator::make(
+            [
+                'url' => $this->url
+            ],
+            [
+                'url' => 'required|url'
+            ]
+        );
+        
+        if($validator->fails())
+            return;
 
-        // From remote, arg 1 set keys
-        $contentType = get_headers($this->url, 1)['Content-Type'];
+        $contentType = get_headers($this->url, 1)['Content-Type'][1];
         
         if(!in_array($contentType, $this->allowedMimeTypes))
             return;
-
+        
         app('db')->transaction(function() use ($contentType){
             
             $filename = md5(microtime());

@@ -130,11 +130,13 @@ class ProcessPageCrawlerJob extends Job
             return $page_info;
         });
 
-        // Send post http request and process image urls
-        Http::post(env('IMAGE_SERVICE_URL') . '/images', [
-            'page' => $page_info->page_id,
-            'images' => $results['images'],
-        ]);
+        if(isset($results['images']) && !empty($results['images'])) {
+            // Send post http request and process image urls
+            Http::post(env('IMAGE_SERVICE_URL') . '/images', [
+                'page' => $page_info->page_id,
+                'images' => $results['images'],
+            ]);
+        }
 
         event(new PageCreatedEvent($page_info->toArray()));        
     }

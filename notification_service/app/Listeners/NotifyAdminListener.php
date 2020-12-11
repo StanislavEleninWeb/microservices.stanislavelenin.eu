@@ -21,10 +21,8 @@ class NotifyAdminsListener implements ShouldQueue
      */
     public function handle(Event $event)
     {
-        $response = Http::get(env('USER_SERVICE_URL') . '/users', [
-            'admin' => true,
-        ]);
-
+        $response = Http::get(env('USER_SERVICE_URL') . '/users');
+        dd($response->json()->pluck('id'));
         if($response->failed())
             throw new \Exception('User service no valid response data', ResponseCodes::HTTP_BAD_REQUEST);
 

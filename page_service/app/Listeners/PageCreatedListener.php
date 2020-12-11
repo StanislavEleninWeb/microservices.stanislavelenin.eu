@@ -44,7 +44,7 @@ class PageCreatedListener implements ShouldQueue
      */
     public function handle(Event $event)
     {
-        echo "PageCreatedListener";        
+        //        
     }
 
 }
