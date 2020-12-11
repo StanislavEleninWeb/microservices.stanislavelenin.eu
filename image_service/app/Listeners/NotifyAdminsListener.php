@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\NotifyAdmins as Event;
+use App\Events\NotifyAdminsEvent as Event;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 

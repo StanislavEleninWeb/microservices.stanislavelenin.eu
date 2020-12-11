@@ -28,7 +28,7 @@ class ProcessSourceCrawlerJob extends Job
      *
      * @var int
      */
-    public $timeout = 30;
+    public $timeout = 60;
 
     /**
      * Create a new job instance.
@@ -52,7 +52,6 @@ class ProcessSourceCrawlerJob extends Job
         $generator->analyze();
         $generator->getResult()->each(function($url){
             dispatch(new ProcessPageCrawlerJob($url, $this->source));
-            return false;
         });
     }
 

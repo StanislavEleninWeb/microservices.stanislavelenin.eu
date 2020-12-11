@@ -51,7 +51,7 @@ class ProcessImageFileJob extends Job
             $ext = explode('/', $contentType)[1];
             $datetime = Carbon::now();
 
-            app('db')->insert("INSERT INTO images(page_id, filename, ext) VALUES(:page, :filename, :ext, :created_at, :updated_at)", [
+            app('db')->insert("INSERT INTO images(page_id, filename, ext, created_at, updated_at) VALUES(:page, :filename, :ext, :created_at, :updated_at)", [
                 ':page' => $this->page,
                 ':filename' => $filename,
                 ':ext' => $ext,
@@ -98,6 +98,9 @@ class ProcessImageFileJob extends Job
      */
     public function failed(\Throwable $exception)
     {
-        event(new NotifyAdminsEvent($exception));
+        event(new NotifyAdminsEvent($exception, [
+            'page' => $this->page,
+            'url' => $this->url,
+        ]));
     }
 }
