@@ -17,6 +17,21 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/markdown', function(){
+
+	$user = App\Models\User::find(1);
+
+	foreach ($user->unreadNotifications as $notification) {
+
+		$page = $notification->data['page']['page'];
+
+
+	    return new App\Mail\PageCreatedMail($page);
+
+	    dd($notification->data);
+	}
+});
+
 $router->get('/notifications/unread/user/{id}', 'NotificationController@getUnreadNotifications');
 $router->get('/notifications/user/{id}', 'NotificationController@getNotifications');
 $router->get('/notifications/{id}/read', 'NotificationController@markNotificationAsRead');

@@ -61,9 +61,7 @@ class PageCreatedNotification extends Notification implements ShouldQueue
 	 */
 	public function toArray($notifiable)
 	{
-	    return [
-	        'page' => $this->page,
-	    ];
+	    return $this->page;
 	}
 
 }

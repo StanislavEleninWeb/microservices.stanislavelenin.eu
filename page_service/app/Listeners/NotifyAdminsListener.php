@@ -2,9 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Events\NotifyAdmins as Event;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+
+use App\Events\NotifyAdminsEvent as Event;
 
 class NotifyAdminsListener implements ShouldQueue
 {

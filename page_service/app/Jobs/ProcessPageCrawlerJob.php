@@ -38,7 +38,21 @@ class ProcessPageCrawlerJob extends Job
      *
      * @var int
      */
-    public $tries = 2;
+    public $tries = 3;
+
+    /**
+     * The maximum number of unhandled exceptions to allow before failing.
+     *
+     * @var int
+     */
+    public $maxExceptions = 3;
+
+    /**
+     * The number of seconds to wait before retrying the job.
+     *
+     * @var int
+     */
+    public $backoff = 3;
 
     /**
      * The number of seconds the job can run before timing out.
@@ -147,7 +161,7 @@ class ProcessPageCrawlerJob extends Job
      * @param  \Throwable  $exception
      * @return void
      */
-    public function failed(\Throwable $exception)
+    public function failed(Throwable $exception)
     {
         event(new NotifyAdminsEvent($exception, [
             'url' => $this->url,

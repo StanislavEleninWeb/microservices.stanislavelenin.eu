@@ -31,6 +31,11 @@ class TestController extends Controller
      */
     public function index()
     {
+        event(new \App\Events\NotifyAdminsEvent(new \Exception('TEst new exception', 1), [
+            'url' => 'http://localhost',
+            'data' => 'data',
+        ]));
+        dd('event send');
         // event(new \App\Events\PageCreatedEvent(1));
         // dd('Event send');
     	// try {

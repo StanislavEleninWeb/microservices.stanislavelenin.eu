@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
 
 use App\Notifications\NotifyAdminsNotification;
+use App\Models\User;
 
 class NotifyAdminsListener implements ShouldQueue
 {
@@ -22,12 +23,12 @@ class NotifyAdminsListener implements ShouldQueue
     public function handle(Event $event)
     {
         $response = Http::get(env('USER_SERVICE_URL') . '/users');
-        dd($response->json()->pluck('id'));
+
         if($response->failed())
-            throw new \Exception('User service no valid response data', ResponseCodes::HTTP_BAD_REQUEST);
+            throw new \Exception('NotifyAdminsListener no valid response data', ResponseCodes::HTTP_BAD_REQUEST);
 
         $admins = User::find(collect($response->json())->pluck('id'));
-
-        Notification::send($admins, new NotifyAdminsNotification($event->exception));
+        
+        Notification::send($admins, new NotifyAdminsNotification($event));
     }
 }
