@@ -33,8 +33,12 @@ class TestController extends Controller
     {
         event(new \App\Events\NotifyAdminsEvent(new \Exception('TEst new exception', 1), [
             'url' => 'http://localhost',
-            'data' => 'data',
+            'data' => [
+                'page_id' => 13,
+                'title' => 'Title', 
+            ],
         ]));
+
         dd('event send');
         // event(new \App\Events\PageCreatedEvent(1));
         // dd('Event send');

@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 
 use App\Mail\NotifyAdminsMail;
 
-class PageCreatedNotification extends Notification implements ShouldQueue
+class NotifyAdminsNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -21,7 +21,14 @@ class PageCreatedNotification extends Notification implements ShouldQueue
      */
     public function __construct($data)
     {
-        $this->data = $data;
+        $this->data = [
+	    	'message' => $data->exception->getMessage(),
+	    	'code' => $data->exception->getCode(),
+	    	'file' => $data->exception->getFile(),
+	    	'line' => $data->exception->getLine(),
+	    	'url' => $data->data['url'],
+	    	'data' => $data->data['data'],
+	    ];
     }
 
     /**
@@ -56,9 +63,7 @@ class PageCreatedNotification extends Notification implements ShouldQueue
 	 */
 	public function toArray($notifiable)
 	{
-	    return [
-	        'data' => $this->data,
-	    ];
+	    return $this->data;
 	}
 
 }
