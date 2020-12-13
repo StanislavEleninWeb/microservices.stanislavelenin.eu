@@ -34,6 +34,8 @@ class ProcessCrawlerJob extends Job implements ShouldBeUnique
      */
     public function failed(\Throwable $exception)
     {
-        event(new NotifyAdminsEvent($exception));
+        event(new NotifyAdminsEvent($exception, [
+            'data' => 'Process Crawler Job'
+        ]));
     }
 }

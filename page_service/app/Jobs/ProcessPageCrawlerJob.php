@@ -161,7 +161,7 @@ class ProcessPageCrawlerJob extends Job
      * @param  \Throwable  $exception
      * @return void
      */
-    public function failed(Throwable $exception)
+    public function failed(\Throwable $exception)
     {
         event(new NotifyAdminsEvent($exception, [
             'url' => $this->url,

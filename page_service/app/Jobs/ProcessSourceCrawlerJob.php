@@ -63,6 +63,8 @@ class ProcessSourceCrawlerJob extends Job
      */
     public function failed(\Throwable $exception)
     {
-        event(new NotifyAdminsEvent($exception));
+        event(new NotifyAdminsEvent($exception, [
+            'data' => 'Process Crawler Job',
+        ]));
     }
 }
