@@ -26,8 +26,7 @@ class NotifyAdminsNotification extends Notification implements ShouldQueue
 	    	'code' => $data->exception->getCode(),
 	    	'file' => $data->exception->getFile(),
 	    	'line' => $data->exception->getLine(),
-	    	'url' => $data->data['url'],
-	    	'data' => $data->data['data'],
+	    	'data' => $data->data,
 	    ];
     }
 

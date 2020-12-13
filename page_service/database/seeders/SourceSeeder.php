@@ -16,7 +16,7 @@ class SourceSeeder extends Seeder
 	private $sources = [
 		[
 			'title' => 'Alo.bg',
-			'base_url' => 'https://alo.bg',
+			'base_url' => 'https://www.alo.bg/',
 			'generate_url_request_class' => 'App\GenerateUrlRequest\GenerateUrlRequestAloBg',
 			'analyze_content_class' => 'App\Analyze\AnalyzeContentAloBg',
 		],

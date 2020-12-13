@@ -165,7 +165,7 @@ class ProcessPageCrawlerJob extends Job
     {
         event(new NotifyAdminsEvent($exception, [
             'url' => $this->url,
-            'object' => $this->source,
+            'source' => $this->source->toArray(),
         ]));
     }
 }
