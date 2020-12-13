@@ -98,7 +98,7 @@ class AnalyzeContentAloBg extends AnalyzeContent {
 
     protected function setPrice($price){
         $price = filter_var(trim($price), FILTER_SANITIZE_STRING);
-
+        dd($price);
         preg_match('/^[\d\s]*/', $price, $matches_price);
         preg_match('/[A-Z]{2,3}/', $price, $matches_currency);
         preg_match('/\d+(\.\d{1,2})/', $price, $matches_price_per_square);
