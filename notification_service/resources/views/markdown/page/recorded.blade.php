@@ -6,8 +6,8 @@
 @component('mail::panel')
 <b>{{ $page['title'] }}</b><br/>
 Цена: <b>{{ $page['price'] }}</b><br/>
-Цена кв.м: <b>{{ $page['price_per_square'] }} кв.м</b><br/>
-Квадратура: <b>{{ $page['space'] }}</b><br/>
+Цена кв.м: <b>{{ $page['price_per_square'] }} {{ $page['currency']['title'] }}/кв.</b><br/>
+Квадратура: <b>{{ $page['space'] }} кв.м</b><br/>
 Тип: <b>{{ $page['building_type']['title'] }}</b><br/>
 Строителство: <b>{{ $page['build_type']['title'] }}</b><br/>
 Валута: <b>{{ $page['currency']['title'] }}</b><br/>

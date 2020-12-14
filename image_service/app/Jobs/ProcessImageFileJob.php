@@ -49,8 +49,7 @@ class ProcessImageFileJob extends Job
         if($validator->fails())
             return;
 
-        $contentType = get_headers($this->url, 1)['Content-Type'][1];
-        
+        $contentType = get_headers($this->url, 1)['Content-Type'];
         if(!in_array($contentType, $this->allowedMimeTypes))
             return;
         
@@ -69,7 +68,7 @@ class ProcessImageFileJob extends Job
             ]);
             $id = app('db')->getPdo()->lastInsertId();
 
-            $storage_path = app('path.storage') . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . intval($id/1000) . DIRECTORY_SEPARATOR;
+            $storage_path = app('path.storage') . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $this->page . DIRECTORY_SEPARATOR;
 
             if(!file_exists($storage_path) || !is_dir($storage_path))
                 if(!mkdir($storage_path, 0775, true))

@@ -5,6 +5,7 @@ namespace App\Jobs;
 use Illuminate\Support\Facades\Http;
 use App\Events\NotifyAdminsEvent;
 use App\Models\Source;
+use App\Models\Page;
 
 class ProcessSourceCrawlerJob extends Job
 {
@@ -50,7 +51,13 @@ class ProcessSourceCrawlerJob extends Job
         //Generate source url get/post http request
         $generator = new $this->source->generate_url_request_class($this->source);
         $generator->analyze();
-        $generator->getResult()->each(function($url){
+
+        // Filter unique results
+        $crawled = Page::whereIn('url', $generator->getResult())->pluck('url');        
+        $unique_results = $generator->getResult()->diff($crawled);
+        
+        // Dispatch 
+        $unique_results->each(function($url){
             dispatch(new ProcessPageCrawlerJob($url, $this->source));
         });
     }
