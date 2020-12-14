@@ -31,29 +31,18 @@ class TestController extends Controller
      */
     public function index()
     {
-        event(new \App\Events\NotifyAdminsEvent(new \Exception('TEst new exception', 1), [
-            'url' => 'http://localhost',
-            'data' => [
-                'page_id' => 13,
-                'title' => 'Title', 
-            ],
-        ]));
-
-        dd('event send');
-        // event(new \App\Events\PageCreatedEvent(1));
-        // dd('Event send');
-    	// try {
-     //        // $page = new ProcessPageCrawlerJob('http://127.0.1.2/test.html', Source::find(1));
+     	try {
+            // $page = new ProcessPageCrawlerJob('http://127.0.1.2/test.html', Source::find(1));
             
-     //        $page = new ProcessPageCrawlerJob('https://www.alo.bg/7070426', Source::find(1));
+            $page = new ProcessPageCrawlerJob('https://www.alo.bg/7026560', Source::find(1));
             
-     //        $page->handle();
-    	// } catch(\Exception $e) {
-     //        dd($e);
-    	// 	return new Response( $e->getMessage(), 403);
-    	// } catch(\Throwable $e){
-     //        dd($e);
-     //    }
+            $page->handle();
+    	} catch(\Exception $e) {
+            dd($e);
+    		return new Response( $e->getMessage(), 403);
+    	} catch(\Throwable $e){
+            dd($e);
+        }
 
         return new Response('Success!!!', Response::HTTP_OK);
     }

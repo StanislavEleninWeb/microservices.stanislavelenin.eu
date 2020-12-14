@@ -109,7 +109,7 @@ class ProcessPageCrawlerJob extends Job
             'city' => 'required|string',
             'region' => 'required|string',
             'buildType' => 'required|string',
-            'floor' => 'required|numeric',
+            'floor' => 'nullable|numeric',
             'keywords.*' => 'nullable|string',
             'content' => 'required|string',
         ])->validate();
@@ -129,16 +129,26 @@ class ProcessPageCrawlerJob extends Job
             $page_info = new PageInfo;
             $page_info->page()->associate($page);
             $page_info->title = $page_info_validator['title'];
+
             $page_info->buildingType()->associate(BuildingType::where('title', $page_info_validator['type'])->orWhere('keywords', 'like', '%' . $page_info_validator['type'] . '%')->firstOrFail());
+
             $page_info->buildType()->associate(BuildType::where('title', $page_info_validator['buildType'])->orWhere('keywords', 'like', '%' . $page_info_validator['buildType'] . '%')->firstOrFail());
+
             $page_info->currency()->associate(Currency::where('title', $page_info_validator['currency'])->orWhere('slug', $page_info_validator['currency'])->orWhere('keywords', 'like', '%' . $page_info_validator['currency'] . '%')->firstOrFail());
+            
             $page_info->price = $page_info_validator['price'];
             $page_info->price_per_square = $page_info_validator['pricePerSquare'];
             $page_info->space = $page_info_validator['space'];
             $page_info->region_id = '1';
+            
+            if(isset($page_info_validator))
             $page_info->floor = $page_info_validator['floor'];
-            $page_info->keywords = implode(', ', $page_info_validator['keywords']);
+
+            if(isset($page_info_validator['keywords']))
+                $page_info->keywords = implode(', ', $page_info_validator['keywords']);
+
             $page_info->content = $page_info_validator['content'];
+
             $page_info->save();
 
             return $page_info;
