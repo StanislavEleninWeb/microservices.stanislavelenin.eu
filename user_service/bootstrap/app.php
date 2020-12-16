@@ -60,6 +60,8 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('auth');
+$app->configure('permission');
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +82,8 @@ $app->routeMiddleware([
     'auth' => \App\Http\Middleware\Authenticate::class,
     'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
     'auth0' => \App\Http\Middleware\Auth0Middleware::class,
+    'permission' => Spatie\Permission\Middlewares\PermissionMiddleware::class,
+    'role'       => Spatie\Permission\Middlewares\RoleMiddleware::class,
 ]);
 
 /*
@@ -96,6 +100,19 @@ $app->routeMiddleware([
 // $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
+$app->register(Spatie\Permission\PermissionServiceProvider::class);
+
+/*
+|--------------------------------------------------------------------------
+| Alias cache
+|--------------------------------------------------------------------------
+|
+| Here we will register all of the application's service providers which
+| are used to bind services into the container. Service providers are
+| totally optional, so you are not required to uncomment this line.
+|
+*/
+$app->alias('cache', \Illuminate\Cache\CacheManager::class);
 
 /*
 |--------------------------------------------------------------------------
