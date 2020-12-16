@@ -36,4 +36,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'remember_token',
         'deleted_at',
     ];
+
+    /**
+     * Get the user asssociated preferences
+     *
+     * @var Illuminate\Database\Eloquent\Model
+     */
+    public function preferences(){
+        return $this->hasOne(App\Models\UserPreferences::class);
+    }
+
 }
