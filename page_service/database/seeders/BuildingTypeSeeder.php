@@ -14,6 +14,10 @@ class BuildingTypeSeeder extends Seeder
 	*/
 	private $building_type = [
 		[
+			'title' => 'Едностаен апартамент',
+			'keywords' => 'Едностаен',
+		],
+		[
 			'title' => 'Двустаен апартамент',
 			'keywords' => 'Двустаен',
 		],
