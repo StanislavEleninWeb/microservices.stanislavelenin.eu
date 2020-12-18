@@ -74,6 +74,10 @@ $router->get('/', function () use ($router) {
 
 $router->get('/users', 'UserController@index');
 
+$router->post('/users/by/preference', 'UserController@usersByPreference');
+
+$router->post('/users/by/role', 'UserController@usersByRole');
+
 $router->group(['middleware' => 'auth0'], function () use ($router) {
 
     $router->get('/users/{id}', 'UserController@show');

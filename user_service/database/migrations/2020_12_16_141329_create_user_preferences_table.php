@@ -17,10 +17,8 @@ class CreateUserPreferencesTable extends Migration
 
             $table->unsignedBigInteger('id')->primary();
             
-            $table->string('building_type_id')->nullable();
-            $table->string('build_type_id')->nullable();
-            
-            $table->unsignedBigInteger('currency_id')->nullable();
+            $table->json('building_type_id')->nullable();
+            $table->json('build_type_id')->nullable();
 
             $table->decimal('price_from', 8, 2)->nullable();
             $table->decimal('price_to', 8, 2)->nullable();
@@ -31,9 +29,9 @@ class CreateUserPreferencesTable extends Migration
             $table->decimal('space_from', 6, 2)->nullable();
             $table->decimal('space_to', 6, 2)->nullable();
             
-            $table->string('region_id')->nullable();
+            $table->json('region_id')->nullable();
 
-            $table->string('keywords')->nullable();
+            $table->json('keywords')->nullable();
 
         });
     }

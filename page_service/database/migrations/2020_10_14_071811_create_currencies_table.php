@@ -18,6 +18,7 @@ class CreateCurrenciesTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('keywords');
+            $table->decimal('rate', 5, 3);
             $table->timestamps();
         });
     }
