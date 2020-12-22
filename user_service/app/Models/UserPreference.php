@@ -15,6 +15,18 @@ class User extends Model
         'name', 'email', 'api_token', 'password'
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'cities' => 'array',
+        'building_type' => 'array',
+        'build_type' => 'array',
+        'region' => 'array',
+        'keywords' => 'array',
+    ];
 
     /**
      * Get the asssociated user 

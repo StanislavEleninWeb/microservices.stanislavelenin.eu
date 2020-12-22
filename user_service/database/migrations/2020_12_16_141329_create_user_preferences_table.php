@@ -15,10 +15,12 @@ class CreateUserPreferencesTable extends Migration
     {
         Schema::create('user_preferences', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('id')->primary();
+            $table->unsignedBigInteger('user_id')->primary();
             
-            $table->json('building_type_id')->nullable();
-            $table->json('build_type_id')->nullable();
+            $table->json('cities')->nullable();
+
+            $table->json('building_type')->nullable();
+            $table->json('build_type')->nullable();
 
             $table->decimal('price_from', 8, 2)->nullable();
             $table->decimal('price_to', 8, 2)->nullable();
@@ -29,7 +31,7 @@ class CreateUserPreferencesTable extends Migration
             $table->decimal('space_from', 6, 2)->nullable();
             $table->decimal('space_to', 6, 2)->nullable();
             
-            $table->json('region_id')->nullable();
+            $table->json('region')->nullable();
 
             $table->json('keywords')->nullable();
 
