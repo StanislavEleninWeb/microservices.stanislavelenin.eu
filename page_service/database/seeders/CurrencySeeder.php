@@ -15,15 +15,18 @@ class CurrencySeeder extends Seeder
 	private $currency = [
 		'BGN' => [
 			'title' => 'Лев',
-			'keywords' => 'Лев, BGN, бг, bg'
+			'keywords' => 'Лев, BGN, бг, bg',
+			'rate' => 1
 		],
 		'EUR' => [
 			'title' => 'Евро',
-			'keywords' => 'Евро, Euro, EUR'
+			'keywords' => 'Евро, Euro, EUR',
+			'rate' => 1.96
 		],
 		'USD' => [
 			'title' => 'Долар',
-			'keywords' => 'Долар, $, usd'
+			'keywords' => 'Долар, $, usd',
+			'rate' => 1.60
 		]
 	];
 
@@ -42,6 +45,7 @@ class CurrencySeeder extends Seeder
         		'title' => $itr['title'],
         		'slug' => $slug,
         		'keywords' => $itr['keywords'],
+        		'rate' => $itr['rate'],
         		'created_at' => $now,
 	        	'updated_at' => $now,
         	]);
