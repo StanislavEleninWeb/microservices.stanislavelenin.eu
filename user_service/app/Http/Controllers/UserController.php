@@ -39,51 +39,47 @@ class UserController extends Controller
      */
     public function usersByPreference(Request $request)
     {
-        // $usr = User::orderBy('id');
-        $user = User::find(1);
-        // dd($user);
-        dd($user->preference);
-        $usr->whereHas('preferences', function($query) use ($request){
-            return $query->where('price_from', '<=', $request->price);
+        $users = User::orderBy('id');
+        
+        $users->whereHas('preference', function($query) use ($request){
+            
+            // Price
+            if(isset($request->price) && is_numeric($request->price)) {
+                $query->where('price_from', '<=', $request->price)->orWhereNull('price_from');
+                $query->where('price_to', '>=', $request->price)->orWhereNull('price_to');
+            }
+
+            // Price pre square
+            if(isset($request->price_per_square) && is_numeric($request->price_per_square)) {
+                $query->where('price_per_square_from', '<=', $request->price_per_square)->orWhereNull('price_per_square_from');
+                $query->where('price_per_square_to', '>=', $request->price_per_square)->orWhereNull('price_per_square_to');
+            }
+
+            // Space
+            if(isset($request->space) && is_numeric($request->space)) {
+                $query->where('space_from', '<=', $request->space)->orWhereNull('space_from');
+                $query->where('space_to', '>=', $request->space)->orWhereNull('space_to');
+            }
+
+            // Building Type
+            if(isset($request->building_type) && is_numeric($request->building_type))
+                $query->whereJsonContains('building_type', $request->building_type)->orWhereNull('building_type');
+
+            // Build Type
+            if(isset($request->build_type) && is_numeric($request->build_type))
+                $query->whereJsonContains('build_type', $request->build_type)->orWhereNull('build_type');
+
+            // Region
+            if(isset($request->region) && is_numeric($request->region))
+                $query->whereJsonContains('region', $request->region)->orWhereNull('region');
+
+            // Keywords
+            if(isset($request->keywords) && !empty($request->keywords))
+                $query->whereJsonContains('keywords', $request->keywords)->orWhereNull('keywords');
+
+            return $query;
+
         });
-        return $usr->get();
-        $users = UserPreference::orderBy('user_id', 'DESC');
-
-        return $users->get()->pluck('user');
-
-        // Price
-        if(isset($request->price) && is_numeric($request->price)) {
-            $user->where('price_from', '>=', $request->price);
-            $user->where('price_to', '<=', $request->price);
-        }
-
-        // Price pre square
-        if(isset($request->price_per_square) && is_numeric($request->price_per_square)) {
-            $user->where('price_per_square_from', '>=', $request->price_per_square);
-            $user->where('price_per_square_to', '<=', $request->price_per_square);
-        }
-
-        // Space
-        if(isset($request->space) && is_numeric($request->space)) {
-            $user->where('space_from', '>=', $request->space);
-            $user->where('space_to', '<=', $request->space);
-        }
-
-        // Building Type
-        if(isset($request->building_type) && is_numeric($request->building_type))
-            $user->whereJsonContains('building_type_id', $request->building_type);
-
-        // Build Type
-        if(isset($request->build_type) && is_numeric($request->build_type))
-            $user->whereJsonContains('build_type_id', $request->build_type);
-
-        // Region
-        if(isset($request->region) && is_numeric($request->region))
-            $user->whereJsonContains('region_id', $request->region);
-
-        // Keywords
-        if(isset($request->keywords) && !empty($request->keywords))
-            $user->whereJsonContains('keywords', $request->keywords);
 
         return response()->json($users->get());
     }
