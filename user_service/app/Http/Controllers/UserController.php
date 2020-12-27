@@ -41,7 +41,7 @@ class UserController extends Controller
     {
         // $usr = User::orderBy('id');
         $user = User::find(1);
-        dd($user);
+        // dd($user);
         dd($user->preference);
         $usr->whereHas('preferences', function($query) use ($request){
             return $query->where('price_from', '<=', $request->price);
