@@ -87,6 +87,8 @@ class UserSeeder extends Seeder
 	        	'space_to' => $itr['preferences']['space_to'],
 	        	'region' => $itr['preferences']['region'],
 	        	'keywords' => json_encode($itr['preferences']['keywords']),
+	        	'created_at' => $now,
+	        	'updated_at' => $now,
 	        ]);
     	}
     }

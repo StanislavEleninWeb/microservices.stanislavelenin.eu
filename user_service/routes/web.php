@@ -78,6 +78,8 @@ $router->post('/users/by/preference', 'UserController@usersByPreference');
 
 $router->post('/users/by/role', 'UserController@usersByRole');
 
+$router->post('/users/{id}/preference', 'UserPreferenceController@store');
+
 $router->group(['middleware' => 'auth0'], function () use ($router) {
 
     $router->get('/users/{id}', 'UserController@show');

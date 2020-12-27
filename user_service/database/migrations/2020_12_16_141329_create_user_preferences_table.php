@@ -35,6 +35,8 @@ class CreateUserPreferencesTable extends Migration
 
             $table->json('keywords')->nullable();
 
+            $table->timestamps();
+
         });
     }
 

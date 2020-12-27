@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class UserPreference extends Model
 {
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'user_id';
+    
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array
