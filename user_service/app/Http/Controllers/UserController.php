@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
+use App\Models\UserPreference;
 
 class UserController extends Controller
 {
@@ -38,7 +39,17 @@ class UserController extends Controller
      */
     public function usersByPreference(Request $request)
     {
-        $users = User::orderBy('id', 'DESC');
+        // $usr = User::orderBy('id');
+        $user = User::find(1);
+        dd($user);
+        dd($user->preference);
+        $usr->whereHas('preferences', function($query) use ($request){
+            return $query->where('price_from', '<=', $request->price);
+        });
+        return $usr->get();
+        $users = UserPreference::orderBy('user_id', 'DESC');
+
+        return $users->get()->pluck('user');
 
         // Price
         if(isset($request->price) && is_numeric($request->price)) {

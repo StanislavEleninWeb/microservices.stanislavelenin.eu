@@ -42,8 +42,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      *
      * @var Illuminate\Database\Eloquent\Model
      */
-    public function preferences(){
-        return $this->hasOne(App\Models\UserPreferences::class);
+    public function preference(){
+        return $this->hasOne(App\Models\UserPreference::class);
     }
 
 }
