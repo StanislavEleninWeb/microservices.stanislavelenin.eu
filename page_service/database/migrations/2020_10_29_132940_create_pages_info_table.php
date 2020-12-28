@@ -16,6 +16,7 @@ class CreatePagesInfoTable extends Migration
         Schema::create('pages_info', function (Blueprint $table) {
             $table->foreignId('page_id')->primary();
             $table->string('title');
+            $table->foreignId('city_id');
             $table->foreignId('building_type_id');
             $table->foreignId('build_type_id')->nullable();
             $table->foreignId('currency_id')->nullable();
@@ -30,6 +31,7 @@ class CreatePagesInfoTable extends Migration
             $table->timestamps();
 
             $table->foreign('page_id')->references('id')->on('pages');
+            $table->foreign('city_id')->references('id')->on('cities');
             $table->foreign('building_type_id')->references('id')->on('building_types');
             $table->foreign('build_type_id')->references('id')->on('build_types');
             $table->foreign('currency_id')->references('id')->on('currencies');

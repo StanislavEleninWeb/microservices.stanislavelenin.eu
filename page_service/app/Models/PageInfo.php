@@ -16,16 +16,6 @@ class PageInfo extends Model implements AuthenticatableContract, AuthorizableCon
     protected $table = 'pages_info';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email',
-    ];
-
-
-    /**
      * Get the user that owns the phone.
      */
     public function page()

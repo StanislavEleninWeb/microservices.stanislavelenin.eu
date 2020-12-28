@@ -45,6 +45,17 @@ $router->post('/page', 'PageController@store');
 $router->patch('/page/{id}', 'PageController@update');
 $router->delete('/page/{id}', 'PageController@destroy');
 
+
+/*
+|--------------------------------------------------------------------------
+| Page Info Rating AVG, MIN, MAX
+|--------------------------------------------------------------------------
+|
+| Here is where you get rating information
+|
+*/
+$router->post('/pages/last/quarter/rating', 'PageController@lastQuarterRating');
+
 /*
 |--------------------------------------------------------------------------
 | Source Routes
