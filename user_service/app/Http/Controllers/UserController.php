@@ -42,7 +42,7 @@ class UserController extends Controller
     public function usersByPreference(Request $request)
     {
         $users = User::orderBy('id');
-        
+
         $users->whereHas('preference', function($query) use ($request){
 
             // Price
@@ -82,31 +82,30 @@ class UserController extends Controller
                 });
 
             // Build Type
-            if(isset($request->build_type) && is_numeric($request->build_type)){
+            if(isset($request->build_type) && is_numeric($request->build_type))
                 $query->where(function($sub_query) use ($request){
                     return $sub_query->whereJsonContains('build_type', $request->build_type)->orWhereNull('build_type');
                 });
-            }
-
+            
             // Region
-            if(isset($request->region) && is_numeric($request->region)){
+            if(isset($request->region) && is_numeric($request->region))
                 $query->where(function($sub_query) use ($request){ 
                     return $sub_query->whereJsonContains('region', $request->region)->orWhereNull('region');
                 });
-            }
 
-            // Keywords
-            if(isset($request->keywords) && !empty($request->keywords)){
-                $query->where(function($sub_query) use ($request){
-                    return $sub_query->whereJsonContains('keywords', $request->keywords)->orWhereNull('keywords');
-                });
-            }
+            // // Keywords
+            // if(isset($request->keywords) && !empty($request->keywords)) {
+            //     $keywords = preg_split("/[\s,\/]+/", $request->keywords);
+            //     $query->where(function($sub_query) use ($keywords){
+            //         return $sub_query->whereJsonContains('keywords', $keywords)->orWhereNull('keywords');
+            //     });
+            // }
 
             return $query;
 
         });
 
-        // dd($users->toSql());
+        // return response()->json($users->toSql());
 
         return response()->json($users->get());
     }
