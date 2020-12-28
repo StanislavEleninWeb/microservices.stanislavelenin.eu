@@ -21,7 +21,7 @@ class PageCreatedListener implements ShouldQueue
     public function handle(Event $event)
     {
         $response = Http::post(env('PAGE_SERVICE_URL') . '/pages/last/quarter/rating', [
-            'city_id' => 1,
+            'city_id' => $event->page['city_id'],
         ]);
 
         if($response->failed())
