@@ -30,11 +30,11 @@ class UserSeeder extends Seeder
 					1
 				],
 
-				'price_from' => 80000,
+				'price_from' => 30000,
 				'price_to' => 120000,
 
 				'price_per_square_from' => null,
-				'price_per_square_to' => 1050,
+				'price_per_square_to' => 1100,
 
 				'space_from' => 80,
 				'space_to' => null,
@@ -44,6 +44,7 @@ class UserSeeder extends Seeder
 				'keywords' => [
 					'собственик',
 					'гараж',
+					'паркомясто'
 				],
 			],
 
