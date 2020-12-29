@@ -16,8 +16,8 @@ class CreatePagesInfoTable extends Migration
         Schema::create('pages_info', function (Blueprint $table) {
             $table->foreignId('page_id')->primary();
             $table->string('title');
-            $table->foreignId('city_id')->default(0);
-            $table->foreignId('building_type_id');
+            $table->foreignId('city_id')->nullable();
+            $table->foreignId('building_type_id')->nullable();
             $table->foreignId('build_type_id')->nullable();
             $table->foreignId('currency_id')->nullable();
             $table->decimal('price', 8, 2);

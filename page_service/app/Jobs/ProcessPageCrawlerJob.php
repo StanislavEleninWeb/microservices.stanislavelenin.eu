@@ -59,7 +59,7 @@ class ProcessPageCrawlerJob extends Job
      *
      * @var int
      */
-    public $timeout = 60;
+    public $timeout = 30;
 
     /**
      * Create a new job instance.
@@ -136,10 +136,12 @@ class ProcessPageCrawlerJob extends Job
 
             $page_info->currency()->associate(Currency::where('title', $page_info_validator['currency'])->orWhere('slug', $page_info_validator['currency'])->orWhere('keywords', 'like', '%' . $page_info_validator['currency'] . '%')->firstOrFail());
             
+            $page_info->region_id = 1;
+            $page_info->city_id = 1;
+            
             $page_info->price = $page_info_validator['price'];
             $page_info->price_per_square = $page_info_validator['pricePerSquare'];
             $page_info->space = $page_info_validator['space'];
-            $page_info->region_id = '1';
             
             if(isset($page_info_validator))
             $page_info->floor = $page_info_validator['floor'];

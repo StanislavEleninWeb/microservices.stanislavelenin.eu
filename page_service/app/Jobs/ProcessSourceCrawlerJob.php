@@ -29,7 +29,7 @@ class ProcessSourceCrawlerJob extends Job
      *
      * @var int
      */
-    public $timeout = 60;
+    public $timeout = 30;
 
     /**
      * Create a new job instance.
