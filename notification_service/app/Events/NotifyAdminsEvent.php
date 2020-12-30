@@ -25,7 +25,7 @@ class NotifyAdminsEvent extends Event
      *
      * @return void
      */
-    public function __construct($exception, $data)
+    public function __construct(\Exception $exception, $data)
     {
         $this->exception = $exception;
         $this->data = $data;
