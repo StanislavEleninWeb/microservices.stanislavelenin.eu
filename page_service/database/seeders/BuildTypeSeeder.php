@@ -22,6 +22,10 @@ class BuildTypeSeeder extends Seeder
 			'title' => 'Панел',
 			'keywords' => ''
 		],
+		[
+			'title' => 'Гредоред',
+			'keywords' => ''
+		],
 	];
 
 

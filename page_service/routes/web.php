@@ -65,5 +65,7 @@ $router->post('/pages/last/quarter/rating', 'PageController@lastQuarterRating');
 |
 */
 $router->get('/test', 'TestController@index');
+$router->get('/test/generate/url/request', 'TestController@testGenerateUrlRequest');
+$router->get('/test/analyze/content', 'TestController@testAnalyzeContent');
 $router->get('/test/images', 'TestController@images');
 $router->get('/failed/jobs', 'TestController@failedJobs');

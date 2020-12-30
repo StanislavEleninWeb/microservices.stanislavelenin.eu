@@ -99,13 +99,15 @@ class AnalyzeContentImotiBg extends AnalyzeContent {
     protected function setPrice($price){
         $price = filter_var(trim($price), FILTER_SANITIZE_STRING);
 
-        preg_match('/^[\d\s]*/', $price, $matches_price);
+        // Currency   
         preg_match('/[A-Z]{2,3}/', $price, $matches_currency);
-        preg_match('/\d+(\.\d{1,2})/', $price, $matches_price_per_square);
-
-        $this->price = filter_var($matches_price[0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-        $this->setPricePerSquare($matches_price_per_square[0]);
         $this->setCurrency($matches_currency[0]);
+
+        // Split string by currency
+        $split = explode($matches_currency[0], $price);
+
+        $this->price = filter_var($split[0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $this->setPricePerSquare($split[1]);
     }
 
     protected function setPricePerSquare($pricePerSquare){

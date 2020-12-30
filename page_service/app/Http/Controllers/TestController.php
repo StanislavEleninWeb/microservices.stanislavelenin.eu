@@ -8,6 +8,7 @@ use App\Jobs\ProcessCrawlerJob;
 use App\Jobs\ProcessSourceCrawlerJob;
 use App\Jobs\ProcessPageCrawlerJob;
 use App\Analyze\AnalyzeContentAloBg;
+use App\GenerateUrlRequest\GenerateUrlRequestImotiBg;
 use App\Models\Source;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
@@ -32,15 +33,56 @@ class TestController extends Controller
     public function index()
     {
      	try {
-            $page = new ProcessPageCrawlerJob('http://127.0.1.2/test.html', Source::find(1));
-            
             // $page = new ProcessPageCrawlerJob('https://www.alo.bg/7026560', Source::find(1));
+            // $page = new ProcessPageCrawlerJob('http://127.0.1.2/alobg.html', Source::find(1));
+            $page = new ProcessPageCrawlerJob('http://127.0.1.2/imotibg.html', Source::find(2));
+            
             
             $page->handle();
     	} catch(\Exception $e) {
             dd($e);
     		return new Response( $e->getMessage(), 403);
     	} catch(\Throwable $e){
+            dd($e);
+        }
+
+        return new Response('Success!!!', Response::HTTP_OK);
+    }
+
+    public function testGenerateUrlRequest()
+    {
+
+        try {
+            // $page = new ProcessPageCrawlerJob('https://www.alo.bg/7026560', Source::find(1));
+            // $page = new ProcessPageCrawlerJob('http://127.0.1.2/alobg.html', Source::find(1));
+            $page = new GenerateUrlRequestImotiBg(Source::find(2));
+            $page->analyze();
+            
+            dd($page->getResult());
+        } catch(\Exception $e) {
+            dd($e);
+            return new Response( $e->getMessage(), 403);
+        } catch(\Throwable $e){
+            dd($e);
+        }
+
+        return new Response('Success!!!', Response::HTTP_OK);
+    }
+
+    public function testAnalyzeContent()
+    {
+
+        try {
+            // $page = new ProcessPageCrawlerJob('https://www.alo.bg/7026560', Source::find(1));
+            // $page = new ProcessPageCrawlerJob('http://127.0.1.2/alobg.html', Source::find(1));
+            $page = new AnalyzeContentAloBg('http://127.0.1.2/imotibg.html', Source::find(2));
+            
+            
+            $page->handle();
+        } catch(\Exception $e) {
+            dd($e);
+            return new Response( $e->getMessage(), 403);
+        } catch(\Throwable $e){
             dd($e);
         }
 
