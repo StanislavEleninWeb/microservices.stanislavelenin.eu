@@ -78,19 +78,25 @@ class UserController extends Controller
             // Building Type
             if(isset($request->building_type) && is_numeric($request->building_type))
                 $query->where(function($sub_query) use ($request){
-                    return $sub_query->whereJsonContains('building_type', $request->building_type)->orWhereNull('building_type');
+                    return $sub_query->whereJsonContains('building_types', $request->building_type)->orWhereNull('building_types');
                 });
 
             // Build Type
             if(isset($request->build_type) && is_numeric($request->build_type))
                 $query->where(function($sub_query) use ($request){
-                    return $sub_query->whereJsonContains('build_type', $request->build_type)->orWhereNull('build_type');
+                    return $sub_query->whereJsonContains('build_types', $request->build_type)->orWhereNull('build_types');
+                });
+
+            // City
+            if(isset($request->city) && is_numeric($request->city))
+                $query->where(function($sub_query) use ($request){ 
+                    return $sub_query->whereJsonContains('cities', $request->region)->orWhereNull('cities');
                 });
             
             // Region
             if(isset($request->region) && is_numeric($request->region))
                 $query->where(function($sub_query) use ($request){ 
-                    return $sub_query->whereJsonContains('region', $request->region)->orWhereNull('region');
+                    return $sub_query->whereJsonContains('regions', $request->region)->orWhereNull('regions');
                 });
 
             // // Keywords

@@ -32,7 +32,7 @@ class PageCreatedListener implements ShouldQueue
 
         $price = $this->rate($array['price'], $event->page['price']);
         $price_per_square = $this->rate($array['price_per_square'], $event->page['price_per_square']);
-        $space = $this->rate($array['space'], $event->page['space']);
+        $space = $this->rateSpace($array['space'], $event->page['space']);
 
         DB::table('rating')->insert([
             'page_id' => $event->page['page_id'],
@@ -61,6 +61,26 @@ class PageCreatedListener implements ShouldQueue
         } else {
             $rate_per_point = ($array['max'] - $array['avg'])/5;
             $rating = ($array['max'] - $value)/$rate_per_point;
+        }
+
+        return $rating;
+    }
+
+    public function rateSpace($array, $value) {
+        $rating = 0;
+
+        if($value <= $array['min'])
+            return 0;
+
+        if($value >= $array['max'])
+            return 10;
+
+        if($value <= $array['avg']){
+            $rate_per_point = ($array['avg'] - $array['min'])/5;
+            $rating = ($value - $array['min'])/$rate_per_point;
+        } else {
+            $rate_per_point = ($array['max'] - $array['avg'])/5;
+            $rating = 10 - ($array['max'] - $value)/$rate_per_point;
         }
 
         return $rating;

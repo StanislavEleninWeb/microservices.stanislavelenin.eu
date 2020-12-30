@@ -19,8 +19,8 @@ class CreateUserPreferencesTable extends Migration
             
             $table->json('cities')->nullable();
 
-            $table->json('building_type')->nullable();
-            $table->json('build_type')->nullable();
+            $table->json('building_types')->nullable();
+            $table->json('build_types')->nullable();
 
             $table->decimal('price_from', 8, 2)->nullable();
             $table->decimal('price_to', 8, 2)->nullable();
@@ -31,7 +31,7 @@ class CreateUserPreferencesTable extends Migration
             $table->decimal('space_from', 6, 2)->nullable();
             $table->decimal('space_to', 6, 2)->nullable();
             
-            $table->json('region')->nullable();
+            $table->json('regions')->nullable();
 
             $table->json('keywords')->nullable();
 

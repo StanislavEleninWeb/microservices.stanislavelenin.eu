@@ -23,15 +23,26 @@ class PageCreatedListener implements ShouldQueue
      */
     public function handle(Event $event)
     {
-        $response = Http::post(env('USER_SERVICE_URL') . '/users/by/preference', [
-            'price' => $event->page['price'],
-            'price_per_square' => $event->page['price_per_square'],
-            'space' => $event->page['space'],
-            'build_type' => $event->page['build_type_id'],
-            'building_type' => $event->page['building_type_id'],
-            'region' => $event->page['region_id'],
-            'keywords' => $event->page['keywords'],
-        ]);
+        $post = [];
+
+        if(isset($event->page['price']))
+            $post['price'] = $event->page['price'];
+        if(isset($event->page['price_per_square']))
+            $post['price_per_square'] = $event->page['price_per_square'];
+        if(isset($event->page['space']))
+            $post['space'] = $event->page['space'];
+        if(isset($event->page['build_type']))
+            $post['build_type'] = $event->page['build_type'];
+        if(isset($event->page['building_type']))
+            $post['building_type'] = $event->page['building_type'];
+        if(isset($event->page['city']))
+            $post['city'] = $event->page['city'];
+        if(isset($event->page['region']))
+            $post['region'] = $event->page['region'];
+        if(isset($event->page['keywords']))
+            $post['keywords'] = $event->page['keywords'];
+
+        $response = Http::post(env('USER_SERVICE_URL') . '/users/by/preference', $post);
 
         if($response->failed())
             throw new Exception("Error Processing. Http request failed. Users not found", 403);

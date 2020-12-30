@@ -23,10 +23,10 @@ class UserSeeder extends Seeder
 				'cities' => [
 					1,
 				],
-				'building_type' => [
+				'building_types' => [
 					3, 4, 5
 				],
-				'build_type' => [
+				'build_types' => [
 					1
 				],
 
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
 				'space_from' => 80,
 				'space_to' => null,
 
-				'region' => null,
+				'regions' => null,
 
 				'keywords' => [
 					'собственик',
@@ -78,15 +78,15 @@ class UserSeeder extends Seeder
 	        DB::table('user_preferences')->insert([
 	        	'user_id' => $user_id,
 	        	'cities' => json_encode($itr['preferences']['cities']),
-	        	'building_type' => json_encode($itr['preferences']['building_type']),
-	        	'build_type' => json_encode($itr['preferences']['build_type']),
+	        	'building_types' => json_encode($itr['preferences']['building_types']),
+	        	'build_types' => json_encode($itr['preferences']['build_types']),
 	        	'price_from' => $itr['preferences']['price_from'],
 	        	'price_to' => $itr['preferences']['price_to'],
 	        	'price_per_square_from' => $itr['preferences']['price_per_square_from'],
 	        	'price_per_square_to' => $itr['preferences']['price_per_square_to'],
 	        	'space_from' => $itr['preferences']['space_from'],
 	        	'space_to' => $itr['preferences']['space_to'],
-	        	'region' => $itr['preferences']['region'],
+	        	'regions' => $itr['preferences']['regions'],
 	        	'keywords' => json_encode($itr['preferences']['keywords']),
 	        	'created_at' => $now,
 	        	'updated_at' => $now,
