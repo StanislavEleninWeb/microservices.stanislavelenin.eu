@@ -108,7 +108,7 @@ class ProcessPageCrawlerJob extends Job
             'space' => 'required|numeric',
             'city' => 'required|string',
             'region' => 'required|string',
-            'buildType' => 'required|string',
+            'buildType' => 'nullable|string',
             'floor' => 'nullable|numeric',
             'keywords.*' => 'nullable|string',
             'content' => 'required|string',

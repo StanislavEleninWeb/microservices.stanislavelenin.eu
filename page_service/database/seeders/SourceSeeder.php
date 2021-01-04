@@ -20,6 +20,18 @@ class SourceSeeder extends Seeder
 			'generate_url_request_class' => 'App\GenerateUrlRequest\GenerateUrlRequestAloBg',
 			'analyze_content_class' => 'App\Analyze\AnalyzeContentAloBg',
 		],
+        [
+            'title' => 'Imoti.bg',
+            'base_url' => 'http://imoti.bg/',
+            'generate_url_request_class' => 'App\GenerateUrlRequest\GenerateUrlRequestImotiBg',
+            'analyze_content_class' => 'App\Analyze\AnalyzeContentImotiBg',
+        ],
+        [
+            'title' => 'Olx.bg',
+            'base_url' => 'https://www.olx.bg/',
+            'generate_url_request_class' => 'App\GenerateUrlRequest\GenerateUrlRequestOlxBg',
+            'analyze_content_class' => 'App\Analyze\AnalyzeContentOlxBg',
+        ],
 	];
 
     /**

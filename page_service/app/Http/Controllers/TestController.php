@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
 use App\Jobs\ProcessCrawlerJob;
 use App\Jobs\ProcessSourceCrawlerJob;
 use App\Jobs\ProcessPageCrawlerJob;
+
 use App\Analyze\AnalyzeContentAloBg;
+use App\Analyze\AnalyzeContentImotiBg;
 use App\GenerateUrlRequest\GenerateUrlRequestImotiBg;
+
 use App\Models\Source;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Http;
 
 class TestController extends Controller
 {
@@ -53,8 +57,7 @@ class TestController extends Controller
     {
 
         try {
-            // $page = new ProcessPageCrawlerJob('https://www.alo.bg/7026560', Source::find(1));
-            // $page = new ProcessPageCrawlerJob('http://127.0.1.2/alobg.html', Source::find(1));
+
             $page = new GenerateUrlRequestImotiBg(Source::find(2));
             $page->analyze();
             
@@ -73,10 +76,7 @@ class TestController extends Controller
     {
 
         try {
-            // $page = new ProcessPageCrawlerJob('https://www.alo.bg/7026560', Source::find(1));
-            // $page = new ProcessPageCrawlerJob('http://127.0.1.2/alobg.html', Source::find(1));
-            $page = new AnalyzeContentAloBg('http://127.0.1.2/imotibg.html', Source::find(2));
-            
+            $page = new ProcessPageCrawlerJob('http://127.0.1.2/imotibg.html', Source::find(2));
             
             $page->handle();
         } catch(\Exception $e) {

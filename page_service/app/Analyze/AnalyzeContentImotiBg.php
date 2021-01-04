@@ -8,14 +8,7 @@ use \DOMXpath;
 class AnalyzeContentImotiBg extends AnalyzeContent {
 
     private $tableKeyWithValue = [
-        'Цена:' => 'price',
-        'Местоположение:' => 'city',
-        'Вид на имота:' => 'type',
-        'Квадратура:' => 'space',
-        'Вид строителство:' => 'buildType',
-        'Година на строителство:' => '',
-        'Номер на етажа:' => 'floor',
-        'Особености:' => 'keywords',
+        'Площ' => 'space',
     ];
 
     /**
@@ -49,17 +42,38 @@ class AnalyzeContentImotiBg extends AnalyzeContent {
         //----------------------------------------------------------------
         // Title
         //----------------------------------------------------------------
-        $this->setTitle($this->xpath->query('//div[contains(@class, "big-info")]//h1')[0]->nodeValue);
+        $this->setTitle($this->xpath->query('//div[contains(@class, "left_desc")]//h2')[0]->nodeValue);
+
+        //----------------------------------------------------------------
+        // Price
+        //----------------------------------------------------------------
+        $this->setPrice($this->xpath->query('//div[contains(@class, "left_desc")]//h2')[1]->nodeValue);
+
+        //----------------------------------------------------------------
+        // Price per square
+        //----------------------------------------------------------------
+        $this->setPricePerSquare($this->xpath->query('//div[contains(@class, "price_for_meter")]')[0]->nodeValue);
+
+        //----------------------------------------------------------------
+        // Currency
+        //----------------------------------------------------------------
+        $this->setCurrency($this->xpath->query('//div[contains(@class, "price_for_meter")]')[0]->nodeValue);
+
+        //----------------------------------------------------------------
+        // City and Region
+        //----------------------------------------------------------------
+        $this->setCity($this->xpath->query('//div[contains(@class, "place")]')[0]->nodeValue);
 
         //----------------------------------------------------------------
         // Table
         //----------------------------------------------------------------
-        $table = $this->xpath->query('//div[contains(@class, "ads-params-table")]//div[contains(@class, "ads-params-row")]');
+
+        $table = $this->xpath->query('//table[contains(@class, "moreInfo")]//tr');
 
         foreach($table as $table_node){
-            $row_node = $this->xpath->query('div', $table_node);
-            $key = $this->matchTableKeyWithValue($row_node[0]->nodeValue);
+            $row_node = $this->xpath->query('td', $table_node);
 
+            $key = $this->matchTableKeyWithValue($row_node[0]->nodeValue);
             $key_arr[] = $key;
 
             if(isset($key)){
@@ -72,23 +86,26 @@ class AnalyzeContentImotiBg extends AnalyzeContent {
         //----------------------------------------------------------------
         // Content
         //----------------------------------------------------------------
-        $this->setContent($this->xpath->query('//div[@class="more-info"]//p')[0]->nodeValue);
+        $this->setContent($this->xpath->query('//div[@class="advDesc"]')[0]->nodeValue);
 
-        //----------------------------------------------------------------
-        // Contacts
-        //----------------------------------------------------------------
-        $this->setContactPhone($this->xpath->query('//div[@class="contacts_wrapper"]//div[@class="contact_row"]//a//@href'));
+        // //----------------------------------------------------------------
+        // // Contacts
+        // //----------------------------------------------------------------
+        // $this->setContactPhone($this->xpath->query('//div[@class="contacts_wrapper"]//div[@class="contact_row"]//a//@href'));
 
         //----------------------------------------------------------------
         // Images
         //----------------------------------------------------------------
-        $this->setImages($this->xpath->query('//div[@id="thumbscroll"]//a//@href'));
+        $this->setImages($this->xpath->query('//div[@class="advDetails"]//div[@class="pics"]//a//@href'));
 
     }
 
     protected function setTitle($title){
         $title = trim(strip_tags($title));
         $this->title = filter_var($title, FILTER_SANITIZE_STRING);
+
+        // Try to set building type
+        $this->setType($title);
     }
 
     protected function setType($type){
@@ -97,25 +114,19 @@ class AnalyzeContentImotiBg extends AnalyzeContent {
     }
 
     protected function setPrice($price){
-        $price = filter_var(trim($price), FILTER_SANITIZE_STRING);
+        preg_match('/[\d.]+/', $price, $matches_price);
 
-        // Currency   
-        preg_match('/[A-Z]{2,3}/', $price, $matches_currency);
-        $this->setCurrency($matches_currency[0]);
-
-        // Split string by currency
-        $split = explode($matches_currency[0], $price);
-
-        $this->price = filter_var($split[0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-        $this->setPricePerSquare($split[1]);
+        $this->price = filter_var($matches_price[0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     }
 
     protected function setPricePerSquare($pricePerSquare){
-        $this->pricePerSquare = filter_var($pricePerSquare, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        preg_match('/[\d.]+/', $pricePerSquare, $matches_price_per_square);
+        $this->pricePerSquare = filter_var($matches_price_per_square[0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     }
 
     protected function setCurrency($currency){
-        $this->currency = filter_var(trim($currency), FILTER_SANITIZE_STRING);
+        preg_match('/[A-Z]{2,3}/', $currency, $matches_currency);
+        $this->currency = filter_var(trim($matches_currency[0]), FILTER_SANITIZE_STRING);
     }
 
     protected function setSpace($space){
@@ -124,10 +135,10 @@ class AnalyzeContentImotiBg extends AnalyzeContent {
     }
 
     protected function setCity($city){
-        $city = explode(',', $city);
+        $city = explode('/', $city);
 
-        $this->city = filter_var(trim($city[1], FILTER_SANITIZE_STRING));
-        $this->setRegion($city[0]);
+        $this->city = filter_var(trim($city[0], FILTER_SANITIZE_STRING));
+        $this->setRegion($city[count($city) - 1]);
     }
 
     protected function setRegion($region){
