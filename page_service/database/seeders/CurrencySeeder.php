@@ -20,7 +20,7 @@ class CurrencySeeder extends Seeder
 		],
 		'EUR' => [
 			'title' => 'Евро',
-			'keywords' => 'Евро, Euro, EUR',
+			'keywords' => 'Евро, Euro, EUR, €',
 			'rate' => 1.96
 		],
 		'USD' => [

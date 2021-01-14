@@ -11,10 +11,6 @@ use App\Jobs\ProcessCrawlerJob;
 use App\Jobs\ProcessSourceCrawlerJob;
 use App\Jobs\ProcessPageCrawlerJob;
 
-use App\Analyze\AnalyzeContentAloBg;
-use App\Analyze\AnalyzeContentImotiBg;
-use App\GenerateUrlRequest\GenerateUrlRequestImotiBg;
-
 use App\Models\Source;
 
 class TestController extends Controller
@@ -37,10 +33,11 @@ class TestController extends Controller
     public function index()
     {
      	try {
-            // $page = new ProcessPageCrawlerJob('https://www.alo.bg/7026560', Source::find(1));
-            // $page = new ProcessPageCrawlerJob('http://127.0.1.2/alobg.html', Source::find(1));
-            $page = new ProcessPageCrawlerJob('http://127.0.1.2/imotibg.html', Source::find(2));
-            
+            // Test information
+            $source = 4;
+            $testable = 'https://bazar.bg/obiava-30374372/garsoniera-ot-sobstvenik';
+
+            $page = new ProcessPageCrawlerJob($testable, Source::find($source));            
             
             $page->handle();
     	} catch(\Exception $e) {
@@ -57,8 +54,11 @@ class TestController extends Controller
     {
 
         try {
+            // Test information
+            $source = 4;
+            $testable = 'App\GenerateUrlRequest\GenerateUrlRequestBazarBg';
 
-            $page = new GenerateUrlRequestImotiBg(Source::find(2));
+            $page = new $testable(Source::find($source));
             $page->analyze();
             
             dd($page->getResult());
@@ -76,9 +76,22 @@ class TestController extends Controller
     {
 
         try {
-            $page = new ProcessPageCrawlerJob('http://127.0.1.2/imotibg.html', Source::find(2));
+            // Test information
+            $source = 4;
+            $testable = 'http://127.0.1.2/bazarbg.html';
+
+            // Find Source
+            $source = Source::findOrFail($source);
+
+            //Generate source url get/post http request
+            $analyzer = new $source->analyze_content_class($testable);
+
+            $analyzer->analyze();
+
+            $results = $analyzer->getResult();
+
+            dd($results);
             
-            $page->handle();
         } catch(\Exception $e) {
             dd($e);
             return new Response( $e->getMessage(), 403);

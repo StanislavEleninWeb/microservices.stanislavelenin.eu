@@ -15,19 +15,19 @@ class BuildingTypeSeeder extends Seeder
 	private $building_type = [
 		[
 			'title' => 'Едностаен апартамент',
-			'keywords' => 'Едностаен',
+			'keywords' => 'Едностаен, 1-стаен',
 		],
 		[
 			'title' => 'Двустаен апартамент',
-			'keywords' => 'Двустаен',
+			'keywords' => 'Двустаен, 2-стаен',
 		],
 		[
 			'title' => 'Тристаен апартамент',
-			'keywords' => 'Тристаен',
+			'keywords' => 'Тристаен, 3-стаен',
 		],
 		[
 			'title' => 'Четиристаен апартамент',
-			'keywords' => 'Четиристаен,4 стаен апартамент',
+			'keywords' => 'Четиристаен,4 стаен апартамент, 4-стаен',
 		],
 		[
 			'title' => 'Многостаен апартамент',
@@ -43,7 +43,7 @@ class BuildingTypeSeeder extends Seeder
 		],
 		[
 			'title' => 'Етаж от къща',
-			'keywords' => 'етаж от къща',
+			'keywords' => 'етаж от къща, етаж',
 		],
 		[
 			'title' => 'Ателие',

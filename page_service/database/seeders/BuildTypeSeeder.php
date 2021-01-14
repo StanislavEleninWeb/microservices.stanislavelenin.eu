@@ -26,6 +26,10 @@ class BuildTypeSeeder extends Seeder
 			'title' => 'Гредоред',
 			'keywords' => ''
 		],
+		[
+			'title' => 'Едроплощен кофраж',
+			'keywords' => 'ЕПК'
+		],
 	];
 
 

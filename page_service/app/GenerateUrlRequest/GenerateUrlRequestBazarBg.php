@@ -6,7 +6,7 @@ use Goutte\Client;
 use App\Models\Source;
 use App\Traits\ValidateUrl;
 
-class GenerateUrlRequestOlxBg implements GenerateUrlRequest {
+class GenerateUrlRequestBazarBg implements GenerateUrlRequest {
 
 	use ValidateUrl;
 
@@ -37,14 +37,11 @@ class GenerateUrlRequestOlxBg implements GenerateUrlRequest {
     */
 	public function analyze(){
 
-
-		return;
-
 		$client = new Client();
 
-		$crawler = $client->request('GET', $this->source->base_url . '';
-
-		$crawler->filter(".listAdv > .box > a")->each(function($node){
+		$crawler = $client->request('GET', $this->source->base_url . 'obiavi/prodazhba-imoti/plovdiv?district_province_id=16&sort=date');
+		
+		$crawler->filter(".listItemContainer > a")->each(function($node){
 			$this->links->push($node->attr('href'));
 		});
 
