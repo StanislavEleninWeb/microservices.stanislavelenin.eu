@@ -59,9 +59,11 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-    	foreach($request->input('images') as $image){
-    			dispatch(new ProcessImageFileJob($request->input('page'), $image));
-    	}
+        if(isset($request->input('images')) && is_array($request->input('images')){
+        	foreach($request->input('images') as $image){
+        			dispatch(new ProcessImageFileJob($request->input('page'), $image));
+        	}   
+        }
 
         return response('Successfully queued for upload.', ResponseCodes::HTTP_ACCEPTED);
     }
