@@ -59,17 +59,21 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        if(isset($request->input('images')) && is_array($request->input('images')){
-        	foreach($request->input('images') as $image){
-        			dispatch(new ProcessImageFileJob($request->input('page'), $image));
-        	}   
-        }
-
+        if(
+            isset($request->page) && 
+            is_numeric($request->page) && 
+            isset($request->images) &&
+            is_array($request->images)
+        )
+        	foreach($request->images as $image){
+        			dispatch(new ProcessImageFileJob($request->page, $image));
+        	} 
+        
         return response('Successfully queued for upload.', ResponseCodes::HTTP_ACCEPTED);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Delete resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

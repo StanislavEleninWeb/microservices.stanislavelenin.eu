@@ -100,7 +100,7 @@ class TestController extends Controller
         $arr = [
             "images" => [
                 0 => "https://alo.bg/user_files/m/martoam/7095963_113174276_big.jpg",
-                // 1 => "https://alo.bg/user_files/m/martoam/7095963_113174277_big.jpg",
+                1 => "https://alo.bg/user_files/m/martoam/7095963_113174277_big.jpg",
                 // 2 => "https://alo.bg/user_files/m/martoam/7095963_113174278_big.jpg",
                 // 3 => "https://alo.bg/user_files/m/martoam/7095963_113174279_big.jpg",
                 // 4 => "https://alo.bg/user_files/m/martoam/7095963_113174280_big.jpg",
@@ -119,10 +119,12 @@ class TestController extends Controller
 
 
         // Send post http request and process image urls
-        Http::post(env('IMAGE_SERVICE_URL') . '/images', [
+        $response = Http::post(env('IMAGE_SERVICE_URL') . '/images', [
             'page' => 13,
             'images' => $arr['images'],
         ]);
+
+        dd($response->json());
 
         return response('Success', 200);
     }
