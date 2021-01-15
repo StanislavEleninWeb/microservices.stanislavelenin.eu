@@ -37,6 +37,20 @@ class CitiesSeeder extends Seeder
 				'Кършияка',
 			],
 		],
+		[
+			'prefix' => 'гр',
+			'title' => 'Пазарджик',
+			'regions' => [
+				'Център',
+			],
+		],
+		[
+			'prefix' => 'гр',
+			'title' => 'Асеновград',
+			'regions' => [
+				'Център',
+			],
+		],
 	];
 
     /**
