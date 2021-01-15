@@ -38,6 +38,12 @@ class SourceSeeder extends Seeder
             'generate_url_request_class' => 'App\GenerateUrlRequest\GenerateUrlRequestBazarBg',
             'analyze_content_class' => 'App\Analyze\AnalyzeContentBazarBg',
         ],
+        [
+            'title' => 'Facebook Market',
+            'base_url' => 'https://www.facebook.com/',
+            'generate_url_request_class' => 'App\GenerateUrlRequest\GenerateUrlRequestFacebook',
+            'analyze_content_class' => 'App\Analyze\AnalyzeContentFacebook',
+        ],
 	];
 
     /**
