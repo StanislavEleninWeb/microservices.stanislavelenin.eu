@@ -55,10 +55,12 @@ class TestController extends Controller
 
         try {
             // Test information
-            $source = 4;
-            $testable = 'App\GenerateUrlRequest\GenerateUrlRequestBazarBg';
+            $source = 5;
 
-            $page = new $testable(Source::find($source));
+            // Find Source
+            $source = Source::findOrFail($source);
+
+            $page = new $source->generate_url_request_class($source);
             $page->analyze();
             
             dd($page->getResult());
@@ -77,7 +79,7 @@ class TestController extends Controller
 
         try {
             // Test information
-            $source = 4;
+            $source = 5;
             $testable = 'http://127.0.1.2/bazarbg.html';
 
             // Find Source

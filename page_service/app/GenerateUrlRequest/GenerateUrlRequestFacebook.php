@@ -41,7 +41,9 @@ class GenerateUrlRequestFacebook implements GenerateUrlRequest {
 
 		$crawler = $client->request('GET', $this->source->base_url . 'marketplace/110234925673168/search?minPrice=100000&daysSinceListed=1&sortBy=creation_time_descend&query=%D0%B0%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82&exact=false');
 		
-		$crawler->filter(".listtop-image > a")->each(function($node){
+		dd($crawler);
+
+		$crawler->filter(".b3onmgus")->each(function($node){
 			$this->links->push($node->attr('href'));
 		});
 
