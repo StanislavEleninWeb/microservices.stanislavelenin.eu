@@ -2,9 +2,12 @@
 
 namespace App\GenerateUrlRequest;
 
-use Goutte\Client;
 use App\Models\Source;
 use App\Traits\ValidateUrl;
+
+use Spatie\Browsershot\Browsershot;
+use \DOMDocument;
+use \DOMXpath;
 
 class GenerateUrlRequestFacebook implements GenerateUrlRequest {
 
@@ -29,28 +32,63 @@ class GenerateUrlRequestFacebook implements GenerateUrlRequest {
 		$this->links = collect([]);
 	}
 
+    /**
+     * Analyze content
+     *
+     * @return void
+     */
+    public function crawl(){
+
+        // Facebook Market url address
+        $url = $this->source->base_url . 'marketplace/110234925673168/propertyforsale?minPrice=80000&daysSinceListed=1&sortBy=creation_time_descend';
+
+        $url = $this->source->base_url . 'marketplace/110234925673168/search?minPrice=100000&daysSinceListed=1&sortBy=creation_time_descend&query=%D0%B0%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82&exact=false';
+
+        if(filter_var($url, FILTER_VALIDATE_URL))
+            return Browsershot::url($url)
+            ->waitUntilNetworkIdle(false)
+            ->device('iPhone X')
+            ->fullPage()
+            // ->bodyHtml();
+            ->save('/home/stanislav/Projects/php/laravel/microservices.stanislavelenin.demo/image_service/storage/images/' . md5(microtime()) . '.png');
+        else
+            throw new \Exception('Url not valid : ' . $url);
+    }
+
 	/**
     * Analyze html
     * Use Goutte to fetch url and analyze
     *
     * @return void;
     */
-	public function analyze(){
+	public function analyze(){		
 
-		$client = new Client();
+        $this->crawl();
+        die;
 
-		$crawler = $client->request('GET', $this->source->base_url . 'marketplace/110234925673168/search?minPrice=100000&daysSinceListed=1&sortBy=creation_time_descend&query=%D0%B0%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82&exact=false');
-		
-		dd($crawler);
+        // Create dom element
+        $dom = new DOMDocument();
 
-		$crawler->filter(".b3onmgus")->each(function($node){
-			$this->links->push($node->attr('href'));
-		});
+        // Set error handling
+        libxml_use_internal_errors (true);
 
-		// Filter valid urls
-		$this->links = $this->links->map(function($url, $key){
-			return $this->validateUrl($url, $this->source->base_url);
-		})->unique();
+        // Load curl response as html
+        $dom->loadHTML(mb_convert_encoding($this->crawl(), 'HTML-ENTITIES', "UTF-8"));
+
+        // Create xpath element
+        $xpath = new DOMXpath($dom);
+
+        // Xpath Qyery to fetch a href 
+        $array_node = $xpath->query('//div[contains(@class, "bq4bzpyk")]//a//@href');
+
+        foreach($array_node as $node){
+            $this->links->push($node->nodeValue);
+        }
+
+        // Filter valid urls
+        $this->links = $this->links->map(function($url, $key){
+            return $this->validateUrl($url, $this->source->base_url);
+        })->unique();
 	}
 
 	/**
