@@ -2,9 +2,12 @@
 
 namespace App\GenerateUrlRequest;
 
-use Goutte\Client;
 use App\Models\Source;
 use App\Traits\ValidateUrl;
+
+use Spatie\Browsershot\Browsershot;
+use \DOMDocument;
+use \DOMXpath;
 
 class GenerateUrlRequestOlxBg implements GenerateUrlRequest {
 
@@ -30,6 +33,26 @@ class GenerateUrlRequestOlxBg implements GenerateUrlRequest {
 	}
 
 	/**
+     * Analyze content
+     *
+     * @return void
+     */
+    public function crawl(){
+
+    	// Facebook Market url address
+    	$url = $this->source->base_url . 'nedvizhimi-imoti/prodazhbi/apartamenti/plovdiv/?search%5Border%5D=created_at:desc';
+
+        if(filter_var($url, FILTER_VALIDATE_URL))
+            return Browsershot::url($url)
+            ->waitUntilNetworkIdle(false)
+            ->disableJavascript()
+            ->device('iPhone X')
+            ->bodyHtml();
+        else
+            throw new \Exception('Url not valid : ' . $url);
+    }
+
+	/**
     * Analyze html
     * Use Goutte to fetch url and analyze
     *
@@ -37,16 +60,24 @@ class GenerateUrlRequestOlxBg implements GenerateUrlRequest {
     */
 	public function analyze(){
 
+        // Create dom element
+        $dom = new DOMDocument();
 
-		return;
+        // Set error handling
+        libxml_use_internal_errors (true);
 
-		$client = new Client();
+        // Load curl response as html
+        $dom->loadHTML(mb_convert_encoding($this->crawl(), 'HTML-ENTITIES', "UTF-8"));
 
-		$crawler = $client->request('GET', $this->source->base_url . '';
+        // Create xpath element
+        $xpath = new DOMXpath($dom);
 
-		$crawler->filter(".listAdv > .box > a")->each(function($node){
-			$this->links->push($node->attr('href'));
-		});
+       	// Xpath Qyery to fetch a href 
+        $array_node = $xpath->query('//div[@data-testid="listing-grid"]//a//@href');
+
+        foreach($array_node as $node){
+            $this->links->push($node->nodeValue);
+        }
 
 		// Filter valid urls
 		$this->links = $this->links->map(function($url, $key){
