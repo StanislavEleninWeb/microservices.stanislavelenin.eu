@@ -7,17 +7,6 @@ use \DOMXpath;
 
 class AnalyzeContentFacebook extends AnalyzeContent {
 
-    private $tableKeyWithValue = [
-        'Цена:' => 'price',
-        'Местоположение:' => 'city',
-        'Вид на имота:' => 'type',
-        'Квадратура:' => 'space',
-        'Вид строителство:' => 'buildType',
-        'Година на строителство:' => '',
-        'Номер на етажа:' => 'floor',
-        'Особености:' => 'keywords',
-    ];
-
     /**
      * Analyze content
      *
@@ -47,33 +36,20 @@ class AnalyzeContentFacebook extends AnalyzeContent {
         // Create xpath element
         $this->xpath = new DOMXpath($this->dom);
 
-        // //----------------------------------------------------------------
-        // // Title
-        // //----------------------------------------------------------------
-        // $this->setTitle($this->xpath->query('//div[contains(@class, "big-info")]//h1')[0]->nodeValue);
+        //----------------------------------------------------------------
+        // Title
+        //----------------------------------------------------------------
+        $this->setTitle($this->xpath->query('//div[@data-pagelet="MainFeed"]//span[contains(@class, "d2edcug0")]')[0]->nodeValue);
 
-        // //----------------------------------------------------------------
-        // // Table
-        // //----------------------------------------------------------------
-        // $table = $this->xpath->query('//div[contains(@class, "ads-params-table")]//div[contains(@class, "ads-params-row")]');
+        //----------------------------------------------------------------
+        // Price
+        //----------------------------------------------------------------
+        $this->setTitle($this->xpath->query('//div[@data-pagelet="MainFeed"]//div[contains(@class, "aahdfvyu")]//span[contains(@class, "d2edcug0")]')[0]->nodeValue);
 
-        // foreach($table as $table_node){
-        //     $row_node = $this->xpath->query('div', $table_node);
-        //     $key = $this->matchTableKeyWithValue($row_node[0]->nodeValue);
-
-        //     $key_arr[] = $key;
-
-        //     if(isset($key)){
-        //         $method = 'set'. ucfirst($key);
-        //         if(method_exists($this, $method))
-        //             call_user_func([$this, $method], $row_node[1]->nodeValue);
-        //     }
-        // }
-
-        // //----------------------------------------------------------------
-        // // Content
-        // //----------------------------------------------------------------
-        // $this->setContent($this->xpath->query('//div[@class="more-info"]//p')[0]->nodeValue);
+        //----------------------------------------------------------------
+        // Content
+        //----------------------------------------------------------------
+        $this->setContent($this->xpath->query('//div[@data-pagelet="MainFeed"]//div[contains(@class, "aov4n071")]//span[contains(@class, "d2edcug0")]')[0]->nodeValue);
 
         // //----------------------------------------------------------------
         // // Contacts
@@ -83,7 +59,7 @@ class AnalyzeContentFacebook extends AnalyzeContent {
         //----------------------------------------------------------------
         // Images
         //----------------------------------------------------------------
-        $this->setImages($this->xpath->query('//div[contains(@class, "bp9cbjyn")]//img//@src'));
+        $this->setImages($this->xpath->query('//div[contains(@class, "nhd2j8a9")]//img//@src'));
 
 	}
 
@@ -98,6 +74,7 @@ class AnalyzeContentFacebook extends AnalyzeContent {
     }
 
     protected function setPrice($price){
+        dd($price);
         $price = filter_var(trim($price), FILTER_SANITIZE_STRING);
 
         // Currency   
