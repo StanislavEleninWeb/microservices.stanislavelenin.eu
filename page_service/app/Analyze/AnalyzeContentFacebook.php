@@ -27,6 +27,7 @@ class AnalyzeContentFacebook extends AnalyzeContent {
 
         if(filter_var($this->url, FILTER_VALIDATE_URL))
             return Browsershot::url($this->url)
+            ->waitUntilNetworkIdle(false)
             ->device('iPhone X')
             ->bodyHtml();
         else
@@ -46,43 +47,43 @@ class AnalyzeContentFacebook extends AnalyzeContent {
         // Create xpath element
         $this->xpath = new DOMXpath($this->dom);
 
-        //----------------------------------------------------------------
-        // Title
-        //----------------------------------------------------------------
-        $this->setTitle($this->xpath->query('//div[contains(@class, "big-info")]//h1')[0]->nodeValue);
+        // //----------------------------------------------------------------
+        // // Title
+        // //----------------------------------------------------------------
+        // $this->setTitle($this->xpath->query('//div[contains(@class, "big-info")]//h1')[0]->nodeValue);
 
-        //----------------------------------------------------------------
-        // Table
-        //----------------------------------------------------------------
-        $table = $this->xpath->query('//div[contains(@class, "ads-params-table")]//div[contains(@class, "ads-params-row")]');
+        // //----------------------------------------------------------------
+        // // Table
+        // //----------------------------------------------------------------
+        // $table = $this->xpath->query('//div[contains(@class, "ads-params-table")]//div[contains(@class, "ads-params-row")]');
 
-        foreach($table as $table_node){
-            $row_node = $this->xpath->query('div', $table_node);
-            $key = $this->matchTableKeyWithValue($row_node[0]->nodeValue);
+        // foreach($table as $table_node){
+        //     $row_node = $this->xpath->query('div', $table_node);
+        //     $key = $this->matchTableKeyWithValue($row_node[0]->nodeValue);
 
-            $key_arr[] = $key;
+        //     $key_arr[] = $key;
 
-            if(isset($key)){
-                $method = 'set'. ucfirst($key);
-                if(method_exists($this, $method))
-                    call_user_func([$this, $method], $row_node[1]->nodeValue);
-            }
-        }
+        //     if(isset($key)){
+        //         $method = 'set'. ucfirst($key);
+        //         if(method_exists($this, $method))
+        //             call_user_func([$this, $method], $row_node[1]->nodeValue);
+        //     }
+        // }
 
-        //----------------------------------------------------------------
-        // Content
-        //----------------------------------------------------------------
-        $this->setContent($this->xpath->query('//div[@class="more-info"]//p')[0]->nodeValue);
+        // //----------------------------------------------------------------
+        // // Content
+        // //----------------------------------------------------------------
+        // $this->setContent($this->xpath->query('//div[@class="more-info"]//p')[0]->nodeValue);
 
-        //----------------------------------------------------------------
-        // Contacts
-        //----------------------------------------------------------------
-        $this->setContactPhone($this->xpath->query('//div[@class="contacts_wrapper"]//div[@class="contact_row"]//a//@href'));
+        // //----------------------------------------------------------------
+        // // Contacts
+        // //----------------------------------------------------------------
+        // $this->setContactPhone($this->xpath->query('//div[@class="contacts_wrapper"]//div[@class="contact_row"]//a//@href'));
 
         //----------------------------------------------------------------
         // Images
         //----------------------------------------------------------------
-        $this->setImages($this->xpath->query('//div[@id="thumbscroll"]//a//@href'));
+        $this->setImages($this->xpath->query('//div[contains(@class, "bp9cbjyn")]//img//@src'));
 
 	}
 
@@ -167,7 +168,7 @@ class AnalyzeContentFacebook extends AnalyzeContent {
 
     protected function setImages($images){
         foreach($images as $node){
-            $this->images[] = $this->validateUrl($node->nodeValue, $this->url);
+            $this->images[] = $this->validateUrl($node->nodeValue, $this->url, true);
         }
     }
 
