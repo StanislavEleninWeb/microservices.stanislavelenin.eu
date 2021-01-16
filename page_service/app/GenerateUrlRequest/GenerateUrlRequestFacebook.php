@@ -42,15 +42,13 @@ class GenerateUrlRequestFacebook implements GenerateUrlRequest {
         // Facebook Market url address
         $url = $this->source->base_url . 'marketplace/110234925673168/propertyforsale?minPrice=80000&daysSinceListed=1&sortBy=creation_time_descend';
 
-        $url = $this->source->base_url . 'marketplace/110234925673168/search?minPrice=100000&daysSinceListed=1&sortBy=creation_time_descend&query=%D0%B0%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82&exact=false';
+        // $url = $this->source->base_url . 'marketplace/110234925673168/search?minPrice=100000&daysSinceListed=1&sortBy=creation_time_descend&query=%D0%B0%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82&exact=false';
 
         if(filter_var($url, FILTER_VALIDATE_URL))
             return Browsershot::url($url)
             ->waitUntilNetworkIdle(false)
             ->device('iPhone X')
-            ->fullPage()
-            // ->bodyHtml();
-            ->save('/home/stanislav/Projects/php/laravel/microservices.stanislavelenin.demo/image_service/storage/images/' . md5(microtime()) . '.png');
+            ->bodyHtml();
         else
             throw new \Exception('Url not valid : ' . $url);
     }
@@ -63,8 +61,8 @@ class GenerateUrlRequestFacebook implements GenerateUrlRequest {
     */
 	public function analyze(){		
 
-        $this->crawl();
-        die;
+        // $this->crawl();
+        // die;
 
         // Create dom element
         $dom = new DOMDocument();
