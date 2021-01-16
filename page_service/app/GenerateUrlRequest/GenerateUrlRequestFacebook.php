@@ -40,7 +40,7 @@ class GenerateUrlRequestFacebook implements GenerateUrlRequest {
     public function crawl(){
 
         // Facebook Market url address
-        $url = $this->source->base_url . 'marketplace/110234925673168/propertyforsale?minPrice=80000&daysSinceListed=1&sortBy=creation_time_descend';
+        $url = $this->source->base_url . 'https://www.facebook.com/marketplace/110234925673168/propertyforsale/?minPrice=80000&daysSinceListed=1&sortBy=creation_time_descend&latitude=42.1455&longitude=24.7476&radius=2';
 
         // $url = $this->source->base_url . 'marketplace/110234925673168/search?minPrice=100000&daysSinceListed=1&sortBy=creation_time_descend&query=%D0%B0%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82&exact=false';
 
@@ -60,9 +60,6 @@ class GenerateUrlRequestFacebook implements GenerateUrlRequest {
     * @return void;
     */
 	public function analyze(){		
-
-        // $this->crawl();
-        // die;
 
         // Create dom element
         $dom = new DOMDocument();
