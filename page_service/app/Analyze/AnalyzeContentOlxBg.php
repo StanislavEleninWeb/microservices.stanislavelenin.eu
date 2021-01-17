@@ -8,7 +8,15 @@ use \DOMXpath;
 class AnalyzeContentOlxBg extends AnalyzeContent {
 
     private $tableKeyWithValue = [
-        'Площ' => 'space',
+        'Цена на кв.м' => 'pricePerSquare',
+        'Тип апартамент' => 'buildingType',
+        'Квадратура' => 'space',
+        'Строителство' => 'buildType',
+        'Етаж' => 'floor',
+        'Отопление' => 'keywords',
+        'Обзавеждане' => 'keywords',
+        'Особености' => 'keywords',
+        'Година на строителство' => 'year',
     ];
 
     /**
@@ -42,36 +50,36 @@ class AnalyzeContentOlxBg extends AnalyzeContent {
         //----------------------------------------------------------------
         // Title
         //----------------------------------------------------------------
-        $this->setTitle($this->xpath->query('//div[contains(@class, "left_desc")]//h2')[0]->nodeValue);
+        $this->setTitle($this->xpath->query('//p[@data-cy="offer_title"]')[0]->nodeValue);
 
         //----------------------------------------------------------------
-        // Price
+        // Price and currency
         //----------------------------------------------------------------
-        $this->setPrice($this->xpath->query('//div[contains(@class, "left_desc")]//h2')[1]->nodeValue);
+        $this->setPrice($this->xpath->query('//div[@data-testid="ad-price-container"]//h3')[0]->nodeValue);
 
-        //----------------------------------------------------------------
-        // Price per square
-        //----------------------------------------------------------------
-        $this->setPricePerSquare($this->xpath->query('//div[contains(@class, "price_for_meter")]')[0]->nodeValue);
+        // //----------------------------------------------------------------
+        // // Price per square
+        // //----------------------------------------------------------------
+        // $this->setPricePerSquare($this->xpath->query('//div[contains(@class, "price_for_meter")]')[0]->nodeValue);
 
-        //----------------------------------------------------------------
-        // Currency
-        //----------------------------------------------------------------
-        $this->setCurrency($this->xpath->query('//div[contains(@class, "price_for_meter")]')[0]->nodeValue);
+        // //----------------------------------------------------------------
+        // // Currency
+        // //----------------------------------------------------------------
+        // $this->setCurrency($this->xpath->query('//div[contains(@class, "price_for_meter")]')[0]->nodeValue);
 
-        //----------------------------------------------------------------
-        // City and Region
-        //----------------------------------------------------------------
-        $this->setCity($this->xpath->query('//div[contains(@class, "place")]')[0]->nodeValue);
+        // //----------------------------------------------------------------
+        // // City and Region
+        // //----------------------------------------------------------------
+        // $this->setCity($this->xpath->query('//div[contains(@class, "place")]')[0]->nodeValue);
 
         //----------------------------------------------------------------
         // Table
         //----------------------------------------------------------------
 
-        $table = $this->xpath->query('//table[contains(@class, "moreInfo")]//tr');
+        $table = $this->xpath->query('//div[@class="css-jsfayd"]//div[@class="css-17y17yd"]');
 
         foreach($table as $table_node){
-            $row_node = $this->xpath->query('td', $table_node);
+            $row_node = $this->xpath->query('span', $table_node);
 
             $key = $this->matchTableKeyWithValue($row_node[0]->nodeValue);
             $key_arr[] = $key;
@@ -86,17 +94,17 @@ class AnalyzeContentOlxBg extends AnalyzeContent {
         //----------------------------------------------------------------
         // Content
         //----------------------------------------------------------------
-        $this->setContent($this->xpath->query('//div[@class="advDesc"]')[0]->nodeValue);
+        $this->setContent($this->xpath->query('//div[@data-testid="textContainer"]')[0]->nodeValue);
 
-        // //----------------------------------------------------------------
-        // // Contacts
-        // //----------------------------------------------------------------
-        // $this->setContactPhone($this->xpath->query('//div[@class="contacts_wrapper"]//div[@class="contact_row"]//a//@href'));
+        // // //----------------------------------------------------------------
+        // // // Contacts
+        // // //----------------------------------------------------------------
+        // // $this->setContactPhone($this->xpath->query('//div[@class="contacts_wrapper"]//div[@class="contact_row"]//a//@href'));
 
         //----------------------------------------------------------------
         // Images
         //----------------------------------------------------------------
-        $this->setImages($this->xpath->query('//div[@class="advDetails"]//div[@class="pics"]//a//@href'));
+        $this->setImages($this->xpath->query('//ul[@id="descGallery"]//a//@href'));
 
     }
 
@@ -117,6 +125,8 @@ class AnalyzeContentOlxBg extends AnalyzeContent {
         preg_match('/[\d.]+/', $price, $matches_price);
 
         $this->price = filter_var($matches_price[0], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
+        $this->setCurrency($price);
     }
 
     protected function setPricePerSquare($pricePerSquare){
@@ -125,7 +135,7 @@ class AnalyzeContentOlxBg extends AnalyzeContent {
     }
 
     protected function setCurrency($currency){
-        preg_match('/[A-Z]{2,3}/', $currency, $matches_currency);
+        preg_match('/\D+$/', $currency, $matches_currency);
         $this->currency = filter_var(trim($matches_currency[0]), FILTER_SANITIZE_STRING);
     }
 
@@ -155,11 +165,14 @@ class AnalyzeContentOlxBg extends AnalyzeContent {
     }
 
     protected function setKeywords($keywords){
-        $this->keywords = explode(' ', trim($keywords));
+        if(!isset($this->keywords))
+            $this->keywords = [];
+        array_push($this->keywords, filter_var(trim($keywords), FILTER_SANITIZE_STRING));
     }
 
     protected function setContent($content){
-        $this->content = filter_var(trim($content), FILTER_SANITIZE_STRING);
+        $content = strip_tags(trim($content));
+        $this->content = filter_var($content, FILTER_SANITIZE_STRING);
     }
 
     protected function setContactPhone($phone){
