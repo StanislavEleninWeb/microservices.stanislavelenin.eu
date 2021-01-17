@@ -45,6 +45,17 @@ return [
             'auth_mode' => null,
         ],
 
+        'gmail' => [
+            'transport' => 'mail',
+            'host' => env('GMAIL_HOST', 'smtp.gmail.com'),
+            'port' => env('GMAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('GMAIL_USERNAME'),
+            'password' => env('GMAIL_PASSWORD'),
+            'timeout' => null,
+            'auth_mode' => null,
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],
