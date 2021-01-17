@@ -123,5 +123,8 @@ class NotificationController extends Controller
         return response($notification, ResponseCodes::HTTP_OK);
     }
 
+    public function googleMail(){
+        dd('Google Mail');
+    }
 
 }

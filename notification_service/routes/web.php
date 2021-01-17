@@ -40,3 +40,5 @@ $router->get('/notifications/{id}', 'NotificationController@getNotificationById'
 $router->post('/notify/admins', 'NotificationController@notifyAdmins');
 $router->post('/notify/user/created', 'NotificationController@notifyUserCreated');
 $router->post('/notify/page/created', 'NotificationController@notifyPageCreated');
+
+$router->get('/notify/google/mail', 'NotificationController@googleMail');
