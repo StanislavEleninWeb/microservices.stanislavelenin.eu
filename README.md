@@ -13,19 +13,13 @@
   </thead>
   <tr>
     <td>
-      Fix rating avarage limit 10 lowest/highest offers
-      
+      Fix rating avarage limit 10 lowest or highest offers <br>
     </td>
     <td></td>
     <td>
       Scrape content <br>
       Analyze contetn <br>
     </td>
-  </tr>
-  <tr>
-    <td>Fix rating avarage limit 10 lowest/highest offers</td>
-    <td></td>
-    <td></td>
   </tr>
   <tr>
     <td></td>
