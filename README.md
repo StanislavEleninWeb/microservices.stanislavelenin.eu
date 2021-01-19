@@ -14,11 +14,19 @@
   <tr>
     <td>
       Fix rating avarage limit 10 lowest or highest offers <br>
+      Cache content<br>
+      Local host stmp send mail<br>
+      Authentication<br>
+      Authorization<br>
     </td>
     <td></td>
     <td>
       Scrape content <br>
-      Analyze contetn <br>
+      Analyze content <br>
+      Add local property websites<br>
+      Create RabbitMQ queue <br>
+      Create Database schema<br>
+      Notification database and mail<br>
     </td>
   </tr>
   <tr>
