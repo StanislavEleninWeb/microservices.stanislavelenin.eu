@@ -109,18 +109,23 @@ class PageController extends Controller
         if(isset($request->city_id) && is_numeric($request->city_id))
             $info->where('city_id', $request->city_id);      
 
-        //Should optimize queries
-        $array['price']['min'] = round($info->min('price'), 2);
-        $array['price']['max'] = round($info->max('price'), 2);
+        // Average
         $array['price']['avg'] = round($info->avg('price'), 2);
-
-        $array['price_per_square']['min'] = round($info->min('price_per_square'), 2);
-        $array['price_per_square']['max'] = round($info->max('price_per_square'), 2);
         $array['price_per_square']['avg'] = round($info->avg('price_per_square'), 2);
-
-        $array['space']['min'] = round($info->min('space'), 2);
-        $array['space']['max'] = round($info->max('space'), 2);
         $array['space']['avg'] = round($info->avg('space'), 2);
+
+        // Set query limit
+        $info->limit(10);
+
+        // Min
+        $array['price']['min'] = round(clone($info)->orderBy('price', 'ASC')->pluck('price')->avg(), 2);
+        $array['price_per_square']['min'] = round(clone($info)-orderBy('price_per_square', 'ASC')->pluck('price_per_square')->avg(), 2);
+        $array['space']['min'] = round(clone($info)->orderBy('space', 'ASC')->pluck('space')->avg(), 2);
+
+        // Max
+        $array['price']['max'] = round(clone($info)->orderBy('price', 'DESC')->pluck('price')->avg(), 2);        
+        $array['price_per_square']['max'] = round(clone($info)->orderBy('price_per_square', 'DESC')->pluck('price_per_square')->avg(), 2);
+        $array['space']['max'] = round(clone($info)->orderBy('space', 'DESC')->pluck('space')->avg(), 2);
 
         return response()->json($array);
     }
