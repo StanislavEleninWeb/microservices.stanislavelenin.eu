@@ -13,13 +13,14 @@
   </thead>
   <tr>
     <td>
-      Fix rating avarage limit 10 lowest or highest offers <br>
       Cache content<br>
       Local host stmp send mail<br>
       Authentication<br>
       Authorization<br>
     </td>
-    <td></td>
+    <td>
+      Fix rating avarage limit 10 lowest or highest offers <br>
+    </td>
     <td>
       Scrape content <br>
       Analyze content <br>
