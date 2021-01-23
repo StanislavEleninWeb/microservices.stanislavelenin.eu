@@ -69,3 +69,13 @@ $router->get('/test/generate/url/request', 'TestController@testGenerateUrlReques
 $router->get('/test/analyze/content', 'TestController@testAnalyzeContent');
 $router->get('/test/images', 'TestController@images');
 $router->get('/failed/jobs', 'TestController@failedJobs');
+
+/*
+|--------------------------------------------------------------------------
+| Source Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can CRUD source
+|
+*/
+$router->get('/failed/jobs', 'FailedJobsController@getFailedJobs');

@@ -1,4 +1,4 @@
-<?phpWe
+<?php
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
@@ -18,3 +18,5 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/source', 'SourceController@index');
+
+$router->get('/failed/jobs', 'FailedJobsController@getFailedJobs');
