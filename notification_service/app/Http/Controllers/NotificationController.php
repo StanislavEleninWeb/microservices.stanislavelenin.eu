@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response as ResponseCodes;
 
 use App\Events\NotifyAdminsEvent;
@@ -124,7 +125,7 @@ class NotificationController extends Controller
     }
 
     public function googleMail(){
-        dd('Google Mail');
+        return Mail::to('stanislaveleninweb@gmail.com')->send(new \App\Mail\UserCreatedMail());
     }
 
 }
