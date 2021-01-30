@@ -125,8 +125,8 @@ class NotificationController extends Controller
     }
 
     public function googleMail(){
-        // return Mail::to('stanislaveleninweb@gmail.com')->send(new \App\Mail\UserCreatedMail());
-        return Mail::mailer('sendmail')->to('stanislaveleninweb@gmail.com')->send(new \App\Mail\UserCreatedMail());
+        return Mail::to('stanislaveleninweb@gmail.com')->send(new \App\Mail\UserCreatedMail());
+        // return Mail::mailer('sendmail')->to('stanislaveleninweb@gmail.com')->send(new \App\Mail\UserCreatedMail());
     }
 
 }
