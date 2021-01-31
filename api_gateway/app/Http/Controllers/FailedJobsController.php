@@ -16,11 +16,13 @@ class FailedJobsController extends Controller
     {
         $failedJobs = [];
 
-        $failedJobs['user.service'] = Http::get(env('USER_SERVICE_URL') . 'failed/jobs');
-        $failedJobs['page.service'] = Http::get(env('PAGE_SERVICE_URL') . 'failed/jobs');
-        $failedJobs['image.service'] = Http::get(env('IMAGE_SERVICE_URL') . 'failed/jobs');
-        $failedJobs['rating.service'] = Http::get(env('RATING_SERVICE_URL') . 'failed/jobs');
-        $failedJobs['notification.service'] = Http::get(env('NOTIFICATION_SERVICE_URL') . 'failed/jobs');
+        $failedJobs['user.service'] = Http::get(env('USER_SERVICE_URL') . '/failed/jobs')->json();
+        $failedJobs['page.service'] = Http::get(env('PAGE_SERVICE_URL') . '/failed/jobs')->json();
+        $failedJobs['image.service'] = Http::get(env('IMAGE_SERVICE_URL') . '/failed/jobs')->json();
+        $failedJobs['rating.service'] = Http::get(env('RATING_SERVICE_URL') . '/failed/jobs')->json();
+        $failedJobs['notification.service'] = Http::get(env('NOTIFICATION_SERVICE_URL') . '/failed/jobs')->json();
+
+        dd($failedJobs);
 
         return response()->json($failedJobs);
     }
