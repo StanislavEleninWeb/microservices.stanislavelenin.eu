@@ -15,8 +15,6 @@ use App\Events\UserCreatedEvent;
 
 use App\Models\User;
 
-use PHPMailer\PHPMailer;
-
 class NotificationController extends Controller
 {
     /**
@@ -127,27 +125,7 @@ class NotificationController extends Controller
     }
 
     public function googleMail(){
-       
-        $text             = 'Hello Mail';
-        $mail             = new PHPMailer\PHPMailer(); // create a n
-        $mail->SMTPDebug  = 1; // debugging: 1 = errors and messages, 2 = messages only
-        $mail->SMTPAuth   = true; // authentication enabled
-        $mail->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for Gmail
-        $mail->Host       = "stanislavelenin.eu";
-        $mail->Port       = 25; // or 587
-        $mail->IsHTML(true);
-        $mail->Username = "support@stanislavelenin.eu";
-        $mail->Password = "g1w+9xn8M;Y;";
-        $mail->SetFrom("support@stanislavelenin.eu", 'Support');
-        $mail->Subject = "Test Subject";
-        $mail->Body    = $text;
-        $mail->AddAddress("stanislaveleninweb@gmail.com", "Receiver Name");
-        if ($mail->Send()) {
-            return 'Email Sended Successfully';
-        } else {
-            return 'Failed to Send Email';
-        }
-       
+        //
     }
 
 }
