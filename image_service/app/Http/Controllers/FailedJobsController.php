@@ -14,7 +14,7 @@ class FailedJobsController extends Controller
      */
     public function getFailedJobs()
     {
-        return DB::table('failed_jobs')->select('*')->get();
+        return DB::table('failed_jobs')->select('*')->orderBy('id', 'DESC')->get();
     }
 
 }
