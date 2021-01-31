@@ -68,7 +68,16 @@ $router->get('/test', 'TestController@index');
 $router->get('/test/generate/url/request', 'TestController@testGenerateUrlRequest');
 $router->get('/test/analyze/content', 'TestController@testAnalyzeContent');
 $router->get('/test/images', 'TestController@images');
-$router->get('/failed/jobs', 'TestController@failedJobs');
+
+/*
+|--------------------------------------------------------------------------
+| Failed jobs Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can manage failed jobs
+|
+*/
+$router->get('/failed/jobs', 'FailedJobsController@getFailedJobs');
 
 /*
 |--------------------------------------------------------------------------
