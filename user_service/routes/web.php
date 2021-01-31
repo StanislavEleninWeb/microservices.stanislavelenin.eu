@@ -87,3 +87,13 @@ $router->group(['middleware' => 'auth0'], function () use ($router) {
     $router->delete('/users/{id}', 'UserController@delete');
 
 });
+
+/*
+|--------------------------------------------------------------------------
+| Failed jobs Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can manage failed jobs
+|
+*/
+$router->get('/failed/jobs', 'FailedJobsController@getFailedJobs');

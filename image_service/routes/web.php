@@ -21,3 +21,13 @@ $router->get('/page/{id}/images', 'ImageController@index');
 $router->post('/images', 'ImageController@store');
 $router->get('/image/{id}', 'ImageController@show');
 $router->delete('/image/{id}', 'ImageController@destroy');
+
+/*
+|--------------------------------------------------------------------------
+| Failed jobs Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can manage failed jobs
+|
+*/
+$router->get('/failed/jobs', 'FailedJobsController@getFailedJobs');

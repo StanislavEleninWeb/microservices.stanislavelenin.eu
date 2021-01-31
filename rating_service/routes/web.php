@@ -16,3 +16,13 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+/*
+|--------------------------------------------------------------------------
+| Failed jobs Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can manage failed jobs
+|
+*/
+$router->get('/failed/jobs', 'FailedJobsController@getFailedJobs');

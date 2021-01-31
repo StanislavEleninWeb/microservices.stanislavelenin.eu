@@ -42,3 +42,13 @@ $router->post('/notify/user/created', 'NotificationController@notifyUserCreated'
 $router->post('/notify/page/created', 'NotificationController@notifyPageCreated');
 
 $router->get('/notify/google/mail', 'NotificationController@googleMail');
+
+/*
+|--------------------------------------------------------------------------
+| Failed jobs Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can manage failed jobs
+|
+*/
+$router->get('/failed/jobs', 'FailedJobsController@getFailedJobs');
