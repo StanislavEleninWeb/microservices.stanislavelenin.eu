@@ -98,7 +98,6 @@ class ProcessPageCrawlerJob extends Job
         $analyzer->analyze();
 
         $results = $analyzer->getResult();
-        dd($results);
 
         $page_info_validator = Validator::make($results, [
             'title' => 'required|string',
