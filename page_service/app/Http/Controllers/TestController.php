@@ -77,9 +77,6 @@ class TestController extends Controller
     public function testAnalyzeContent()
     {
 
-        var_dump(mail('stanislaveleninweb@gmail.com', 'My Subject', "Message Content"));
-        die;
-
         try {
             // Test information
             $source = 3;
