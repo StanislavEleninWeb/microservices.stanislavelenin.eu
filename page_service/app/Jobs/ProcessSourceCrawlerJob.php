@@ -56,8 +56,6 @@ class ProcessSourceCrawlerJob extends Job
         $crawled = Page::whereIn('url', $generator->getResult())->pluck('url');        
         $unique_results = $generator->getResult()->diff($crawled);
         
-        dd($unique_results);
-
         // Dispatch 
         $unique_results->each(function($url){
             dispatch(new ProcessPageCrawlerJob($url, $this->source));
