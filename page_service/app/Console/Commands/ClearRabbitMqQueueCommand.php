@@ -56,7 +56,7 @@ class ClearRabbitMqQueueCommand extends Command
         foreach($this->queues as $queue){
             $this->callSilently('rabbitmq:queue-purge', [
                 'queue' => $queue,
-                '--env' => local,
+                '--env' => 'local',
             ]);
         }
 
