@@ -79,8 +79,8 @@ class TestController extends Controller
 
         try {
             // Test information
-            $source = 3;
-            $testable = 'https://www.olx.bg/ad/obzaveden-tristaen-apartament-blizo-do-mu-plovdiv-CID368-ID8jX2x.html#958ec8f13c;promoted';
+            $source = 1;
+            $testable = 'https://www.alo.bg/7177269';
 
             // Find Source
             $source = Source::findOrFail($source);
