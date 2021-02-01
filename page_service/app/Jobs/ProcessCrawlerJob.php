@@ -19,7 +19,7 @@ class ProcessCrawlerJob extends Job implements ShouldBeUnique
     {
         // Fetch all sources
     	$sources = Cache::get('sources', Source::all());
-        dd($sources);
+
     	// Iterate over sources
     	$sources->each(function($source){
             dispatch(new ProcessSourceCrawlerJob($source));
