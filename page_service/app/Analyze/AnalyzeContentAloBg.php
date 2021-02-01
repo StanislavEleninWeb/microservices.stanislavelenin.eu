@@ -40,8 +40,6 @@ class AnalyzeContentAloBg extends AnalyzeContent {
      */
 	public function analyze(){
         
-        dd('AnalyzeContent');
-
         // Load curl response as html
         $this->dom->loadHTML(mb_convert_encoding($this->crawl(), 'HTML-ENTITIES', "UTF-8"));
 
