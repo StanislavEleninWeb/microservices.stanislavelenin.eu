@@ -54,7 +54,9 @@ class ClearRabbitMqQueueCommand extends Command
             $this->queues = array_intersect($this->queues, $queues);
 
         foreach($this->queues as $queue){
-            Artisan::call('rabbitmq:queue-purge ' . $queue);
+            $this->callSilently('rabbitmq:queue-purge', [
+                'queue' => $queue
+            ]);
         }
 
         $this->info('RabbitMQ queues purged!');
